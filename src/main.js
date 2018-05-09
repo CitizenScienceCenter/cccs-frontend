@@ -3,9 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from './backend'
-Vue.config.productionTip = false
+import axios from './backend/axios'
+import VueAxios from 'vue-axios'
 
+Vue.config.productionTip = false
+Vue.use(VueAxios, axios)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
