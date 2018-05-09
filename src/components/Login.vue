@@ -25,6 +25,10 @@ export default {
   methods: {
     login () {
       console.log(this.email)
+      this.$http
+        .post('/users/authorize', { email: this.email, pwd: this.password })
+        .then(request => console.log(request))
+        .catch((e) => console.error(e))
     }
   }
 }
