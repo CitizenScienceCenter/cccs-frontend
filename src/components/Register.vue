@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
       msg: 'Sign up for an account',
