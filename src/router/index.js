@@ -14,6 +14,11 @@ const isAuthenticated = (to, from, next) => {
   return next('/login?redirect=' + to.fullPath)
 }
 
+const logout = (to, from, next) => {
+  localStorage.removeItem('user-token')
+  return next('/login')
+}
+
 export default new Router({
   routes: [
     {
@@ -25,6 +30,12 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Login,
+      beforeEnter: logout
     },
     {
       path: '/oauth/authorize',

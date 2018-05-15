@@ -29,6 +29,11 @@ export default {
         .then(request => {
           console.log(request)
           localStorage.setItem('user-token', request.apiKey)
+          console.log(this.$route.query.redirect)
+          const q = this.$route.query
+          if (q.redirect) {
+            this.$router.push(q.redirect)
+          }
         })
         .catch((e) => console.error(e))
     }

@@ -2,7 +2,7 @@
     <div class="login-wrapper border border-light">
     <form class="form-allow">
       <button class="btn btn-lg btn-primary btn-block" type="submit" @submit.prevent="allow">Allow</button>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" @submit.prevent="deny">Deny</button>
+      <button class="btn btn-lg btn-danger btn-block" type="submit" @submit.prevent="deny">Deny</button>
     </form>
   </div>
 </template>
