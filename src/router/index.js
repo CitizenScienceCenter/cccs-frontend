@@ -7,7 +7,7 @@ import Oauthorize from '@/components/Oauthorize'
 Vue.use(Router)
 
 const isAuthenticated = (to, from, next) => {
-  if (localStorage.getItem('user-token')) {
+  if (localStorage.getItem('user')) {
     return next()
   }
   console.log(to)
@@ -15,7 +15,7 @@ const isAuthenticated = (to, from, next) => {
 }
 
 const logout = (to, from, next) => {
-  localStorage.removeItem('user-token')
+  localStorage.removeItem('user')
   return next('/login')
 }
 
@@ -36,6 +36,12 @@ export default new Router({
       name: 'Logout',
       component: Login,
       beforeEnter: logout
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: Login, // TODO create home view?
+      beforeEnter: isAuthenticated
     },
     {
       path: '/oauth/authorize',

@@ -25,10 +25,11 @@ export default {
     login () {
       console.log(this.email, this.password)
       this.$http
-        .post('/users/authorize', { email: this.email, pwd: this.password })
+        .post('/users/login', { email: this.email, pwd: this.password })
         .then(request => {
           console.log(request)
-          localStorage.setItem('user-token', request.apiKey)
+          localStorage.setItem('user', request)
+          // TODO add token to axios
           console.log(this.$route.query.redirect)
           const q = this.$route.query
           if (q.redirect) {

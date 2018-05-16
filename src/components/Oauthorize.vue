@@ -1,9 +1,9 @@
 <template>
     <div class="login-wrapper border border-light">
-    <form class="form-allow">
+    <div>
       <button class="btn btn-lg btn-primary btn-block" type="submit" @submit.prevent="allow">Allow</button>
       <button class="btn btn-lg btn-danger btn-block" type="submit" @submit.prevent="deny">Deny</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -18,12 +18,15 @@ export default {
     }
   },
   methods: {
-    register () {
-      console.log(this.email)
+    allow () {
+      console.log('allowed')
       this.$http
-        .post('/users/oauth/authorize', { email: this.email, pwd: this.password })
+        .post('/users/oauth/authorize', { user_id: localStorage.getItem('user').user_id, project_id: 1 })
         .then(request => console.log(request))
         .catch((e) => console.error(e))
+    },
+    deny () {
+      console.log('denied')
     }
   }
 }
