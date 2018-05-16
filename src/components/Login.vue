@@ -23,18 +23,17 @@ export default {
   },
   methods: {
     login () {
-      console.log(this.email, this.password)
       this.$http
         .post('/users/login', { email: this.email, pwd: this.password })
         .then(request => {
-          console.log(request)
-          localStorage.setItem('user', request)
+          const u = request.data
+          console.log(u)
+          localStorage.setItem('api_key', u['api_key'])
+          localStorage.setItem('user', JSON.stringify(request.data))
           // TODO add token to axios
           console.log(this.$route.query.redirect)
-          const q = this.$route.query
-          if (q.redirect) {
-            this.$router.push(q.redirect)
-          }
+          const q = this.$route.query || '/'
+          this.$router.push(q.redirect)
         })
         .catch((e) => console.error(e))
     }

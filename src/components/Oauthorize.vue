@@ -1,8 +1,8 @@
 <template>
     <div class="login-wrapper border border-light">
     <div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" @submit.prevent="allow">Allow</button>
-      <button class="btn btn-lg btn-danger btn-block" type="submit" @submit.prevent="deny">Deny</button>
+      <button class="btn btn-lg btn-primary btn-block" v-on:click="allow">Allow</button>
+      <button class="btn btn-lg btn-danger btn-block" v-on:click="deny">Deny</button>
     </div>
   </div>
 </template>
@@ -19,9 +19,10 @@ export default {
   },
   methods: {
     allow () {
-      console.log('allowed')
+      const u = JSON.parse(localStorage.getItem('user'))
+      console.log(u)
       this.$http
-        .post('/users/oauth/authorize', { user_id: localStorage.getItem('user').user_id, project_id: 1 })
+        .post('/users/authorize', { user_id: u.id, project_id: '1' })
         .then(request => console.log(request))
         .catch((e) => console.error(e))
     },

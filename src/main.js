@@ -6,10 +6,8 @@ import router from './router'
 import axios from './backend/axios'
 import VueAxios from 'vue-axios'
 
-const token = localStorage.getItem('user-token')
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
-}
+const token = localStorage.getItem('api_key')
+axios.defaults.headers.common['Authorization'] = token
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
