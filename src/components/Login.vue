@@ -31,9 +31,8 @@ export default {
           localStorage.setItem('api_key', u['api_key'])
           localStorage.setItem('user', JSON.stringify(request.data))
           // TODO add token to axios
-          console.log(this.$route.query.redirect)
-          const q = this.$route.query || '/'
-          this.$router.push(q.redirect)
+          const q = this.$route.query
+          this.$router.push(q.redirect_uri || '/')
         })
         .catch((e) => console.error(e))
     }

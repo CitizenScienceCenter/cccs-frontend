@@ -23,7 +23,12 @@ export default {
       console.log(u)
       this.$http
         .post('/users/authorize', { user_id: u.id, project_id: '1' })
-        .then(request => console.log(request))
+        .then(request => {
+          console.log(request)
+          const q = this.$route.query
+          console.log(this.$route.query.redirect_uri)
+          window.location = q.redirect_uri
+        })
         .catch((e) => console.error(e))
     },
     deny () {

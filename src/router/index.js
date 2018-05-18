@@ -11,7 +11,7 @@ const isAuthenticated = (to, from, next) => {
     return next()
   }
   console.log(to)
-  return next('/login?redirect=' + to.fullPath)
+  return next('/login?redirect_url=' + to.fullPath)
 }
 
 const logout = (to, from, next) => {
