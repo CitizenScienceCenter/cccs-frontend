@@ -77,6 +77,16 @@ module.exports = {
       }
     ]
   },
+  loader: 
+    {                                                                         
+      test: /\.js$/,                                                          
+      loaders: [                                                              
+        'babel',                                                                                                                                          
+        'imports?define=>false'                                               
+      ],                                                                      
+      exclude: /node_modules/,                                                
+      include: __dirname                                                      
+    },    
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).

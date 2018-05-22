@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Register',
   data () {
@@ -24,9 +25,8 @@ export default {
   methods: {
     register () {
       console.log(this.email)
-      this.$http
-        .post('/users/register', { email: this.email, pwd: this.password })
-        .then(request => console.log(request))
+      this.$cc.UsersApi.apiUserRegister({ user: { email: this.email, pwd: this.password } })
+        .then(req => console.log(req))
         .catch((e) => console.error(e))
     }
   }

@@ -5,12 +5,19 @@ import App from './App'
 import router from './router'
 import axios from './backend/axios'
 import VueAxios from 'vue-axios'
+// import * as cc from './sdk/src/index'
+import Swagger from 'swagger-client'
 
 const token = localStorage.getItem('api_key')
 axios.defaults.headers.common['Authorization'] = token
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Swagger("http://localhost:8080/api/v1/swagger.json").then((client) => {
+  Vue.prototype.$ac = client;
+  console.log(client.spec);
+  console.dir(client.apis);
+});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

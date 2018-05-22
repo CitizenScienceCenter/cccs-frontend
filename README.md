@@ -1,6 +1,6 @@
 # vuecs
 
-> CCCS Frontend
+> CCCS Sample Client App
 
 ## Build Setup
 

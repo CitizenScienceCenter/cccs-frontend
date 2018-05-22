@@ -14,17 +14,17 @@
 <script>
 
 export default {
-  name: 'Login',
+  name: 'Create Project',
   data () {
     return {
-      msg: 'Please login here',
+      msg: 'Please create a project',
       email: '',
       password: ''
     }
   },
   methods: {
-    login () {
-      this.$ac.apis.Users.login({ user: { email: this.email, pwd: this.password } })
+    create () {
+      this.$cc.api_project_create({ project: { email: this.email, pwd: this.password } })
         .then(req => {
           localStorage.setItem('user', req['data'])
           console.log(req)
