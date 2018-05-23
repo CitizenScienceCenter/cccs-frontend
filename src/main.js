@@ -9,6 +9,7 @@ import VueAxios from 'vue-axios'
 import Swagger from 'swagger-client'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
 
 const token = localStorage.getItem('api_key')
 axios.defaults.headers.common['Authorization'] = token
