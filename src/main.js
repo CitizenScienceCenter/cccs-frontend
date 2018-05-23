@@ -7,12 +7,16 @@ import axios from './backend/axios'
 import VueAxios from 'vue-axios'
 // import * as cc from './sdk/src/index'
 import Swagger from 'swagger-client'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
 
 const token = localStorage.getItem('api_key')
 axios.defaults.headers.common['Authorization'] = token
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.use(VueMaterial)
+// Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger("http://localhost:8080/api/v1/swagger.json").then((client) => {
   Vue.prototype.$ac = client;
   console.log(client.spec);
