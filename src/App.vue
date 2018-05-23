@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img class="banner" src="./assets/logo_invert.png">
     <div class="container">
       <router-view/>
     </div>
@@ -21,5 +21,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.banner {
+  max-width: 30%;
+  padding-bottom: 6%;
 }
 </style>

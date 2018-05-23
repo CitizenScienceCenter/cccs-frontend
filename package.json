@@ -81,7 +81,6 @@
     "sinon": "^4.0.0",
     "sinon-chai": "^2.8.0",
     "swagger-client": "^3.8.4",
-    "swagger-vue-generator": "^1.0.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",

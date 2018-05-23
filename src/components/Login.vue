@@ -8,6 +8,9 @@
       <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit" @submit.prevent="login">Sign in</button>
     </form>
+    <div v-if="username" class="alert alert-success" role="alert">
+      Welcome, {{username}}
+    </div>
   </div>
 </template>
 
@@ -19,15 +22,18 @@ export default {
     return {
       msg: 'Please login here',
       email: '',
-      password: ''
+      password: '',
+      username: undefined,
+      error: false
     }
   },
   methods: {
     login () {
       this.$ac.apis.Users.login({ user: { email: this.email, pwd: this.password } })
         .then(req => {
-          localStorage.setItem('user', req['data'])
+          localStorage.setItem('user', req['body'])
           console.log(req)
+          this.username = req['body']['email']
         })
         .catch((e) => console.error(e))
     }
