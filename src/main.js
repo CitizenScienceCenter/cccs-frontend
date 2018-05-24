@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import axios from './backend/axios'
 import VueAxios from 'vue-axios'
-// import * as cc from './sdk/src/index'
+import VueCarousel from 'vue-carousel'
 import Swagger from 'swagger-client'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
@@ -17,11 +17,11 @@ axios.defaults.headers.common['Authorization'] = token
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(VueMaterial)
+Vue.use(VueCarousel)
+
 // Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger("http://localhost:8080/api/v1/swagger.json").then((client) => {
   Vue.prototype.$ac = client;
-  console.log(client.spec);
-  console.dir(client.apis);
 });
 /* eslint-disable no-new */
 new Vue({

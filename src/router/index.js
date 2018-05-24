@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
-import Oauthorize from '@/components/Oauthorize'
+import { Login, Project, Register, Oauthorize, Dashboard } from '@/components'
 
 Vue.use(Router)
 
@@ -38,10 +36,17 @@ export default new Router({
       beforeEnter: logout
     },
     {
-      path: '/',
-      name: 'Home',
-      component: Login, // TODO create home view?
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
       beforeEnter: isAuthenticated
+    },
+    {
+      path: '/',
+      name: 'home',
+      redirect: {
+        name: 'dashboard'
+      }
     },
     {
       path: '/oauth/authorize',
