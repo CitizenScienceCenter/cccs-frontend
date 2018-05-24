@@ -7,11 +7,12 @@
 
         <md-card-content>
             <div class="md-layout">
-                <carousel :autoplay="true">
-                    <li v-for="item in items">
-                        <slide><span class="label"> {{ item.number }} </span></slide>
-                    </li>
+                <carousel :autoplay="true" :per-page="1" >
+                    <slide key="{{item.number}}" v-for="item in items">
+                      <span class="label">{{ item.msg }}</span>
+                    </slide>
                 </carousel>
+                
             </div>
         </md-card-content>
     </md-card>
@@ -148,27 +149,20 @@ export default {
           number: 1
       },
       {
-          msg: 'hi',
+          msg: 'Hey',
           number: 2
       },
       {
-          msg: 'hi',
+          msg: 'Sup',
           number: 3
       },
       {
-          msg: 'hi',
+          msg: 'Yo',
           number: 4
       }]
     }
   },
   methods: {
-    buildSlideMarkup(count)  {
-        let slideMarkup = '';
-        for (var i = 1; i <= count; i++) {
-            slideMarkup += ''
-        }
-        return slideMarkup;
-    }
   }
 }
 </script>
@@ -180,5 +174,22 @@ export default {
     display: inline-block;
     vertical-align: top;
     border: 1px solid rgba(#000, .12);
+  }
+
+  .VueCarousel-slide {
+    position: relative;
+    background: #42b983;
+    color: #fff;
+    font-family: Arial;
+    font-size: 24px;
+    text-align: center;
+    min-height: 100px;
+  }
+
+  .label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 </style>

@@ -18,7 +18,7 @@
       <md-list>
         <md-list-item>
           <md-icon>move_to_inbox</md-icon>
-          <span class="md-list-item-text">Porjects</span>
+          <span class="md-list-item-text">Projects</span>
         </md-list-item>
 
         <md-list-item>
@@ -33,7 +33,7 @@
 
         <md-list-item>
           <md-icon>error</md-icon>
-          <span class="md-list-item-text">Signout</span>
+          <router-link :to="{ name: 'Logout' }">Log out</router-link>
         </md-list-item>
       </md-list>
     </md-drawer>
