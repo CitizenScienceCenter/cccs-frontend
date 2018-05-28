@@ -1,7 +1,7 @@
 <template>
     <div>
     <form novalidate class="md-layout" @submit.prevent="register">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
+      <md-card class="md-layout-item md-size-70 md-small-size-100">
         <md-card-header>
           <div class="md-title">Create a Project</div>
         </md-card-header>
@@ -9,14 +9,22 @@
         <md-card-content>
           <div class="md-layout">
           <md-field>
-            <label for="email">Name</label>
-            <md-input v-model="text" type="email" name="email" id="email" autocomplete="email" :disabled="sending" />
+            <label for="name">Name</label>
+            <md-input type="text" name="name" id="name" :disabled="sending" />
           </md-field>
 
-              <md-field>
-                <label for="password">Password</label>
-                <md-input v-model="text" type="password" id="password" name="password" autocomplete="password" :disabled="sending" />
-              </md-field>
+          <md-field>
+            <label for="type">Type</label>
+            <md-select name="type" id="type">
+              <md-option :key="t" :value="t" v-for="t in project.types">{{t}}</md-option>
+            </md-select>
+          </md-field>
+
+          <md-field>
+            <label for="desc">Description</label>
+            <md-input type="text" name="desc" id="desc" :disabled="sending" />
+          </md-field>
+
           </div>
         </md-card-content>
 
@@ -27,21 +35,7 @@
         </md-card-actions>
       </md-card>
 
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Create a Project</div>
-        </md-card-header>
-
-        <md-card-content>
-          <div class="md-layout">
-            <md-field>
-              Lorem Ipsum Dolor
-            </md-field>
-          </div>
-        </md-card-content>
-      </md-card>
-
-      <md-snackbar :md-active.sync="userSaved">The user {{ email }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="projectSaved">Your project has been created, add some tasks!</md-snackbar>
     </form>
   </div>
 </template>
@@ -49,12 +43,19 @@
 <script>
 
 export default {
-  name: 'Create Project',
+  name: 'CreateProject',
   data () {
     return {
       msg: 'Please create a project',
-      email: '',
-      password: ''
+      sending: false,
+      project: {
+        types: [
+          'Desktop',
+          'Mobile',
+          'Both'
+        ]
+      },
+      projectSaved: false
     }
   },
   methods: {

@@ -56,9 +56,9 @@ export default {
           this.success = true
           localStorage.setItem('user', req['body'])
           this.username = req['body']['email']
-          this.router.push('dashboard')
+          this.$router.push('dashboard')
         })
-        .catch((e) => console.error(e))
+        .catch((e) => this.error = true)
         .finally(() => this.sending = false)
     }
   }

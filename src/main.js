@@ -21,6 +21,7 @@ Vue.use(VueCarousel)
 
 // Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger("http://localhost:8080/api/v1/swagger.json").then((client) => {
+  console.log(client)
   Vue.prototype.$ac = client;
 });
 /* eslint-disable no-new */

@@ -1,24 +1,29 @@
 <template>
   <div flex class="page-container md-layout-column">
     <md-toolbar class="md-primary">
+      <md-button @click="showNavigation = true">
+        <md-icon>menu</md-icon>
+      </md-button>
       <span class="md-title">CCCS</span>
 
       <div class="md-toolbar-section-end">
-        <md-button @click="showNavigation = true">
-          <md-icon>menu</md-icon>
-        </md-button>
       </div>
     </md-toolbar>
 
-    <md-drawer class="md-right" :md-active.sync="showNavigation">
+    <md-drawer :md-active.sync="showNavigation">
       <md-toolbar class="md-transparent" md-elevation="0">
         <span class="md-title">CCCS</span>
       </md-toolbar>
 
       <md-list>
-        <md-list-item>
-          <md-icon>move_to_inbox</md-icon>
+        <md-list-item md-expand>
+          <md-icon>whatshot</md-icon>
           <span class="md-list-item-text">Projects</span>
+
+          <md-list slot="md-expand">
+            <md-list-item to="/projects/create" class="md-inset">Create</md-list-item>
+            <md-list-item class="md-inset">My Projects</md-list-item>
+          </md-list>
         </md-list-item>
 
         <md-list-item>
@@ -27,13 +32,8 @@
         </md-list-item>
 
         <md-list-item>
-          <md-icon>delete</md-icon>
-          <span class="md-list-item-text">Create</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>error</md-icon>
-          <router-link :to="{ name: 'Logout' }">Log out</router-link>
+          <md-icon>logout</md-icon>
+          <md-list-item to="/logout">Logout</md-list-item>
         </md-list-item>
       </md-list>
     </md-drawer>
@@ -54,17 +54,33 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  body{
-    display: flex;
-    flex-direction: column;
+<style lang="scss">
+html, body {
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
     height: 100%;
-  }
+}
+  // html {
+  //   height: 100%;
+  // }
+  // body {
+  //   display: flex;
+  //   margin: 0;
+  //   padding: 0;
+  //   flex-direction: column;
+  //   min-height: 100%;
+  // }
 
   .page-container {
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(#000, .12);
+  //   overflow: hidden;
+  //   position: relative;
+    min-height: 100%;
+  //   border: 1px solid rgba(#000, .12);
   }
 
    // Demo purposes only
