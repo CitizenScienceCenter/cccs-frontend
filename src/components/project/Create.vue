@@ -1,6 +1,6 @@
 <template>
     <div>
-    <form novalidate class="md-layout" @submit.prevent="register">
+    <form novalidate class="md-layout" @submit.prevent="create">
       <md-card class="md-layout-item md-size-70 md-small-size-100">
         <md-card-header>
           <div class="md-title">Create a Project</div>
@@ -10,20 +10,20 @@
           <div class="md-layout">
           <md-field>
             <label for="name">Name</label>
-            <md-input type="text" name="name" id="name" :disabled="sending" />
+            <md-input type="text" v-model="project.name" name="name" id="name" :disabled="sending" />
           </md-field>
 
           <md-field>
-            <label for="type">Type</label>
-            <md-select name="type" id="type">
-              <md-option :key="t" :value="t" v-for="t in project.types">{{t}}</md-option>
+            <label for="platform">Platform</label>
+            <md-select v-model="project.platform" name="platform" id="platform">
+              <md-option :value="t" :key="t" v-for="t in getModel()">{{t}}</md-option>
             </md-select>
           </md-field>
 
-          <md-field>
-            <label for="desc">Description</label>
-            <md-input type="text" name="desc" id="desc" :disabled="sending" />
-          </md-field>
+            <md-field>
+              <label>Description</label>
+              <md-textarea type="text" v-model="project.description" md-autogrow></md-textarea>
+            </md-field>
 
           </div>
         </md-card-content>
@@ -49,6 +49,12 @@ export default {
       msg: 'Please create a project',
       sending: false,
       project: {
+        name:'',
+        description:'',
+        platform:'Desktop',
+        owned_by: ''
+      },
+      model: {
         types: [
           'Desktop',
           'Mobile',
@@ -58,9 +64,16 @@ export default {
       projectSaved: false
     }
   },
+  created () {
+    
+  },
   methods: {
+    getModel() {
+      return this.model.types;
+    },
     create () {
-      this.$cc.api_project_create({ project: { email: this.email, pwd: this.password } })
+      console.log(this.project);
+      this.$ac.apis.Projects.create2({ project: this.project })
         .then(req => {
           localStorage.setItem('user', req['data'])
           console.log(req)

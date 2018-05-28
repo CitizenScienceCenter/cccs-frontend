@@ -54,7 +54,8 @@ export default {
       this.$ac.apis.Users.login({ user: { email: this.email, pwd: this.password } })
         .then(req => {
           this.success = true
-          localStorage.setItem('user', req['body'])
+          localStorage.setItem('api_key', req['body']['api_key'])
+          localStorage.setItem('user', JSON.stringify(req['body']))
           this.username = req['body']['email']
           this.$router.push('dashboard')
         })
