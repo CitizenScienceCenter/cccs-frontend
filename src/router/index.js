@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Login, Create, Register, Oauthorize, Dashboard, Profile } from '@/components'
+import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router)
 
@@ -57,6 +57,12 @@ export default new Router({
       path: '/projects/create',
       name: 'CreateProject',
       component: Create,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/projects/:id',
+      name: 'ViewProject',
+      component: View,
       beforeEnter: isAuthenticated
     },
     {

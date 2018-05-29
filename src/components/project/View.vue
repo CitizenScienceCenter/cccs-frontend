@@ -1,20 +1,26 @@
 <template>
     <div>
-    <form novalidate class="md-layout" @submit.prevent="">
+    <md-progress-spinner class="center" md-mode="indeterminate" v-if="project === undefined"></md-progress-spinner>
+    <form novalidate class="md-layout" v-if="project" @submit.prevent="">
       <md-card class="md-layout-item">
         <md-card-header>
-          <div class="md-title">User Details</div>
+          <div class="md-title">{{project.name}}</div>
         </md-card-header>
 
         <md-card-content>
-          <div v-if="user" class="md-layout">
+          <div class="md-layout">
             <md-field>
-                <label for="email">Email</label>
-                <md-input v-model="user.email" type="email" name="email" id="email" autocomplete="email" disabled/>
+                <label for="email">Description</label>
+                <md-input v-model="project.description" type="text" name="desc" id="desc" disabled/>
             </md-field>
 
           </div>
+          <br><br>
         </md-card-content>
+
+         <md-button v-if="userID === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
+            <md-icon>edit</md-icon>
+        </md-button>
 
 
         <!-- <md-card-actions>
@@ -29,21 +35,28 @@
 <script>
 
 export default {
-  name: 'UserProfile',
+  name: 'ViewProject',
   data () {
     return {
-        user: undefined
+        project: undefined,
+        userID: undefined
     }
   },
   mounted () {
-      this.fetchUser()
+      this.fetchProject()
+      this.userID = localStorage.getItem('user_id')
   },
   methods: {
-    fetchUser () {
-        this.$ac.apis.Users.get4({search_term: localStorage.getItem('api_key')})
+    fetchProject () {
+        this.$ac.apis.Projects.get_one1({id: this.$route.params.id || undefined})
         .then(req => {
-            if (req.body.length > 0) {
-                this.user = req.body[0]
+            this.project = req.body
+        })
+        .catch(err => {
+            if (err.response.status === 404) {
+                // TODO load 404 page
+            } else {
+                // TODO show errror
             }
         })
     },
@@ -66,6 +79,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.center {
+    margin-left: 50%;
+}
 h1,
 h2 {
   font-weight: normal;

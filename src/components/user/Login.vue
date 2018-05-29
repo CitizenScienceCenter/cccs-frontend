@@ -55,6 +55,7 @@ export default {
         .then(req => {
           this.success = true
           localStorage.setItem('api_key', req['body']['api_key'])
+          localStorage.setItem('user_id', req['body']['id'])
           localStorage.setItem('user', JSON.stringify(req['body']))
           this.username = req['body']['email']
           this.$router.push('dashboard')

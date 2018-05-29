@@ -16,24 +16,33 @@
       </md-toolbar>
 
       <md-list>
+        <md-list-item to="/">
+          <md-icon>home</md-icon>
+          <span class="md-list-item-text">Dashboard</span>
+        </md-list-item>
         <md-list-item md-expand>
-          <md-icon>whatshot</md-icon>
+          <md-icon>list</md-icon>
           <span class="md-list-item-text">Projects</span>
-
           <md-list slot="md-expand">
-            <md-list-item to="/projects/create" class="md-inset">Create</md-list-item>
-            <md-list-item class="md-inset">My Projects</md-list-item>
+            <md-list-item to="/projects/create" class="md-inset">
+              <md-icon>create</md-icon>
+                <span class="md-list-item-text">Create</span>
+            </md-list-item>
+            <md-list-item class="md-inset">
+              <md-icon>favorite</md-icon>
+              <span class="md-list-item-text">My Projects</span>
+            </md-list-item>
           </md-list>
         </md-list-item>
 
         <md-list-item>
-          <md-icon>send</md-icon>
+          <md-icon>account_circle</md-icon>
           <span class="md-list-item-text">Account</span>
         </md-list-item>
 
-        <md-list-item>
-          <md-icon>logout</md-icon>
-          <md-list-item to="/logout">Logout</md-list-item>
+        <md-list-item  to="/logout">
+          <md-icon>lock</md-icon>
+          <span class="md-list-item-text">Logout</span>
         </md-list-item>
       </md-list>
     </md-drawer>
