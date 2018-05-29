@@ -28,12 +28,12 @@ requestInterceptor(req) {
 }}).then((client) => {
   console.log(client)
   Vue.prototype.$ac = client
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    axios,
+    components: { App },
+    template: '<App/>'
+  })
 });
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  axios,
-  components: { App },
-  template: '<App/>'
-})
