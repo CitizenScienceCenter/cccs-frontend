@@ -29,7 +29,7 @@
 <script>
 
 export default {
-  name: 'UserProfile',
+  name: 'ViewUser',
   data () {
     return {
         user: undefined

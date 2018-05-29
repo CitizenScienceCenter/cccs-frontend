@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
+import * as User from '@/components/user'
+import * as Project from '@/components/project'
+import * as Home from '@/components/home'
+// import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router)
 
@@ -22,23 +25,23 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: User.Login
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: User.Register
     },
     {
       path: '/logout',
       name: 'Logout',
-      component: Login,
+      component: User.Login,
       beforeEnter: logout
     },
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard,
+      component: Home.Dashboard,
       beforeEnter: isAuthenticated
     },
     {
@@ -50,25 +53,25 @@ export default new Router({
     {
       path: '/oauth/authorize',
       name: 'Oauthorize', // heh
-      component: Oauthorize,
+      component: User.Oauthorize,
       beforeEnter: isAuthenticated
     },
     {
       path: '/projects/create',
       name: 'CreateProject',
-      component: Create,
+      component: Project.Create,
       beforeEnter: isAuthenticated
     },
     {
       path: '/projects/:id',
       name: 'ViewProject',
-      component: View,
+      component: Project.View,
       beforeEnter: isAuthenticated
     },
     {
-      path: '/users/profile',
-      name: 'UserProfile',
-      component: Profile,
+      path: '/users/:id',
+      name: 'ViewUser',
+      component: User.View,
       beforeEnter: isAuthenticated
     },
   ],
