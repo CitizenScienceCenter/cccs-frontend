@@ -4,13 +4,13 @@
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span class="md-title">CCCS</span>
+      <span class="md-title">Citizen Science</span>
 
       <div class="md-toolbar-section-end">
       </div>
     </md-toolbar>
 
-    <md-drawer :md-active.sync="showNavigation">
+    <md-drawer :md-active.sync="showNavigation" >
       <md-toolbar class="md-transparent" md-elevation="0">
         <span class="md-title">CCCS</span>
       </md-toolbar>
@@ -86,7 +86,7 @@ html, body {
   // }
 
   .page-container {
-  //   overflow: hidden;
+    overflow: auto;
   //   position: relative;
     min-height: 100%;
   //   border: 1px solid rgba(#000, .12);
