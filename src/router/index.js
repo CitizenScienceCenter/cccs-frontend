@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import * as User from '@/components/user'
 import * as Project from '@/components/project'
 import * as Home from '@/components/home'
+import * as Task from '@/components/task'
 // import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router)
@@ -72,6 +73,12 @@ export default new Router({
       path: '/users/:id',
       name: 'ViewUser',
       component: User.View,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/projects/:id/tasks/create',
+      name: 'CreateTask',
+      component: Task.Create,
       beforeEnter: isAuthenticated
     },
   ],

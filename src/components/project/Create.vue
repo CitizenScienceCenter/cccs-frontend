@@ -25,6 +25,10 @@
               <md-textarea type="text" v-model="project.description" md-autogrow></md-textarea>
             </md-field>
 
+            <md-field>
+              <label>Live?</label>
+              <md-switch v-model="project.active" class="md-primary">Live?</md-switch>
+            </md-field>
           </div>
         </md-card-content>
 
@@ -65,14 +69,14 @@ export default {
     }
   },
   created () {
-    
+    console.log(this.project)
   },
   methods: {
     getModel() {
-      return this.model.types;
+      return this.model.types
     },
     create () {
-      console.log(this.project);
+      console.log(this.project)
       this.$ac.apis.Projects.create2({ project: this.project })
         .then(req => {
           localStorage.setItem('user', req['data'])

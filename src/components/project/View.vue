@@ -14,6 +14,12 @@
                 <md-input v-model="project.description" type="text" name="desc" id="desc" disabled/>
             </md-field>
 
+            <md-field>
+              <label>Live?</label>
+              
+              <md-switch v-model="project.active" class="md-primary"></md-switch>
+            </md-field>
+
           </div>
           <br><br>
         </md-card-content>
