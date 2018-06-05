@@ -13,7 +13,7 @@
           </md-button>
         </div>
       </md-table-toolbar>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.content.readonly" md-selectable="multiple" md-auto-select>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
         <md-table-cell md-label="Sequence" md-sort-by="sequence">{{ item.sequence }}</md-table-cell>
         <md-table-cell md-label="Title" md-sort-by="title">{{ item.title }}</md-table-cell>
         <md-table-cell md-label="Data Type" md-sort-by="data_type">
@@ -44,7 +44,7 @@
 
 <script>
   export default {
-    name: "CreateTask",
+    name: "ViewTasks",
     data() {
       return {
         msg: "Please create a task for this project",
@@ -57,27 +57,34 @@
     },
     // this.$ac.apis.tasks.get
     created() {
-      this.project_id = this.$route.params.id;
-      this.$ac.apis.Projects.project_tasks({
+      this.project_id = this.$route.params.id
+      this.loadTasks()
+    },
+    methods: {
+      loadTasks() {
+        this.$ac.apis.Projects.project_tasks({
           id: this.project_id
         })
         .then(res => {
           this.tasks = res.body.map(t => {
-            t["readonly"] = true;
-            return t;
+            t["readonly"] = true
+            return t
           });
         })
         .catch(err => {});
-    },
-    methods: {
-      getModel() {
-        //   return this.model.types
       },
       del() {
-
+        const sel = this.selected
+        console.log(sel)
+        this.$ac.apis.Tasks.delete3({tasks: sel})
+          .then(res => {
+            console.log(res.body)
+            this.loadTasks()
+          }).catch(e => console.error(e))
       },
       onSelect(selected) {
-        this.selected = selected
+        console.log(selected)
+        this.selected = selected.map(s => {return s.id})
       },
       save() {
         this.sending = true;

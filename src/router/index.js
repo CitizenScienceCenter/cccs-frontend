@@ -76,9 +76,9 @@ export default new Router({
       beforeEnter: isAuthenticated
     },
     {
-      path: '/projects/:id/tasks/create',
-      name: 'CreateTask',
-      component: Task.Create,
+      path: '/projects/:id/tasks',
+      name: 'ViewTasks',
+      component: Task.View,
       beforeEnter: isAuthenticated
     },
   ],
