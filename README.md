@@ -2,6 +2,18 @@
 
 > CCCS Sample Client App
 
+## Running
+
+### Development
+
+* `npm run dev` (or select a different environment)
+
+### Docker
+
+* `docker build . -t <TAG>`
+* `docker run <TAG> -p PORT:PORT`
+* Load on the port specified (if using the backend in Docker, you will need to expose this as well)
+
 ## Build Setup
 
 ``` bash

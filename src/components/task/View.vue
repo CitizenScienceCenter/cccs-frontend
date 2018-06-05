@@ -63,20 +63,25 @@
     methods: {
       loadTasks() {
         this.$ac.apis.Projects.project_tasks({
-          id: this.project_id
-        })
-        .then(res => {
-          this.tasks = res.body.map(t => {
-            t["readonly"] = true
-            return t
-          });
-        })
-        .catch(err => {});
+            id: this.project_id
+          })
+          .then(res => {
+            this.selected = []
+            this.tasks = res.body.map(t => {
+              t["readonly"] = true
+              return t
+            })
+          })
+          .catch(err => {
+            console.error(e)
+          })
       },
       del() {
         const sel = this.selected
         console.log(sel)
-        this.$ac.apis.Tasks.delete3({tasks: sel})
+        this.$ac.apis.Tasks.delete3({
+            tasks: sel
+          })
           .then(res => {
             console.log(res.body)
             this.loadTasks()
@@ -84,41 +89,42 @@
       },
       onSelect(selected) {
         console.log(selected)
-        this.selected = selected.map(s => {return s.id})
+        this.selected = selected.map(s => {
+          return s.id
+        })
       },
       save() {
-        this.sending = true;
+        this.sending = true
         const newTasks = this.tasks.reduce((result, t) => {
-          if (!t["readonly"]) result.push(t);
-          return result;
+          if (!t["readonly"]) result.push(t)
+          return result
         }, []);
-        console.log(newTasks);
+        console.log(newTasks)
         this.$ac.apis.Tasks.create4({
             tasks: newTasks
           })
           .then(res => {
-            this.taskSaved = true;
-            this.sending = false;
+            this.taskSaved = true
+            this.sending = false
             this.tasks = res.body.map(t => {
-              t["readonly"] = true;
-              return t;
-            });
+              t["readonly"] = true
+              return t
+            })
           })
-          .catch(e => console.error(e));
+          .catch(e => console.error(e))
       },
       add() {
         this.tasks.push({
-          project_id: this.project_id,
-          sequence: this.tasks.length + 1,
-          title: `New Task ${this.tasks.length + 1}`,
-          required: true,
-          content: {
-            data_type: "long_text",
-            description: ""
-          }
-        });
-      },
-      delete(id) {}
+            project_id: this.project_id,
+            sequence: this.tasks.length + 1,
+            title: `New Task ${this.tasks.length + 1}`,
+            required: true,
+            content: {
+              data_type: "long_text",
+              description: ""
+            }
+          })
+        }
     }
   };
 </script>
