@@ -22,7 +22,7 @@ Vue.use(VueCarousel)
 // Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
-  req.headers['content-type'] = 'application/json'
+  // req.headers['content-type'] = 'application/json'
   req.headers['X-API-KEY'] = localStorage.getItem('api_key')
   return req
 }}).then((client) => {

@@ -4,6 +4,7 @@ import * as User from '@/components/user'
 import * as Project from '@/components/project'
 import * as Home from '@/components/home'
 import * as Task from '@/components/task'
+import * as Media from '@/components/media'
 // import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router)
@@ -55,6 +56,12 @@ export default new Router({
       path: '/oauth/authorize',
       name: 'Oauthorize', // heh
       component: User.Oauthorize,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/media/upload',
+      name: 'UploadMedia',
+      component: Media.Upload,
       beforeEnter: isAuthenticated
     },
     {
