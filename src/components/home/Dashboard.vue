@@ -2,7 +2,7 @@
   <div class="md-layout md-gutter">
     <md-card class="md-layout-item md-size-100">
         <md-card-header>
-            <div class="md-title"><b>Featured Projects</b></div>
+            <div class="featured-title md-title"><b>Featured Projects</b></div>
         </md-card-header>
 
         <md-card-content>
