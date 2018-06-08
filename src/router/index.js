@@ -22,7 +22,7 @@ const logout = (to, from, next) => {
   return next('/login')
 }
 
-export default new Router({
+module.exports = new Router({
   routes: [
     {
       path: '/login',
