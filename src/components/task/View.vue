@@ -5,9 +5,12 @@
         <h1 class="md-title">Tasks for Project</h1>
       </md-table-toolbar>
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
-        <div class="md-toolbar-section-start">{{ `${count} Tasks Selected` }}c</div>
+        <div class="md-toolbar-section-start">{{ `${count} Tasks Selected` }}</div>
   
         <div class="md-toolbar-section-end">
+          <md-button class="md-icon-button" v-on:click="addMedia" v-if="count === 1">
+            <md-icon>perm_media</md-icon>
+          </md-button>
           <md-button class="md-icon-button" v-on:click="del">
             <md-icon>delete</md-icon>
           </md-button>
@@ -87,6 +90,10 @@
             this.loadTasks()
           }).catch(e => console.error(e))
       },
+      addMedia() {
+        console.log(this.selected)
+        this.$router.push({name:'UploadMediaTask', params: {id: this.$route.params.id, tid: this.selected[0]}})
+      },
       onSelect(selected) {
         console.log(selected)
         this.selected = selected.map(s => {
@@ -115,16 +122,16 @@
       },
       add() {
         this.tasks.push({
-            project_id: this.project_id,
-            sequence: this.tasks.length + 1,
-            title: `New Task ${this.tasks.length + 1}`,
-            required: true,
-            content: {
-              data_type: "long_text",
-              description: ""
-            }
-          })
-        }
+          project_id: this.project_id,
+          sequence: this.tasks.length + 1,
+          title: `New Task ${this.tasks.length + 1}`,
+          required: true,
+          content: {
+            data_type: "long_text",
+            description: ""
+          }
+        })
+      }
     }
   };
 </script>

@@ -35,7 +35,7 @@
           </md-list>
         </md-list-item>
 
-        <md-list-item>
+        <md-list-item to="/user">
           <md-icon>account_circle</md-icon>
           <span class="md-list-item-text">Account</span>
         </md-list-item>

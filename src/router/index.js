@@ -83,11 +83,29 @@ module.exports = new Router({
       beforeEnter: isAuthenticated
     },
     {
+      path: '/user',
+      name: 'ViewUser',
+      component: User.View,
+      beforeEnter: isAuthenticated
+    },
+    {
       path: '/projects/:id/tasks',
       name: 'ViewTasks',
       component: Task.View,
       beforeEnter: isAuthenticated
     },
+    {
+      path: '/projects/:id/tasks/:tid/media/add',
+      name: 'UploadMediaTask',
+      component: Media.Upload,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/projects/:id/tasks/add',
+      name: 'CreateTask',
+      component: Task.Create,
+      beforeEnter: isAuthenticated
+    }
   ],
   mode: 'history'
 })

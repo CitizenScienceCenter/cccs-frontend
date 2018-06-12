@@ -17,7 +17,7 @@
             <md-field>
               <label>Live?</label>
               
-              <md-switch v-model="project.active" class="md-primary"></md-switch>
+              <md-switch v-model="project.active" class="live-switch md-primary"></md-switch>
             </md-field>
 
           </div>
@@ -102,5 +102,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.live-switch {
+  padding-top: 1%;
 }
 </style>
