@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import * as User from '@/components/user'
-import * as Project from '@/components/project'
-import * as Home from '@/components/home'
-import * as Task from '@/components/task'
-import * as Media from '@/components/media'
+import * as User from '@/views/user'
+import * as Project from '@/views/project'
+import * as Home from '@/views/home'
+import * as Task from '@/views/task'
+import * as Media from '@/views/media'
 // import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router)
@@ -65,13 +65,19 @@ module.exports = new Router({
       beforeEnter: isAuthenticated
     },
     {
+      path: '/projects',
+      name: 'MyProjects',
+      component: Project.MyProjects,
+      beforeEnter: isAuthenticated
+    },
+    {
       path: '/projects/create',
       name: 'CreateProject',
       component: Project.Create,
       beforeEnter: isAuthenticated
     },
     {
-      path: '/projects/:id',
+      path: '/projects/:id?',
       name: 'ViewProject',
       component: Project.View,
       beforeEnter: isAuthenticated
@@ -84,7 +90,7 @@ module.exports = new Router({
     },
     {
       path: '/user',
-      name: 'ViewUser',
+      name: 'ViewLoggedIn',
       component: User.View,
       beforeEnter: isAuthenticated
     },
@@ -98,6 +104,12 @@ module.exports = new Router({
       path: '/projects/:id/tasks/:tid/media/add',
       name: 'UploadMediaTask',
       component: Media.Upload,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/projects/:id/tasks/:tid',
+      name: 'ViewTask',
+      component: Task.ViewOne,
       beforeEnter: isAuthenticated
     },
     {

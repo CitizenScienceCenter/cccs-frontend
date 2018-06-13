@@ -42,19 +42,19 @@
 
 export default {
   name: 'ViewProject',
+  props: ['projectID'],
   data () {
     return {
         project: undefined,
-        userID: undefined
+        userID: localStorage.getItem('user_id')
     }
   },
   mounted () {
       this.fetchProject()
-      this.userID = localStorage.getItem('user_id')
   },
   methods: {
     fetchProject () {
-        this.$ac.apis.Projects.get_one1({id: this.$route.params.id || undefined})
+        this.$ac.apis.Projects.get_one2({id: this.$route.params.id || this.projectID})
         .then(req => {
             this.project = req.body
         })

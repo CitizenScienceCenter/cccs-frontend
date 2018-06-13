@@ -28,7 +28,7 @@
               <md-icon>create</md-icon>
                 <span class="md-list-item-text">Create</span>
             </md-list-item>
-            <md-list-item class="md-inset">
+            <md-list-item to="/projects" class="md-inset">
               <md-icon>favorite</md-icon>
               <span class="md-list-item-text">My Projects</span>
             </md-list-item>
