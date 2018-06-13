@@ -8,6 +8,9 @@
         <div class="md-toolbar-section-start">{{ `${count} Tasks Selected` }}</div>
   
         <div class="md-toolbar-section-end">
+          <md-button class="md-icon-button" v-on:click="edit" v-if="count === 1">
+            <md-icon>edit</md-icon>
+          </md-button>
           <md-button class="md-icon-button" v-on:click="addMedia" v-if="count === 1">
             <md-icon>perm_media</md-icon>
           </md-button>
@@ -79,6 +82,9 @@
             console.error(e)
           })
       },
+      edit() {
+        this.$router.push({name:'ViewTask', params: {id: this.$route.params.id, tid: this.selected[0]}})
+      },
       del() {
         const sel = this.selected
         console.log(sel)
@@ -91,7 +97,6 @@
           }).catch(e => console.error(e))
       },
       addMedia() {
-        console.log(this.selected)
         this.$router.push({name:'UploadMediaTask', params: {id: this.$route.params.id, tid: this.selected[0]}})
       },
       onSelect(selected) {
