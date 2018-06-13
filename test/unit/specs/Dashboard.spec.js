@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Dashboard } from '@/components/home'
+import { Dashboard } from '@/views/home'
 
 describe('Dashboard', () => {
 
