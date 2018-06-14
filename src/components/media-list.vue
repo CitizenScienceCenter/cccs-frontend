@@ -7,8 +7,8 @@
       <md-list-item :key="m.id" v-for="m in media">
         <md-icon></md-icon>
         <img class="thumb" :src="getPath(m.path)" v-if="isImage(m.path)" />
-        <span class="md-list-item-text">{{m.path}}</span>
-        <md-button v-on:click="downMedia(m.id)" class="md-icon-button md-list-action">
+        <span class="md-list-item-text">{{m.name}}</span>
+        <md-button :href="getPath(m.path)" class="md-icon-button md-list-action">
           <md-icon class="md-primary">vertical_align_bottom</md-icon>
         </md-button>
         <md-button v-on:click="deleteMedia(m.id)" class="md-icon-button md-list-action">
@@ -23,62 +23,63 @@
 </template>
 
 <script>
-  export default {
-    name: 'media-list',
-    props: ['id'],
-    data() {
-      return {
-        media: [],
-        userID: undefined
-      }
-    },
-    mounted() {
-      this.fetchMedia()
-      this.userID = localStorage.getItem('user_id')
-    },
-    methods: {
-      fetchMedia() {
-        this.$ac.apis.Media.get1({
-            search_term: this.id || undefined
-          })
-          .then(req => {
-            this.media = req.body
-          })
-          .catch(err => {
-            if (err.response.status === 404) {
-              // TODO load 404 page
-            } else {
-              // TODO show errror
-            }
-          })
-      },
-      uploadMedia() {
-        this.$router.push({
-          name: 'UploadMediaTask',
-          params: {
-            id: this.$route.params.id,
-            tid: this.$route.params.id
+export default {
+  name: 'media-list',
+  props: ['id'],
+  data () {
+    return {
+      media: [],
+      userID: undefined
+    }
+  },
+  mounted () {
+    this.fetchMedia()
+    this.userID = localStorage.getItem('user_id')
+  },
+  methods: {
+    fetchMedia () {
+      this.$ac.apis.Media.get1({
+        search_term: this.id || undefined
+      })
+        .then(req => {
+          this.media = req.body
+        })
+        .catch(err => {
+          if (err.response.status === 404) {
+            // TODO load 404 page
+          } else {
+            // TODO show errror
           }
         })
-      },
-      isImage(path) {
-        return true
-      },
-      getPath(path) {
-        return path.replace('./static', 'http://localhost:8080/static')
-      },
-      downMedia(id) {
-  
-      },
-      deleteMedia(id) {
-  
-      }
+    },
+    uploadMedia () {
+      this.$router.push({
+        name: 'UploadMediaTask',
+        params: {
+          id: this.$route.params.id,
+          tid: this.$route.params.id
+        }
+      })
+    },
+    isImage (path) {
+      return true
+    },
+    getPath (path) {
+      return path.replace('./static', 'http://localhost:8080/static')
+    },
+    deleteMedia (id) {
+      this.$ac.apis.Media.delete1({id: id})
+        .then(res => {
+          this.fetchMedia()
+        })
+        .catch(err => console.error(err))
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .thumb {
-    width: 4%;
-  }
+.thumb {
+  width: 4%;
+}
 </style>

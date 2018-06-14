@@ -28,7 +28,7 @@
             <md-field>
               <label>Live?</label>
               <br>
-              <md-switch v-model="project.active" class="live-switch md-primary">Live?</md-switch>
+              <md-switch v-model="project.active" class="live-switch md-primary"></md-switch>
             </md-field>
           </div>
         </md-card-content>
@@ -78,7 +78,7 @@ export default {
     },
     create () {
       console.log(this.project)
-      this.$ac.apis.Projects.create2({ project: this.project })
+      this.$ac.apis.Projects.create1({ project: this.project })
         .then(req => {
           localStorage.setItem('user', req['data'])
           console.log(req)

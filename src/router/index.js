@@ -77,9 +77,15 @@ module.exports = new Router({
       beforeEnter: isAuthenticated
     },
     {
-      path: '/projects/:id?',
+      path: '/projects/:id',
       name: 'ViewProject',
       component: Project.View,
+      beforeEnter: isAuthenticated
+    },
+    {
+      path: '/projects/:id/participate/:tid?',
+      name: 'TakePart',
+      component: Project.Participate,
       beforeEnter: isAuthenticated
     },
     {

@@ -91,7 +91,7 @@
           return result
         }, []);
         console.log(newTasks)
-        this.$ac.apis.Tasks.create4({
+        this.$ac.apis.Tasks.create3({
             tasks: [this.task]
           })
           .then(res => {
