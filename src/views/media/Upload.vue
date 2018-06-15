@@ -40,7 +40,7 @@
         msg: 'Upload Here',
         sending: false,
         form: {
-          id: this.$route.params.tid,
+          id: this.$route.query.id || this.$route.params.tid,
           attachment: {
             name: ''
           },

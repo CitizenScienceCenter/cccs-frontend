@@ -80,8 +80,9 @@ export default {
       console.log(this.project)
       this.$ac.apis.Projects.create1({ project: this.project })
         .then(req => {
-          localStorage.setItem('user', req['data'])
           console.log(req)
+          // this.$router.push({name: 'ViewProject', params: {id: req.body.id}})
+          this.$router.push({name: 'Dashboard'})
         })
         .catch((e) => console.error(e))
     }

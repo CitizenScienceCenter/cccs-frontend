@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <md-empty-state v-if="media.length === 0" md-icon="devices_other" md-label="Add some media!" md-description="Add media to help users classify and complete tasks">
-        <md-button v-on:click="uploadMedia" class="md-primary md-raised">Create first media</md-button>
-      </md-empty-state> -->
+    <md-empty-state v-if="media.length === 0" md-icon="devices_other" md-label="Add some media!" md-description="Add media to help users classify and complete tasks">
+        <md-button v-on:click="uploadMedia" class="md-primary md-raised">Add some files</md-button>
+      </md-empty-state>
     <md-list v-if="media.length > 0">
       <md-list-item :key="m.id" v-for="m in media">
         <md-icon></md-icon>
@@ -38,10 +38,12 @@ export default {
   },
   methods: {
     fetchMedia () {
+      console.log(this.id)
       this.$ac.apis.Media.get1({
         search_term: this.id || undefined
       })
         .then(req => {
+          console.log(req.body)
           this.media = req.body
         })
         .catch(err => {
@@ -57,7 +59,7 @@ export default {
         name: 'UploadMediaTask',
         params: {
           id: this.$route.params.id,
-          tid: this.$route.params.id
+          tid: this.$route.params.tid
         }
       })
     },

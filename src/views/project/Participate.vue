@@ -1,48 +1,42 @@
- <template>
+<template>
   <div>
-    <md-empty-state v-if="projects.length === 0" md-icon="devices_other" md-label="Create your first project" md-description="Creating project, you'll be able to add tasks and share it with people.">
-      <md-button class="md-primary md-raised">Create first project</md-button>
-    </md-empty-state>
-    <md-list class="md-layout-item md-size-80 md-small-size-80" v-if="projects.length > 0">
-      <md-list-item :key="p.id" v-for="p in projects">
-        <md-icon></md-icon>
-        <span class="md-list-item-text">{{p.name}}</span>
-        <md-button :to="{name:'ViewTasks', params: {id: p.id}}" class="md-icon-button md-list-action">
-          <md-icon class="md-primary">chat_bubble</md-icon>
-        </md-button>
-        <md-button :to="{name:'ViewProject', params: {id: p.id}}" class="md-icon-button md-list-action">
-          <md-icon class="md-primary">create</md-icon>
-        </md-button>
-      </md-list-item>
-
-      <md-divider class="md-inset"></md-divider>
-
-    </md-list>
+    <md-card class="md-layout-item md-size-45" v-if="project">
+      <md-card-header>
+        <span class="md-title">{{project.name}}</span>
+        <span class="md-subhead">{{project.description}}</span>
+      </md-card-header>
+    </md-card>
+    <md-card class="md-layout-item md-size-45" v-if="tasks">
+      <md-card-header>
+        <span class="md-title">This project has </span>
+        <span class="md-subhead">{{tasks.length}} Tasks</span>
+      </md-card-header>
+    </md-card>
+    <md-button v-on:click="takePart" class="md-primary md-raised" v-if="tasks.length > 0">Let's Go!</md-button>
   </div>
 </template>
 
 <script>
-  import ViewProject from '@/views/project/View.vue'; //component name should be in camel-case
   export default {
-    name: 'MyProjects',
+    name: 'Participate',
     data() {
       return {
-        projects: [],
+        project: undefined,
+        tasks: [1, 2, 3],
         userID: undefined
       }
     },
-    components: {ViewProject: ViewProject},
     mounted() {
       this.fetchProjects()
       this.userID = localStorage.getItem('user_id')
     },
     methods: {
       fetchProjects() {
-        this.$ac.apis.Projects.get2({
-            search_term: this.userID || undefined
+        this.$ac.apis.Projects.get_one2({
+            id: this.$route.params.id || undefined
           })
           .then(req => {
-            this.projects = req.body
+            this.project = req.body
           })
           .catch(err => {
             if (err.response.status === 404) {
@@ -51,7 +45,23 @@
               // TODO show errror
             }
           })
+      },
+      fetchTasks() {
+        this.$ac.apis.Tasks.get({search_term: this.$route.params.id})
+          .then( req => {
+
+          }).catch(err => {
+            console.error(err);
+          })
+      },
+      takePart() {
+        
       }
     }
   }
 </script>
+<style lang="scss" scoped>
+  .banner {
+    height: 10%
+  }
+</style>

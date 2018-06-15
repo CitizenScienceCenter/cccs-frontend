@@ -1,28 +1,12 @@
  <template>
   <div>
-    <md-empty-state v-if="projects.length === 0" md-icon="devices_other" md-label="Create your first project" md-description="Creating project, you'll be able to add tasks and share it with people.">
-      <md-button class="md-primary md-raised">Create first project</md-button>
-    </md-empty-state>
-    <md-list class="md-layout-item md-size-80 md-small-size-80" v-if="projects.length > 0">
-      <md-list-item :key="p.id" v-for="p in projects">
-        <md-icon></md-icon>
-        <span class="md-list-item-text">{{p.name}}</span>
-        <md-button :to="{name:'ViewTasks', params: {id: p.id}}" class="md-icon-button md-list-action">
-          <md-icon class="md-primary">chat_bubble</md-icon>
-        </md-button>
-        <md-button :to="{name:'ViewProject', params: {id: p.id}}" class="md-icon-button md-list-action">
-          <md-icon class="md-primary">create</md-icon>
-        </md-button>
-      </md-list-item>
-
-      <md-divider class="md-inset"></md-divider>
-
-    </md-list>
+    <project-list></project-list>
   </div>
 </template>
 
 <script>
   import ViewProject from '@/views/project/View.vue'; //component name should be in camel-case
+  import ProjectList from '@/components/project-list.vue'
   export default {
     name: 'MyProjects',
     data() {
@@ -31,7 +15,7 @@
         userID: undefined
       }
     },
-    components: {ViewProject: ViewProject},
+    components: {ViewProject: ViewProject, ProjectList: ProjectList},
     mounted() {
       this.fetchProjects()
       this.userID = localStorage.getItem('user_id')

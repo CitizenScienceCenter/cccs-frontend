@@ -1,129 +1,144 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import * as User from '@/views/user'
-import * as Project from '@/views/project'
-import * as Home from '@/views/home'
-import * as Task from '@/views/task'
-import * as Media from '@/views/media'
+import Vue from 'vue';
+import Router from 'vue-router';
+import * as User from '@/views/user';
+import * as Project from '@/views/project';
+import * as Home from '@/views/home';
+import * as Task from '@/views/task';
+import * as Media from '@/views/media';
 // import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
-Vue.use(Router)
-
-const isAuthenticated = (to, from, next) => {
-  if (localStorage.getItem('user')) {
-    return next()
-  }
-  console.log(to)
-  return next('/login?redirect_url=' + to.fullPath)
-}
+Vue.use(Router);
 
 const logout = (to, from, next) => {
-  localStorage.removeItem('user')
-  return next('/login')
-}
+  localStorage.removeItem('user');
+  return next('/login');
+};
 
-module.exports = new Router({
+const router = new Router({
   routes: [
     {
       path: '/login',
       name: 'Login',
-      component: User.Login
+      component: User.Login,
     },
     {
       path: '/register',
       name: 'Register',
-      component: User.Register
+      component: User.Register,
     },
     {
       path: '/logout',
       name: 'Logout',
       component: User.Login,
-      beforeEnter: logout
+      beforeEnter: logout,
     },
     {
       path: '/dashboard',
       name: 'Dashboard',
       component: Home.Dashboard,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/',
       redirect: {
-        name: 'Dashboard'
-      }
+        name: 'Dashboard',
+      },
     },
     {
       path: '/oauth/authorize',
       name: 'Oauthorize', // heh
       component: User.Oauthorize,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/media/upload',
       name: 'UploadMedia',
       component: Media.Upload,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects',
       name: 'MyProjects',
       component: Project.MyProjects,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/create',
       name: 'CreateProject',
       component: Project.Create,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id',
       name: 'ViewProject',
       component: Project.View,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id/participate/:tid?',
       name: 'TakePart',
       component: Project.Participate,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/users/:id',
       name: 'ViewUser',
       component: User.View,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/user',
       name: 'ViewLoggedIn',
       component: User.View,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id/tasks',
       name: 'ViewTasks',
       component: Task.View,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id/tasks/:tid/media/add',
       name: 'UploadMediaTask',
       component: Media.Upload,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id/tasks/:tid',
       name: 'ViewTask',
       component: Task.ViewOne,
-      beforeEnter: isAuthenticated
+      meta: {requiresAuth: true},
     },
     {
       path: '/projects/:id/tasks/add',
       name: 'CreateTask',
       component: Task.Create,
-      beforeEnter: isAuthenticated
-    }
+      meta: {requiresAuth: true},
+    },
   ],
-  mode: 'history'
+  mode: 'history',
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('api_key')) {
+      next(vm => {
+        console.log(vm)
+        next()
+      })
+      // TODO check against user on server side (no access to $ac api object for call)
+    } else {
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath,
+        },
+      });
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
+
+module.exports = router;

@@ -1,7 +1,7 @@
  <template>
   <div>
     <md-empty-state v-if="projects.length === 0" md-icon="devices_other" md-label="Create your first project" md-description="Creating project, you'll be able to add tasks and share it with people.">
-      <md-button class="md-primary md-raised">Create first project</md-button>
+      <md-button to="/projects/create" class="md-primary md-raised">Create first project</md-button>
     </md-empty-state>
     <md-list v-if="projects.length > 0">
       <md-list-item :key="p.id" v-for="p in projects">
