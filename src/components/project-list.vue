@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     fetchProjects() {
-      this.$ac.apis.Projects.get2({
+      this.$ac.apis.Projects.get_projects({
         search_term: this.userID || undefined,
       })
         .then(req => {

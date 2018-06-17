@@ -78,7 +78,7 @@ export default {
     },
     create () {
       console.log(this.project)
-      this.$ac.apis.Projects.create1({ project: this.project })
+      this.$ac.apis.Projects.create_project({ project: this.project })
         .then(req => {
           console.log(req)
           // this.$router.push({name: 'ViewProject', params: {id: req.body.id}})

@@ -32,7 +32,7 @@
     },
     methods: {
       fetchProjects() {
-        this.$ac.apis.Projects.get_one2({
+        this.$ac.apis.Projects.get_project({
             id: this.$route.params.id || undefined
           })
           .then(req => {

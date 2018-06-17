@@ -59,7 +59,7 @@
     },
     methods: {
       fetchTask() {
-        this.$ac.apis.Tasks.get_one4({
+        this.$ac.apis.Tasks.get_task({
             id: this.$route.params.tid || undefined
           })
           .then(req => {

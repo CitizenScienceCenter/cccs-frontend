@@ -41,7 +41,7 @@
     },
     methods: {
       fetchUser() {
-        this.$ac.apis.Users.get_one4({
+        this.$ac.apis.Users.get_user({
             id: this.userId
           })
           .then(req => {

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     fetchProject () {
-        this.$ac.apis.Projects.get_one2({id: this.$route.params.id || this.projectID})
+        this.$ac.apis.Projects.get_project({id: this.$route.params.id || this.projectID})
         .then(req => {
             this.project = req.body
         })

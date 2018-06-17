@@ -70,7 +70,7 @@
       del() {
         const sel = this.selected
         console.log(sel)
-        this.$ac.apis.Tasks.delete3({
+        this.$ac.apis.Tasks.delete_tasks({
             tasks: sel
           })
           .then(res => {
@@ -91,7 +91,7 @@
           return result
         }, []);
         console.log(newTasks)
-        this.$ac.apis.Tasks.create3({
+        this.$ac.apis.Tasks.create_tasks({
             tasks: [this.task]
           })
           .then(res => {

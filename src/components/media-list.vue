@@ -39,7 +39,7 @@ export default {
   methods: {
     fetchMedia () {
       console.log(this.id)
-      this.$ac.apis.Media.get1({
+      this.$ac.apis.Media.get_media ({
         search_term: this.id || undefined
       })
         .then(req => {
@@ -70,7 +70,7 @@ export default {
       return path.replace('./static', 'http://localhost:8080/static')
     },
     deleteMedia (id) {
-      this.$ac.apis.Media.delete1({id: id})
+      this.$ac.apis.Media.delete_medium({id: id})
         .then(res => {
           this.fetchMedia()
         })
