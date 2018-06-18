@@ -22,12 +22,13 @@ Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
   // req.headers['content-type'] = 'application/json'
   // TODO retrieve this from store (store.user.key)
-  req.headers['X-API-KEY'] = store.getters.user
+  req.headers['X-API-KEY'] = localStorage.getItem('API_KEY')
+    // store.state.user.user.api_key
   return req
 }}).then((client) => {
   console.log(client)
   Vue.prototype.$ac = client
-  store.dispatch('api/set', client)
+  store.dispatch('api/setClient', client)
   /* eslint-disable no-new */
   new Vue({
     el: '#app',

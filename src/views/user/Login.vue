@@ -53,6 +53,7 @@ export default {
       this.$store
         .dispatch("user/login", { user: { email: this.email, pwd: this.password } })
         .then(() => {
+          console.log('redir')
           this.$router.push({name: 'Dashboard'});
         });
     }

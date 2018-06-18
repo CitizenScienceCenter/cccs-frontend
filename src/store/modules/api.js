@@ -13,7 +13,7 @@ const getters = {
 
 // actions
 const actions = {
-    set({ commit }, client) {
+    setClient({ commit }, client) {
         commit('SET_API', client)
     }
 }

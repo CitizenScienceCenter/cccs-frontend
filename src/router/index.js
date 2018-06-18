@@ -1,18 +1,18 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import * as User from '@/views/user';
-import * as Project from '@/views/project';
-import * as Home from '@/views/home';
-import * as Task from '@/views/task';
-import * as Media from '@/views/media';
-import store from '@/store';
-// import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
+import Vue from 'vue'
+import Router from 'vue-router'
+import * as User from '@/views/user'
+import * as Project from '@/views/project'
+import * as Home from '@/views/home'
+import * as Task from '@/views/task'
+import * as Media from '@/views/media'
+import store from '@/store'
 
 Vue.use(Router);
 
 const logout = (to, from, next) => {
-  localStorage.removeItem('user');
-  return next('/login');
+  localStorage.removeItem('user')
+  return store.dispatch('user/logout').then(() => next('/login'))
+
 };
 
 const router = new Router({
@@ -123,8 +123,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.user) {
-      console.log(store.getters.user)
+    console.log(store.getters['user/user'].api_key)
+    // store.getters['user/user']
+    // TODO check user after login is null, need to subscribe to value
+    if (store.state.user.user !== null && 'api_key' in store.state.user.user && store.state.user.user.api_key) {
       next(vm => {
         console.log(vm)
         next()
