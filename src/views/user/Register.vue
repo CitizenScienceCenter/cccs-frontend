@@ -49,7 +49,7 @@ export default {
     register () {
       console.log(this.email)
       this.sending = true
-      this.$ac.apis.Users.register({ user: { email: this.email, pwd: this.password } })
+      this.$ac.apis.Users.register_user({ user: { email: this.email, pwd: this.password } })
         .then(req => {
           console.log(req)
           this.userSaved = true

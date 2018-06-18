@@ -81,8 +81,8 @@ export default {
       this.$ac.apis.Projects.create_project({ project: this.project })
         .then(req => {
           console.log(req)
-          // this.$router.push({name: 'ViewProject', params: {id: req.body.id}})
-          this.$router.push({name: 'Dashboard'})
+          this.$router.push({name: 'CreateTask', params: {id: req.body.id}})
+          // this.$router.push({name: 'Dashboard'})
         })
         .catch((e) => console.error(e))
     }
