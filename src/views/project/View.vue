@@ -24,14 +24,9 @@
           <br><br>
         </md-card-content>
 
-         <md-button v-if="userID === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
-            <md-icon>edit</md-icon>
+         <md-button v-on:click="deleteProject()" v-if="userID === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
+            <md-icon>delete</md-icon>
         </md-button>
-
-
-        <!-- <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Edit</md-button>
-        </md-card-actions> -->
       </md-card>
 
     </form>
@@ -66,18 +61,13 @@ export default {
             }
         })
     },
-    login () {
+    deleteProject () {
       this.sending = true
-      this.$ac.apis.Users.login({ user: { email: this.email, pwd: this.password } })
+      this.$ac.apis.Projects.delete_project({id: this.project.id})
         .then(req => {
           this.success = true
-          localStorage.setItem('api_key', req['body']['api_key'])
-          localStorage.setItem('user', JSON.stringify(req['body']))
-          this.username = req['body']['email']
-          this.$router.push('dashboard')
-        })
-        .catch((e) => this.error = true)
-        .finally(() => this.sending = false)
+          this.$router.push({name: 'Dashboard'})
+        }).catch(err => console.log(err))
     }
   }
 }

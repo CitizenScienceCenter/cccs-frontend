@@ -12,6 +12,12 @@
               <label for="user.email">Email</label>
               <md-input v-model="user.email" type="email" name="email" id="email" autocomplete="email" disabled/>
             </md-field>
+
+            <md-field>
+              <label for="user.email">API Key</label>
+              <md-input v-model="user.api_key" type="text" name="api" id="api"/>
+            </md-field>
+            
   
           </div>
         </md-card-content>
