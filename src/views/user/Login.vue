@@ -34,37 +34,30 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Login',
-  data () {
+  name: "Login",
+  data() {
     return {
-      msg: 'Please login here',
-      email: '',
-      password: '',
-      username: '',
+      msg: "Please login here",
+      email: "",
+      password: "",
+      username: "",
       error: false,
       success: false,
       sending: false
-    }
+    };
   },
   methods: {
-    login () {
-      this.sending = true
-      this.$ac.apis.Users.login({ user: { email: this.email, pwd: this.password } })
-        .then(req => {
-          this.success = true
-          localStorage.setItem('api_key', req['body']['api_key'])
-          localStorage.setItem('user_id', req['body']['id'])
-          localStorage.setItem('user', JSON.stringify(req['body']))
-          this.username = req['body']['email']
-          this.$router.push('dashboard')
-        })
-        .catch((e) => this.error = true)
-        .finally(() => this.sending = false)
+    login() {
+      this.sending = true;
+      this.$store
+        .dispatch("user/login", { user: { email: this.email, pwd: this.password } })
+        .then(() => {
+          this.$router.push({name: 'Dashboard'});
+        });
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

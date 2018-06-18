@@ -5,6 +5,7 @@ import * as Project from '@/views/project';
 import * as Home from '@/views/home';
 import * as Task from '@/views/task';
 import * as Media from '@/views/media';
+import store from '@/store';
 // import { Login, Create, Register, Oauthorize, Dashboard, Profile, View } from '@/components'
 
 Vue.use(Router);
@@ -122,7 +123,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem('api_key')) {
+    if (store.getters.user) {
+      console.log(store.getters.user)
       next(vm => {
         console.log(vm)
         next()

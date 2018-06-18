@@ -3,19 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from './backend/axios'
-import VueAxios from 'vue-axios'
 import VueCarousel from 'vue-carousel'
 import Swagger from 'swagger-client'
 import VueMaterial from 'vue-material'
+import store from './store'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-const token = localStorage.getItem('api_key')
-axios.defaults.headers.common['Authorization'] = token
+// const token = localStorage.getItem('api_key')
+// axios.defaults.headers.common['Authorization'] = token
 
 Vue.config.productionTip = false
-Vue.use(VueAxios, axios)
 Vue.use(VueMaterial)
 Vue.use(VueCarousel)
 
@@ -23,16 +21,18 @@ Vue.use(VueCarousel)
 Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
   // req.headers['content-type'] = 'application/json'
-  req.headers['X-API-KEY'] = localStorage.getItem('api_key')
+  // TODO retrieve this from store (store.user.key)
+  req.headers['X-API-KEY'] = store.getters.user
   return req
 }}).then((client) => {
   console.log(client)
   Vue.prototype.$ac = client
+  store.dispatch('api/set', client)
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
     router,
-    axios,
+    store,
     components: { App },
     template: '<App/>'
   })
