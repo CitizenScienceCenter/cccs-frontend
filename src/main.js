@@ -22,8 +22,10 @@ Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
   // req.headers['content-type'] = 'application/json'
   // TODO retrieve this from store (store.user.key)
-  req.headers['X-API-KEY'] = localStorage.getItem('API_KEY')
-    // store.state.user.user.api_key
+  let u = store.getters['user/user']
+  if (u) {
+    req.headers['X-API-KEY'] = u.api_key
+  }
   return req
 }}).then((client) => {
   console.log(client)

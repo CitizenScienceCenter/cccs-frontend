@@ -38,26 +38,10 @@ export default {
     loading: state => state.project.loading
   }),
   mounted() {
-    // this.fetchProjects();
     this.$store.dispatch("project/getProjects");
     this.userID = localStorage.getItem("user_id");
   },
   methods: {
-    fetchProjects() {
-      this.$ac.apis.Projects.get_projects({
-        search_term: this.userID || undefined
-      })
-        .then(req => {
-          this.projects = req.body;
-        })
-        .catch(err => {
-          if (err.response.status === 404) {
-            // TODO load 404 page
-          } else {
-            // TODO show errror
-          }
-        });
-    }
   }
 };
 </script>
