@@ -53,8 +53,11 @@ export default {
       this.$store
         .dispatch("user/login", { user: { email: this.email, pwd: this.password } })
         .then(() => {
-          console.log('redir')
-          this.$router.push({name: 'Dashboard'});
+          setTimeout(() => {
+            console.log('redir')
+            // Wait is needed for value to be written, must be better solution, maybe mapState?
+            this.$router.push({name: 'Dashboard'});
+          }, 2000);
         });
     }
   }

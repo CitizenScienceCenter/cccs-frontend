@@ -25,22 +25,27 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  name: 'project-list',
+  name: "project-list",
   data() {
     return {
-      projects: [],
-      userID: undefined,
+      userID: undefined
     };
   },
+  computed: mapState({
+    projects: state => state.project.projects,
+    loading: state => state.project.loading
+  }),
   mounted() {
-    this.fetchProjects();
-    this.userID = localStorage.getItem('user_id');
+    // this.fetchProjects();
+    this.$store.dispatch("project/getProjects");
+    this.userID = localStorage.getItem("user_id");
   },
   methods: {
     fetchProjects() {
       this.$ac.apis.Projects.get_projects({
-        search_term: this.userID || undefined,
+        search_term: this.userID || undefined
       })
         .then(req => {
           this.projects = req.body;
@@ -52,7 +57,7 @@ export default {
             // TODO show errror
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
