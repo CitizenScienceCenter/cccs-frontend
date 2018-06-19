@@ -23,37 +23,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 export default {
   name: 'media-list',
   props: ['id'],
   data () {
     return {
-      media: [],
       userID: undefined
     }
   },
+  computed: mapState({
+    media: state => state.media.media,
+    loading: state => state.media.loading
+  }),
   mounted () {
-    this.fetchMedia()
-    this.userID = localStorage.getItem('user_id')
+    this.$store.dispatch('media/getMedia', this.id)
   },
   methods: {
-    fetchMedia () {
-      console.log(this.id)
-      this.$ac.apis.Media.get_media ({
-        search_term: this.id || undefined
-      })
-        .then(req => {
-          console.log(req.body)
-          this.media = req.body
-        })
-        .catch(err => {
-          if (err.response.status === 404) {
-            // TODO load 404 page
-          } else {
-            // TODO show errror
-          }
-        })
-    },
     uploadMedia () {
       this.$router.push({
         name: 'UploadMediaTask',
@@ -70,11 +56,7 @@ export default {
       return path.replace('./static', 'http://localhost:8080/static')
     },
     deleteMedia (id) {
-      this.$ac.apis.Media.delete_medium({id: id})
-        .then(res => {
-          this.fetchMedia()
-        })
-        .catch(err => console.error(err))
+      this.$store.dispatch('media/deleteMedium', id)
     }
   }
 }

@@ -21,7 +21,6 @@ Vue.use(VueCarousel)
 Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
   // req.headers['content-type'] = 'application/json'
-  // TODO retrieve this from store (store.user.key)
   let u = store.getters['user/user']
   if (u !== null) {
     req.headers['X-API-KEY'] = u.api_key

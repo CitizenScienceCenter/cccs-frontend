@@ -41,40 +41,29 @@
 </template>
 
 <script>
-  import MediaList from '@/components/media-list.vue';
+  import MediaList from '@/components/media-list.vue'
+  import { mapState } from "vuex"
   export default {
     name: 'ViewOne',
     data() {
       return {
-        task: undefined,
         userID: undefined
       }
     },
+  computed: mapState({
+    task: state => state.task.selectedTask
+  }),
     mounted() {
-      this.fetchTask()
+      this.$store.dispatch('task/getTask', this.$route.params.tid)
+      .then(() => {
+        this.task['content_str'] = JSON.stringify(this.task.content)
+      })
       this.userID = localStorage.getItem('user_id')
     },
     components: {
       MediaList: MediaList
     },
     methods: {
-      fetchTask() {
-        this.$ac.apis.Tasks.get_task({
-            id: this.$route.params.tid || undefined
-          })
-          .then(req => {
-            this.task = req.body
-            console.log(req.body)
-            this.task['content_str'] = JSON.stringify(this.task.content)
-          })
-          .catch(err => {
-            if (err.response.status === 404) {
-              // TODO load 404 page
-            } else {
-              // TODO show errror
-            }
-          })
-      }
     }
   }
 </script>
