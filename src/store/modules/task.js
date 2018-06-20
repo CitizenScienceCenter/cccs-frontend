@@ -5,12 +5,13 @@
 const state = {
     tasks: [],
     selectedTask: null,
-    loading: false
+    loading: false,
+    clientTasks: []
 }
 
 // getters
 const getters = {
-    tasks: state => state.tasks
+    allTasks: state => state.clientTasks.length > 0 ? state.tasks.concat(state.clientTasks) : state.tasks
 }
 
 // actions
@@ -20,8 +21,8 @@ const actions = {
         rootState.api.client.apis.Tasks.get_tasks({
             search_term: search || undefined
         })
-            .then(req => {
-                commit('SET_TASKS', req.body)
+            .then(res => {
+                commit('SET_TASKS', res.body)
                 commit('SET_LOADING', false)
             })
             .catch(err => {
@@ -38,9 +39,9 @@ const actions = {
         rootState.api.client.apis.Tasks.get_task({
             id: id
         })
-            .then(req => {
-                req.body['content_str'] = JSON.stringify(req.body.content)
-                commit('SET_TASK', req.body)
+            .then(res => {
+                res.body['content_str'] = JSON.stringify(res.body.content)
+                commit('SET_TASK', res.body)
                 commit('SET_LOADING', false)
             })
             .catch(err => {
@@ -57,9 +58,12 @@ const actions = {
         rootState.api.client.apis.Projects.project_tasks({
             id: id
         })
-            .then(req => {
-                req.body['content_str'] = JSON.stringify(req.body.content)
-                commit('SET_TASKS', req.body)
+            .then(res => {
+                res.body.forEach(t => {
+                    t['content_str'] = JSON.stringify(t.content)
+                });
+                console.log(res.body)
+                commit('SET_TASKS', res.body)
                 commit('SET_LOADING', false)
             })
             .catch(err => {
@@ -71,7 +75,41 @@ const actions = {
                 }
             })
     },
-    
+    addTasks({ state, commit, dispatch, rootState }, pid, tasks) {
+        commit('SET_LOADING', true)
+        if (tasks === undefined) {
+            tasks = state.clientTasks
+        }
+        rootState.api.client.apis.Tasks.create_tasks({
+            tasks: tasks,
+        })
+            .then(res => {
+                commit('SET_TASKS', res.body)
+                commit('SET_LOADING', false)
+                dispatch('getTasks', pid)
+            })
+            .catch(e => console.error(e));
+
+    },
+    deleteTasks({ state, commit, dispatch, rootState }, pid, tasks) {
+        commit('SET_LOADING', true)
+        rootState.api.client.apis.Tasks.delete_tasks({
+            tasks: tasks,
+        })
+            .then(res => {
+                commit('SET_TASKS', res.body)
+                commit('SET_LOADING', false)
+                dispatch('getTasks', pid)
+            })
+            .catch(e => console.error(e));
+
+    },
+    syncTasks({ state, commit, dispatch, rootState }, pid) {
+        console.log(state.clientTasks)
+        dispatch('addTasks', pid)
+            .then(commit('EMPTY_CLIENT_TASKS'))
+    }
+
 }
 
 // mutations
@@ -84,6 +122,12 @@ const mutations = {
     },
     SET_TASK(state, task) {
         state.selectedTask = task
+    },
+    APPEND_CLIENT_TASK(state, ct) {
+        state.clientTasks.push(ct)
+    },
+    EMPTY_CLIENT_TASKS(state) {
+        state.clientTasks = []
     }
 }
 

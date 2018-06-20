@@ -32,7 +32,7 @@ const actions = {
             }
           })
     },
-    deleteMedium({state, commit, rootState}, id) {
+    deleteMedium({state, commit, dispatch, rootState}, id) {
         commit('SET_LOADING', true)
         rootState.api.client.apis.Media.delete_medium({
             id: id || undefined
@@ -42,6 +42,7 @@ const actions = {
             dispatch('getMedia')
           })
           .catch(err => {
+            console.log(err)
             if (err.response.status === 404) {
               // TODO load 404 page
             } else {

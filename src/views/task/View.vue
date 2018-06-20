@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-table v-model="tasks" md-card @md-selected="onSelect">
+    <md-table v-model="allTasks" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <h1 class="md-title">Tasks for Project</h1>
       </md-table-toolbar>
@@ -49,50 +49,43 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
-  name: 'ViewTasks',
+  name: "ViewTasks",
   data() {
     return {
-      msg: 'Please create a task for this project',
+      msg: "Please create a task for this project",
       sending: false,
       project_id: undefined,
       selected: [],
-      tasks: [],
-      taskSaved: false,
+      taskSaved: false
     };
   },
   // this.$ac.apis.tasks.get
   created() {
     this.project_id = this.$route.params.id;
-    this.loadTasks();
+    this.$store.dispatch("task/projectTasks", this.project_id);
+  },
+  computed: {
+    ...mapState({
+      clientTasks: state => state.task.clientTasks,
+      tasks: state => state.task.tasks,
+      loading: state => state.task.loading
+    }),
+    ...mapGetters("task", ["allTasks"])
   },
   methods: {
-    loadTasks() {
-      this.$ac.apis.Projects.project_tasks({
-        id: this.project_id,
-      })
-        .then(res => {
-          this.selected = [];
-          this.tasks = res.body.map(t => {
-            t['readonly'] = true;
-            return t;
-          });
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
     edit() {
       this.$router.push({
-        name: 'ViewTask',
-        params: {id: this.$route.params.id, tid: this.selected[0]},
+        name: "ViewTask",
+        params: { id: this.$route.params.id, tid: this.selected[0] }
       });
     },
     del() {
       const sel = this.selected;
       console.log(sel);
       this.$ac.apis.Tasks.delete_tasks({
-        tasks: sel,
+        tasks: sel
       })
         .then(res => {
           console.log(res.body);
@@ -102,46 +95,36 @@ export default {
     },
     addMedia() {
       this.$router.push({
-        name: 'UploadMediaTask',
-        params: {id: this.$route.params.id, tid: this.selected[0]},
+        name: "UploadMediaTask",
+        params: { id: this.$route.params.id, tid: this.selected[0] }
       });
     },
     onSelect(selected) {
       console.log(selected);
+      // TODO add selected to store. Should be in a separate UI state?
       this.selected = selected.map(s => {
         return s.id;
       });
     },
     save() {
-      this.sending = true;
-      const newTasks = this.tasks.reduce((result, t) => {
-        if (!t['readonly']) result.push(t);
-        return result;
-      }, []);
-      console.log(newTasks);
-      this.$ac.apis.Tasks.create_tasks({
-        tasks: newTasks,
-      })
-        .then(res => {
-          this.taskSaved = true
-          this.sending = false
-          this.loadTasks()
-        })
-        .catch(e => console.error(e));
+      this.$store.dispatch("task/syncTasks", this.project_id);
     },
     add() {
-      this.tasks.push({
+      console.log(this.clientTasks);
+      const t = {
         project_id: this.project_id,
         sequence: this.tasks.length + 1,
         title: `New Task ${this.tasks.length + 1}`,
         required: true,
         content: {
-          data_type: 'long_text',
-          description: '',
-        },
-      });
-    },
-  },
+          data_type: "long_text",
+          description: ""
+        }
+      };
+      this.$store.commit("task/APPEND_CLIENT_TASK", t);
+      console.log(this.clientTasks);
+    }
+  }
 };
 </script>
 
