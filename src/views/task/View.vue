@@ -89,7 +89,7 @@ export default {
       })
         .then(res => {
           console.log(res.body);
-          this.loadTasks();
+          this.$store.dispatch("task/projectTasks", this.project_id);
         })
         .catch(e => console.error(e));
     },
@@ -107,7 +107,8 @@ export default {
       });
     },
     save() {
-      this.$store.dispatch("task/syncTasks", this.project_id);
+      this.$store.dispatch("task/syncTasks", this.project_id)
+      .then(this.$store.dispatch("task/projectTasks", this.project_id))
     },
     add() {
       console.log(this.clientTasks);

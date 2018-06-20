@@ -11,7 +11,7 @@ const state = {
 
 // getters
 const getters = {
-    allTasks: state => state.clientTasks.length > 0 ? state.tasks.concat(state.clientTasks) : state.tasks
+    allTasks: state => state.tasks.concat(state.clientTasks)
 }
 
 // actions
@@ -26,6 +26,7 @@ const actions = {
                 commit('SET_LOADING', false)
             })
             .catch(err => {
+                console.log(err)
                 commit('SET_LOADING', false)
                 if (err.response.status === 404) {
                     // TODO load 404 page
@@ -61,12 +62,13 @@ const actions = {
             .then(res => {
                 res.body.forEach(t => {
                     t['content_str'] = JSON.stringify(t.content)
-                });
-                console.log(res.body)
+                })
                 commit('SET_TASKS', res.body)
+                commit('SET_CLIENT_TASKS', [])
                 commit('SET_LOADING', false)
             })
             .catch(err => {
+                console.log(err)
                 commit('SET_LOADING', false)
                 if (err.response.status === 404) {
                     // TODO load 404 page
@@ -84,9 +86,9 @@ const actions = {
             tasks: tasks,
         })
             .then(res => {
-                commit('SET_TASKS', res.body)
                 commit('SET_LOADING', false)
-                dispatch('getTasks', pid)
+                commit('SET_CLIENT_TASKS', [])
+                // dispatch('getTasks', pid)
             })
             .catch(e => console.error(e));
 
@@ -107,7 +109,7 @@ const actions = {
     syncTasks({ state, commit, dispatch, rootState }, pid) {
         console.log(state.clientTasks)
         dispatch('addTasks', pid)
-            .then(commit('EMPTY_CLIENT_TASKS'))
+            // .then(commit('SET_CLIENT_TASKS'), [])
     }
 
 }
@@ -123,11 +125,11 @@ const mutations = {
     SET_TASK(state, task) {
         state.selectedTask = task
     },
+    SET_CLIENT_TASKS(state, ct) {
+        state.clientTasks = ct
+    },
     APPEND_CLIENT_TASK(state, ct) {
         state.clientTasks.push(ct)
-    },
-    EMPTY_CLIENT_TASKS(state) {
-        state.clientTasks = []
     }
 }
 
