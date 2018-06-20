@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     getTasks({ state, commit, rootState }, search) {
         commit('SET_LOADING', true)
-        rootState.api.client.apis.Tasks.get_task({
+        rootState.api.client.apis.Tasks.get_tasks({
             search_term: search || undefined
         })
             .then(req => {
@@ -25,6 +25,7 @@ const actions = {
                 commit('SET_LOADING', false)
             })
             .catch(err => {
+                commit('SET_LOADING', false)
                 if (err.response.status === 404) {
                     // TODO load 404 page
                 } else {
@@ -43,13 +44,34 @@ const actions = {
                 commit('SET_LOADING', false)
             })
             .catch(err => {
+                commit('SET_LOADING', false)
                 if (err.response.status === 404) {
                     // TODO load 404 page
                 } else {
                     // TODO show errror
                 }
             })
-    }
+    },
+    projectTasks({ state, commit, rootState }, id) {
+        commit('SET_LOADING', true)
+        rootState.api.client.apis.Projects.project_tasks({
+            id: id
+        })
+            .then(req => {
+                req.body['content_str'] = JSON.stringify(req.body.content)
+                commit('SET_TASKS', req.body)
+                commit('SET_LOADING', false)
+            })
+            .catch(err => {
+                commit('SET_LOADING', false)
+                if (err.response.status === 404) {
+                    // TODO load 404 page
+                } else {
+                    // TODO show errror
+                }
+            })
+    },
+    
 }
 
 // mutations

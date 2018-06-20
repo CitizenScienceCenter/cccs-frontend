@@ -48,6 +48,19 @@ const actions = {
               // TODO show errror
             }
           })
+    },
+    upload({state, commit, rootState}, medium) {
+        commit('SET_LOADING', true)
+        rootState.api.client.Media.upload(medium)
+            .then(req => {
+            commit('SET_LOADING', false)
+              console.log(req)
+              this.fileSaved = true
+            })
+            .catch((e) => {
+            commit('SET_LOADING', false)
+              console.error(e)
+            })
     }
 }
 

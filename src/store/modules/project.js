@@ -4,7 +4,8 @@
 // shape: [{ id, quantity }]
 const state = {
     projects: [],
-    loading: false
+    loading: false,
+    selectedProject: null
 }
 
 // getters
@@ -14,15 +15,18 @@ const getters = {
 
 // actions
 const actions = {
-    getProjects({state, commit, rootState }) {
+    getProjects({state, commit, rootState }, search) {
 
         commit('SET_LOADING', true)
-        rootState.api.client.apis.Projects.get_projects()
+        rootState.api.client.apis.Projects.get_projects({
+            search_term: search || undefined
+        })
           .then(req => {
             commit('SET_PROJECTS', req.body)
             commit('SET_LOADING', false)
           })
           .catch(err => {
+            commit('SET_LOADING', false)
             if (err.response.status === 404) {
               // TODO load 404 page
             } else {
@@ -30,8 +34,23 @@ const actions = {
             }
           })
     },
-    logout({commit}) {
-        commit('SET_USER', null)
+    getProject({ state, commit, rootState }, id) {
+        commit('SET_LOADING', true)
+        rootState.api.client.apis.Projects.get_project({
+            id: id
+        })
+            .then(req => {
+                commit('SET_PROJECT', req.body)
+                commit('SET_LOADING', false)
+            })
+            .catch(err => {
+                commit('SET_LOADING', false)
+                if (err.response.status === 404) {
+                    // TODO load 404 page
+                } else {
+                    // TODO show errror
+                }
+            })
     }
 }
 
@@ -42,6 +61,9 @@ const mutations = {
     },
     SET_PROJECTS(state, projects) {
         state.projects = projects
+    },
+    SET_PROJECT(state, project) {
+        state.selectedProject = project
     }
 }
 

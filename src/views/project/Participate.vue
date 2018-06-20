@@ -12,50 +12,50 @@
         <span class="md-subhead">{{tasks.length}} Tasks</span>
       </md-card-header>
     </md-card>
-    <md-button v-on:click="takePart" class="md-primary md-raised" v-if="tasks.length > 0">Let's Go!</md-button>
+    <md-progress-bar md-mode="determinate" :md-value="(activeTaskIndex / tasks.length) * 100"></md-progress-bar>
+    <task-submission :task=activeTask></task-submission>
+    <md-button v-on:click="takePart" class="md-primary md-raised" v-if="tasks.length > 0">{{btnText}}</md-button>
   </div>
 </template>
 
 <script>
+  import { mapState } from "vuex"
+  import TaskSubmission from '@/components/task-submission.vue'
   export default {
     name: 'Participate',
     data() {
       return {
         project: undefined,
-        tasks: [1, 2, 3],
-        userID: undefined
+        userID: undefined,
+        activeTaskIndex: undefined,
+        activeTask: undefined,
+        btnText: 'Let\'s Go'
       }
     },
+    components: {TaskSubmission: TaskSubmission},
+    computed: mapState({
+      tasks: state => state.task.tasks,
+      loading: state => state.task.loading
+    }),
     mounted() {
-      this.fetchProjects()
-      this.userID = localStorage.getItem('user_id')
+      console.log(this.$route.params.id)
+      const id = this.$route.params.id
+      this.$store.dispatch('project/getProject', id)
+      this.$store.dispatch('task/projectTasks', id)
+      this.activeTaskIndex = 0
     },
     methods: {
-      fetchProjects() {
-        this.$ac.apis.Projects.get_project({
-            id: this.$route.params.id || undefined
-          })
-          .then(req => {
-            this.project = req.body
-          })
-          .catch(err => {
-            if (err.response.status === 404) {
-              // TODO load 404 page
-            } else {
-              // TODO show errror
-            }
-          })
-      },
-      fetchTasks() {
-        this.$ac.apis.Tasks.get({search_term: this.$route.params.id})
-          .then( req => {
-
-          }).catch(err => {
-            console.error(err);
-          })
-      },
       takePart() {
-        
+        this.activeTask = this.tasks[this.activeTaskIndex]
+        if (this.activeTaskIndex !== this.tasks.length -1) {
+          this.activeTaskIndex += 1
+          this.btnText = 'Next'
+        } else {
+          console.log('FINISHED')
+          this.btnText = 'Finished'
+          this.activeTaskIndex = 100
+        }
+
       }
     }
   }
