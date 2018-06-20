@@ -6,12 +6,11 @@ const state = {
     tasks: [],
     selectedTask: null,
     loading: false,
-    clientTasks: []
 }
 
 // getters
 const getters = {
-    allTasks: state => state.tasks.concat(state.clientTasks)
+    // allTasks: state => state.tasks.concat(state.clientTasks)
 }
 
 // actions
@@ -64,36 +63,30 @@ const actions = {
                     t['content_str'] = JSON.stringify(t.content)
                 })
                 commit('SET_TASKS', res.body)
-                commit('SET_CLIENT_TASKS', [])
                 commit('SET_LOADING', false)
             })
             .catch(err => {
                 console.log(err)
                 commit('SET_LOADING', false)
-                if (err.response.status === 404) {
+                if (err.status === 404) {
                     // TODO load 404 page
                 } else {
                     // TODO show errror
                 }
             })
     },
-    addTasks({ state, commit, dispatch, rootState }, pid, tasks) {
+    addTasks({ state, commit, dispatch, rootState }, tasks) {
         commit('SET_LOADING', true)
-        if (tasks === undefined) {
-            tasks = state.clientTasks
-        }
         rootState.api.client.apis.Tasks.create_tasks({
             tasks: tasks,
         })
             .then(res => {
                 commit('SET_LOADING', false)
-                commit('SET_CLIENT_TASKS', [])
-                // dispatch('getTasks', pid)
             })
             .catch(e => console.error(e));
 
     },
-    deleteTasks({ state, commit, dispatch, rootState }, pid, tasks) {
+    deleteTasks({ state, commit, dispatch, rootState }, tasks) {
         commit('SET_LOADING', true)
         rootState.api.client.apis.Tasks.delete_tasks({
             tasks: tasks,
@@ -101,15 +94,9 @@ const actions = {
             .then(res => {
                 commit('SET_TASKS', res.body)
                 commit('SET_LOADING', false)
-                dispatch('getTasks', pid)
             })
             .catch(e => console.error(e));
 
-    },
-    syncTasks({ state, commit, dispatch, rootState }, pid) {
-        console.log(state.clientTasks)
-        dispatch('addTasks', pid)
-            // .then(commit('SET_CLIENT_TASKS'), [])
     }
 
 }
@@ -125,11 +112,10 @@ const mutations = {
     SET_TASK(state, task) {
         state.selectedTask = task
     },
-    SET_CLIENT_TASKS(state, ct) {
-        state.clientTasks = ct
-    },
-    APPEND_CLIENT_TASK(state, ct) {
-        state.clientTasks.push(ct)
+    UPDATE_TASK(state, index, params) {
+        Object.assign(state.getters.allTasks[index], {
+            [params.field]: params.value
+        });
     }
 }
 

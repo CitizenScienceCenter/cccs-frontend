@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-table v-model="allTasks" md-card @md-selected="onSelect">
+    <md-table v-model="tasks" md-card @md-selected="onSelect" @change="change">
       <md-table-toolbar>
         <h1 class="md-title">Tasks for Project</h1>
       </md-table-toolbar>
@@ -27,7 +27,8 @@
             <md-select v-model="item.content.data_type" name="data_type" id="data_type">
               <md-option value="text">Text</md-option>
               <md-option value="long_text">Long Text</md-option>
-              <md-option value="file">file</md-option>
+              <md-option value="file">File</md-option>
+              <md-option value="file">Question</md-option>
             </md-select>
           </md-field>
         </md-table-cell>
@@ -37,11 +38,11 @@
       </md-table-row>
     </md-table>
   
-    <md-progress-bar md-mode="indeterminate" v-if="sending" />
+    <md-progress-bar md-mode="indeterminate" v-if="loading" />
   
     <md-card-actions md-right>
       <md-button v-on:click="add" type="submit" class="md-primary" :disabled="sending">Add Task</md-button>
-      <md-button v-on:click="save" type="submit" class="md-primary" :disabled="sending">Save</md-button>
+      <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="sending">Save</md-button> -->
     </md-card-actions>
     <md-snackbar :md-active.sync="taskSaved">Your tasks have been created, add some more?</md-snackbar>
   
@@ -68,11 +69,9 @@ export default {
   },
   computed: {
     ...mapState({
-      clientTasks: state => state.task.clientTasks,
       tasks: state => state.task.tasks,
       loading: state => state.task.loading
-    }),
-    ...mapGetters("task", ["allTasks"])
+    })
   },
   methods: {
     edit() {
@@ -84,14 +83,8 @@ export default {
     del() {
       const sel = this.selected;
       console.log(sel);
-      this.$ac.apis.Tasks.delete_tasks({
-        tasks: sel
-      })
-        .then(res => {
-          console.log(res.body);
-          this.$store.dispatch("task/projectTasks", this.project_id);
-        })
-        .catch(e => console.error(e));
+      this.$store.dispatch('task/deleteTasks', sel)
+        .then('task/projectTasks', this.project_id)
     },
     addMedia() {
       this.$router.push({
@@ -110,8 +103,10 @@ export default {
       this.$store.dispatch("task/syncTasks", this.project_id)
       .then(this.$store.dispatch("task/projectTasks", this.project_id))
     },
+    change() {
+      console.log('change')
+    },
     add() {
-      console.log(this.clientTasks);
       const t = {
         project_id: this.project_id,
         sequence: this.tasks.length + 1,
@@ -122,8 +117,8 @@ export default {
           description: ""
         }
       };
-      this.$store.commit("task/APPEND_CLIENT_TASK", t);
-      console.log(this.clientTasks);
+      this.$store.dispatch("task/addTasks", [t])
+        .then(this.$store.dispatch("task/projectTasks", this.project_id))
     }
   }
 };
