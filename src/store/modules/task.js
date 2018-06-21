@@ -10,6 +10,7 @@ const state = {
 
 // getters
 const getters = {
+    // https://vuex.vuejs.org/guide/getters.html#method-style-access
     // allTasks: state => state.tasks.concat(state.clientTasks)
 }
 

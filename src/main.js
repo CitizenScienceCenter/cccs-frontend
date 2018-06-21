@@ -9,13 +9,14 @@ import VueMaterial from 'vue-material'
 import store from './store'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
-
-// const token = localStorage.getItem('api_key')
-// axios.defaults.headers.common['Authorization'] = token
+import VuexRouterSync from 'vuex-router-sync'
+import VueBreadcrumbs from 'vue-2-breadcrumbs'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
 Vue.use(VueCarousel)
+VuexRouterSync.sync(store, router)
+Vue.use(VueBreadcrumbs);
 
 // Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger({url:process.env.BASE_URI,

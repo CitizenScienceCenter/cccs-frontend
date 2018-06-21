@@ -48,6 +48,7 @@
     </md-drawer>
 
     <md-content>
+      <breadcrumbs/>
       <router-view/>
     </md-content>
   </div>

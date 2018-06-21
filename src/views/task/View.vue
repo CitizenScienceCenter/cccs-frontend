@@ -1,6 +1,9 @@
 <template>
   <div>
-    <md-table v-model="tasks" md-card @md-selected="onSelect" @change="change">
+    <md-empty-state v-if="tasks.length === 0" md-icon="devices_other" md-label="Create your first task" md-description="Creating project, you'll be able to add media and share it with people.">
+        <md-button :to="{name:'CreateTask', params: {id: project_id}}" class="md-primary md-raised">Create first task</md-button>
+    </md-empty-state>
+    <md-table v-if="tasks.length > 0" v-model="tasks" md-card @md-selected="onSelect" @change="change">
       <md-table-toolbar>
         <h1 class="md-title">Tasks for Project</h1>
       </md-table-toolbar>
@@ -22,18 +25,10 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple" md-auto-select>
         <md-table-cell md-label="Sequence" md-sort-by="sequence">{{ item.sequence }}</md-table-cell>
         <md-table-cell md-label="Title" md-sort-by="title">{{ item.title }}</md-table-cell>
-        <md-table-cell md-label="Data Type" md-sort-by="data_type">
-          <md-field>
-            <md-select v-model="item.content.data_type" name="data_type" id="data_type">
-              <md-option value="text">Text</md-option>
-              <md-option value="long_text">Long Text</md-option>
-              <md-option value="file">File</md-option>
-              <md-option value="file">Question</md-option>
-            </md-select>
-          </md-field>
-        </md-table-cell>
+        <md-table-cell md-label="Question Type" md-sort-by="question_type">{{ item.content }}</md-table-cell>
+        <md-table-cell md-label="Data Type" md-sort-by="data_type"></md-table-cell>
         <md-table-cell md-label="Required">
-          <md-switch v-model="item.required" class="md-primary"></md-switch>
+          <md-switch v-model="item.required" class="md-primary" disabled></md-switch>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -41,7 +36,7 @@
     <md-progress-bar md-mode="indeterminate" v-if="loading" />
   
     <md-card-actions md-right>
-      <md-button v-on:click="add" type="submit" class="md-primary" :disabled="sending">Add Task</md-button>
+      <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="sending">Add Task</md-button>
       <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="sending">Save</md-button> -->
     </md-card-actions>
     <md-snackbar :md-active.sync="taskSaved">Your tasks have been created, add some more?</md-snackbar>

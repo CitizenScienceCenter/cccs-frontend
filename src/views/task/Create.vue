@@ -1,6 +1,6 @@
 <template>
   <div>
-  <form novalidate class="md-layout" @submit.prevent="create">
+  <form novalidate class="md-layout" @submit.prevent="add">
       <md-card class="md-layout-item md-size-70 md-small-size-100">
         <md-card-header>
           <div class="md-title">{{msg}}</div>
@@ -19,114 +19,122 @@
           </md-field>
 
             <md-field>
-              <label>Content</label>
-              <md-textarea type="text" v-model="task.content" md-autogrow></md-textarea>
-            </md-field>
-
-            <md-field>
               <label>Required?</label>
               <br>
-              <md-switch v-model="task.required" class="live-switch md-primary">Live?</md-switch>
+              <md-switch v-model="task.required" class="live-switch md-primary"></md-switch>
             </md-field>
 
-          
+
+             <md-subheader>Question</md-subheader>
+
+            <md-field>
+            <label for="qutxt">Question Text</label>
+            <md-input type="text" v-model="task.content.question.text" name="qutxt" id="qutxt" :disabled="sending" />
+          </md-field>
+
+            <md-field>
+              <md-select v-model="task.content.question.type" name="data_type" id="data_type">
+                <md-option value="text">Text</md-option>
+                <md-option value="file">File</md-option>
+              </md-select>
+            </md-field>
+
+            <md-subheader>Answer</md-subheader>
+
+            <md-field>
+              <md-select v-model="task.content.answer.type" name="data_type" id="data_type">
+                <md-option value="text">Text</md-option>
+                <md-option value="file">File</md-option>
+                <md-option value="multiple_choice">Multiple Choice</md-option>
+              </md-select>
+            </md-field>
+
+            <task-multiple-choices :choices="task.content.answer.choices" v-if="task.content.answer.type === 'multiple_choice'"></task-multiple-choices>
           </div>
         </md-card-content>
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create</md-button>
+          <md-button type="submit" class="md-primary" :disabled="sending">Add</md-button>
         </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="taskSaved">Your project has been created, add some tasks!</md-snackbar>
+      <md-snackbar :md-active.sync="taskSaved" :md-duration="8000">
+        <span>Your task has been created</span>
+        <md-button class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}">Add Another?</md-button>
+        <md-button class="md-primary" :to="{ path: $store.state.route.from.fullPath }">Back</md-button>
+      </md-snackbar>
     </form>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "CreateTask",
-    data() {
-      return {
-        msg: "Create a new task!",
-        sending: false,
+import TaskMultipleChoices from '@/components/task-multiple-choices.vue'
+export default {
+  name: "CreateTask",
+  components: {TaskMultipleChoices, TaskMultipleChoices},
+  data() {
+    return {
+      msg: "Add a new task!",
+      sending: false,
+      project_id: this.$route.params.id,
+      task: {
+        name: "",
         project_id: this.$route.params.id,
-        task: {
-            name: '',
-            required: false,
-            sequence: 0,
-            content: {}
-        },
-        taskSaved: false
-      };
-    },
-    created() {
-      this.loadTasks()
-    },
-    methods: {
-      
-      del() {
-        const sel = this.selected
-        console.log(sel)
-        this.$ac.apis.Tasks.delete_tasks({
-            tasks: sel
-          })
-          .then(res => {
-            console.log(res.body)
-            this.loadTasks()
-          }).catch(e => console.error(e))
+        required: true,
+        sequence: 0,
+        content: {
+          question: {
+            text: '',
+            type: ''
+          },
+          answer: {
+            type: '',
+            choices: []
+          }
+        }
       },
-      onSelect(selected) {
-        console.log(selected)
-        this.selected = selected.map(s => {
-          return s.id
-        })
-      },
-      save() {
-        this.sending = true
-        const newTasks = this.tasks.reduce((result, t) => {
-          if (!t["readonly"]) result.push(t)
-          return result
-        }, []);
-        console.log(newTasks)
-        this.$ac.apis.Tasks.create_tasks({
-            tasks: [this.task]
-          })
-          .then(res => {
-            console.log(res)
-            // TODO redirect to project task page
-          })
-          .catch(e => console.error(e))
-      }
-    }
-  };
+      taskSaved: false
+    };
+  },
+  created() {
+  },
+  methods: {
+    add() {
+      this.$store.dispatch('task/addTasks', [this.task])
+      .then()
+    },
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1,
-  h2 {
-    font-weight: normal;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  
-  a {
-    color: #42b983;
-  }
-  
-  .active {
-    opacity: 0.8;
-    pointer-events: none;
-  }
+h1,
+h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+.active {
+  opacity: 0.8;
+  pointer-events: none;
+}
+.live-switch {
+  padding-top: 1%;
+}
 </style>

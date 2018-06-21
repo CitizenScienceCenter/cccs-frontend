@@ -40,7 +40,10 @@
         </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="projectSaved">Your project has been created, add some tasks!</md-snackbar>
+      <md-snackbar :md-active.sync="projectSaved">
+        <span>Your project has been created</span>
+        <md-button class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}">Add Some Tasks?</md-button>
+      </md-snackbar>
     </form>
   </div>
 </template>
@@ -59,6 +62,7 @@ export default {
         platform:'Desktop',
         owned_by: ''
       },
+      project_id: undefined,
       model: {
         types: [
           'Desktop',
@@ -81,7 +85,8 @@ export default {
       this.$ac.apis.Projects.create_project({ project: this.project })
         .then(req => {
           console.log(req)
-          this.$router.push({name: 'CreateTask', params: {id: req.body.id}})
+          this.project_id = req.body.id
+          // this.$router.push({name: 'CreateTask', params: {id: req.body.id}})
           // this.$router.push({name: 'Dashboard'})
         })
         .catch((e) => console.error(e))
