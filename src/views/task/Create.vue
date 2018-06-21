@@ -9,13 +9,13 @@
         <md-card-content>
           <div class="md-layout">
           <md-field>
-            <label for="name">Name</label>
-            <md-input type="text" v-model="task.name" name="name" id="name" :disabled="sending" />
+            <label for="title">Title</label>
+            <md-input type="text" v-model="task.title" name="title" id="title" :disabled="sending" />
           </md-field>
 
           <md-field>
-            <label for="platform">Sequence</label>
-            <md-input type="text" v-model="task.sequence" name="name" id="name" :disabled="sending" />
+            <label for="seq">Sequence</label>
+            <md-input type="text" v-model="task.sequence" name="seq" id="seq" :disabled="sending" />
           </md-field>
 
             <md-field>
@@ -80,7 +80,7 @@ export default {
       sending: false,
       project_id: this.$route.params.id,
       task: {
-        name: "",
+        title: "",
         project_id: this.$route.params.id,
         required: true,
         sequence: 0,
