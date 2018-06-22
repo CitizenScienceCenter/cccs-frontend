@@ -26,12 +26,16 @@
 
 <script>
 import { mapState } from "vuex"
+import draggable from 'vuedraggable'
 export default {
   name: "project-list",
   data() {
     return {
       userID: undefined
     };
+  },
+  components: {
+    draggable
   },
   computed: mapState({
     projects: state => state.project.projects,

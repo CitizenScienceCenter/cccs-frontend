@@ -35,12 +35,14 @@ a<template>
 <script>
   export default {
     name: 'UploadMedia',
+    props: ['id'],
     data() {
       return {
         msg: 'Upload Here',
         sending: false,
         form: {
-          id: this.$route.query.id || this.$route.params.tid,
+          id: this.id || this.$route.query.id,
+          // id: this.$route.query.id || this.$route.params.tid,
           attachment: {
             name: ''
           },

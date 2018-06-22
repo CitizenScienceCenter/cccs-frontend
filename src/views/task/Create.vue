@@ -39,6 +39,8 @@
               </md-select>
             </md-field>
 
+            <upload v-if="task.content.question_type === 'file'"></upload>
+
             <md-subheader>Answer</md-subheader>
 
             <md-field>
@@ -71,9 +73,10 @@
 
 <script>
 import TaskMultipleChoices from '@/components/task-multiple-choices.vue'
+import Upload from '@/components/upload.vue'
 export default {
   name: "CreateTask",
-  components: {TaskMultipleChoices, TaskMultipleChoices},
+  components: {TaskMultipleChoices, Upload},
   data() {
     return {
       msg: "Add a new task!",
@@ -103,7 +106,7 @@ export default {
   methods: {
     add() {
       this.$store.dispatch('task/addTasks', [this.task])
-      .then()
+      .then(this.$router.go(-1))
     },
   }
 };
