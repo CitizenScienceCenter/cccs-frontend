@@ -4,6 +4,7 @@ import api from './modules/api'
 import user from './modules/user'
 import project from './modules/project'
 import task from './modules/task'
+import submission from './modules/submission'
 import media from './modules/media'
 import createPersistedState from "vuex-persistedstate"
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     project,
     api,
     task,
-    media
+    media,
+    submission
   },
   strict: debug,
   plugins: [createPersistedState()]

@@ -13,7 +13,7 @@
       </md-card-header>
     </md-card>
     <md-progress-bar md-mode="determinate" :md-value="(activeTaskIndex / tasks.length) * 100"></md-progress-bar>
-    <task-submission :task=activeTask></task-submission>
+    <task-submission :task=activeTask :content=content></task-submission>
     <md-button v-on:click="takePart" class="md-primary md-raised" v-if="tasks.length > 0">{{btnText}}</md-button>
   </div>
 </template>
@@ -27,6 +27,7 @@
       return {
         project: undefined,
         userID: undefined,
+        content: undefined,
         activeTaskIndex: undefined,
         activeTask: undefined,
         btnText: 'Let\'s Go'
@@ -46,8 +47,15 @@
     },
     methods: {
       takePart() {
-        this.activeTask = this.tasks[this.activeTaskIndex]
         if (this.activeTaskIndex !== this.tasks.length -1) {
+          this.activeTask = this.tasks[this.activeTaskIndex]
+          const submission = {
+            user_id: this.$store.getters['user/id'],
+            task_id: this.activeTask.id,
+            content: {}
+          }
+          this.$store.commit('submission/SET_SUBMISSION', submission)
+          console.log(this.content)
           this.activeTaskIndex += 1
           this.btnText = 'Next'
         } else {

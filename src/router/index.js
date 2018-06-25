@@ -69,7 +69,7 @@ const router = new Router({
           meta: {requiresAuth: true, breadcrumb: 'My Projects'},
         },
         {
-          path: '/create',
+          path: 'create',
           name: 'CreateProject',
           component: Project.Create,
           meta: {requiresAuth: true, breadcrumb: 'Create Project'},

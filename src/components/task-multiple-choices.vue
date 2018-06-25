@@ -43,7 +43,9 @@ export default {
     },
     addChoice() {
       const c = {
-        text: "Edit Text"
+        key: this.choices.length - 1,
+        text: "Edit Text",
+        value: "edit_text"
       };
       this.choices.push(c);
     }

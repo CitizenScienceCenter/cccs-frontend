@@ -27,11 +27,11 @@ const actions = {
           })
           .catch(err => {
             commit('SET_LOADING', false)
-            if (err.response.status === 404) {
+            // if (err.response.status === 404) {
               // TODO load 404 page
-            } else {
-              // TODO show errror
-            }
+            // } else {
+            //   // TODO show errror
+            // }
           })
     },
     getProject({ state, commit, rootState }, id) {
@@ -45,11 +45,11 @@ const actions = {
             })
             .catch(err => {
                 commit('SET_LOADING', false)
-                if (err.response.status === 404) {
-                    // TODO load 404 page
-                } else {
-                    // TODO show errror
-                }
+                // if (err.response.status === 404) {
+                //     // TODO load 404 page
+                // } else {
+                //     // TODO show errror
+                // }
             })
     }
 }

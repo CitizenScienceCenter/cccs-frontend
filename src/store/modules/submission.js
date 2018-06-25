@@ -3,6 +3,7 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
+    media: undefined,
     submission: undefined,
     loading: false
 }
@@ -38,6 +39,9 @@ const mutations = {
     },
     SET_MEDIA(state, media) {
         state.media = media
+    },
+    SET_SUBMISSION(state, sub) {
+        state.submission = sub
     }
 }
 
