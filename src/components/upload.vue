@@ -1,4 +1,4 @@
-a<template>
+<template>
   <div>
     <form novalidate class="md-layout" @submit.prevent="upload">
       <md-card class="md-layout-item md-size-70 md-small-size-100">

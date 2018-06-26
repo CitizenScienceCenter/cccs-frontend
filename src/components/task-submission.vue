@@ -51,7 +51,7 @@ export default {
   methods: {
     handleValue() {
       let sub = Object.assign({}, this.submission)
-      sub.content = this.selections
+      sub.content = this.content
       this.$store.commit('submission/SET_SUBMISSION', sub)
     }
   }

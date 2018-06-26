@@ -81,7 +81,13 @@ const router = new Router({
           meta: {requiresAuth: true, breadcrumb: 'View Project'},
         },
         {
-          path: ':id/participate/:tid?',
+          path: ':id/participate/:tid',
+          name: 'Submission',
+          component: Project.Participate,
+          meta: {requiresAuth: true, breadcrumb: 'Take Part'},
+        },
+        {
+          path: ':id/participate',
           name: 'TakePart',
           component: Project.Participate,
           meta: {requiresAuth: true, breadcrumb: 'Take Part'},

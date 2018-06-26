@@ -21,6 +21,22 @@ const actions = {
         rootState.api.client.apis.Submissions.create_submission(submission)
           .then(req => {
             commit('SET_LOADING', false)
+            commit('SET_SUBMISSION', req.body)
+          })
+          .catch(err => {
+            if (err.response.status === 404) {
+              // TODO load 404 page
+            } else {
+              // TODO show errror
+            }
+          })
+    },
+    putSubmission({state, commit, rootState}, submission) {
+        commit('SET_LOADING', true)
+        rootState.api.client.apis.Submissions.put_submission(submission.id, submission)
+          .then(req => {
+            commit('SET_LOADING', false)
+            commit('SET_SUBMISSION', req.body)
           })
           .catch(err => {
             if (err.response.status === 404) {

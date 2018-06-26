@@ -19,57 +19,96 @@
 </template>
 
 <script>
-  import { mapState } from "vuex"
-  import TaskSubmission from '@/components/task-submission.vue'
-  export default {
-    name: 'Participate',
-    data() {
-      return {
-        project: undefined,
-        userID: undefined,
-        content: undefined,
-        activeTaskIndex: undefined,
-        activeTask: undefined,
-        btnText: 'Let\'s Go'
-      }
-    },
-    components: {TaskSubmission: TaskSubmission},
-    computed: mapState({
-      tasks: state => state.task.tasks,
-      loading: state => state.task.loading
-    }),
-    mounted() {
-      console.log(this.$route.params.id)
-      const id = this.$route.params.id
-      this.$store.dispatch('project/getProject', id)
-      this.$store.dispatch('task/projectTasks', id)
-      this.activeTaskIndex = 0
-    },
-    methods: {
-      takePart() {
-        if (this.activeTaskIndex !== this.tasks.length -1) {
-          this.activeTask = this.tasks[this.activeTaskIndex]
-          const submission = {
-            user_id: this.$store.getters['user/id'],
-            task_id: this.activeTask.id,
-            content: {}
-          }
-          this.$store.commit('submission/SET_SUBMISSION', submission)
-          console.log(this.content)
-          this.activeTaskIndex += 1
-          this.btnText = 'Next'
-        } else {
-          console.log('FINISHED')
-          this.btnText = 'Finished'
-          this.activeTaskIndex = 100
-        }
+import { mapState } from "vuex";
+import TaskSubmission from "@/components/task-submission.vue";
+export default {
+  name: "Participate",
+  data() {
+    return {
+      pid: undefined,
+      userID: undefined,
+      content: undefined,
+      activeTaskIndex: undefined,
+      activeTask: undefined,
+      btnText: "Let's Go"
+    };
+  },
+  components: { TaskSubmission: TaskSubmission },
+  computed: mapState({
+    project: state => state.project.project,
+    tasks: state => state.task.tasks,
+    submisson: state => state.submission.submission,
+    loading: state => state.task.loading
+  }),
+  watch: {
+    "$route.params.tid": function(tid) {
+      console.log(this.$route.params)
+      this.handleTask();
 
+    }
+  },
+  mounted() {
+    this.pid = this.$route.params.id
+    this.activeTaskIndex = 0
+    this.$store.dispatch("project/getProject", this.pid)
+    this.$store.dispatch("task/projectTasks", this.pid)
+    this.handleTask()
+  },
+  updated() {
+    console.log('updated')
+  },
+  methods: {
+    handleTask(index) {
+      const id = this.$route.params.id;
+      const tid = this.$route.params.tid;
+      console.log(tid)
+        this.activeTask = this.tasks.find(task => {
+          return task.id === tid;
+        });
+        this.activeTaskIndex = this.tasks.findIndex(task => {
+          return task.id === tid;
+        })
+
+    },
+    takePart() {
+      const tid = this.$route.params.tid;
+      if (!tid) {
+        this.$router.push({
+          name: "Submission",
+          params: { id: this.$route.params.id, tid: this.tasks[0].id }
+        });
+      } else if (this.activeTaskIndex + 1 !== this.tasks.length) { 
+        this.$router.push({
+          name: "Submission",
+          params: { id: this.$route.params.id, tid: this.tasks[this.activeTaskIndex + 1].id }
+        });
+      } else {
+        // TODO load finished page
+        this.btnText = 'Finished'
       }
+
+      // if (this.activeTaskIndex !== this.tasks.length) {
+      //   console.log(this.submisson.content)
+      //   const submission = {
+      //     user_id: this.$store.getters['user/id'],
+      //     task_id: this.activeTask.id,
+      //     content: {}
+      //   }
+      //   this.$store.commit('submission/SET_SUBMISSION', submission)
+      //   this.activeTaskIndex += 1
+      //   this.btnText = 'Next'
+      // } else {
+      //   console.log(this.submisson.content)
+      //   console.log('FINISHED')
+      //   this.btnText = 'Finished'
+      //   this.activeTaskIndex = 100
+      // }
     }
   }
+};
 </script>
 <style lang="scss" scoped>
-  .banner {
-    height: 10%
-  }
+.banner {
+  height: 10%;
+}
 </style>
