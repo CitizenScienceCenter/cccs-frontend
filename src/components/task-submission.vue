@@ -4,12 +4,12 @@
       <md-card>
         <md-icon></md-icon>
         <span class="md-list-item-text md-alignment-top-center">{{task.title}}</span>
-        <upload v-if="task.content.answer.type === 'file'" :id=task.id :content=content></upload>
-        <md-field v-if="task.content.answer.type === 'text'">
+        <upload v-if="task.content.answer.type === 'file'" :id=submission.id></upload>
+        <md-field v-if="task.content.answer.type === 'text' || task.content.answer.type === 'file'">
           <label for="qutxt">{{task.content.question.text}}</label>
-          <md-input type="text" v-model="content" @keyup="handleValue" name="qutxt" id="qutxt" />
+          <md-input type="text" v-model="content" @keyup="handleText" name="qutxt" id="qutxt" />
         </md-field>
-        <submission-multiple-choices :choices="task.content.answer.choices" v-if="task.content.answer.type === 'multiple_choice'"></submission-multiple-choices>
+        <submission-multiple-choices :choices="task.content.answer.choices" :type="task.content.answer.type" v-if="task.content.answer.type === 'multiple_choice'"></submission-multiple-choices>
         <!-- TODO handle multiple choice -->
         <!-- <md-button :to="{name:'TakePart', params: {id: task.id}}" class="md-icon-button md-list-action" title="Take Part!">
           Submit
@@ -32,12 +32,6 @@ export default {
   data() {
     return {
       content: ""
-      // submission: {
-      //   content: {
-      //   },
-      //   task_id: undefined,
-      //   user_id: undefined
-      // }
     };
   },
   components: { Upload, SubmissionMultipleChoices},
@@ -49,7 +43,7 @@ export default {
   mounted() {
   },
   methods: {
-    handleValue() {
+    handleText() {
       let sub = Object.assign({}, this.submission)
       sub.content = this.content
       this.$store.commit('submission/SET_SUBMISSION', sub)

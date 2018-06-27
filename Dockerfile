@@ -2,7 +2,7 @@ FROM node:9.11-alpine AS build
 
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm ci
 RUN npm run build
 RUN ls dist
 

@@ -42,9 +42,7 @@ export default {
   }),
   watch: {
     "$route.params.tid": function(tid) {
-      console.log(this.$route.params)
-      this.handleTask();
-
+      // this.handleTask();
     }
   },
   mounted() {
@@ -55,46 +53,56 @@ export default {
     this.handleTask()
   },
   updated() {
-    console.log('updated')
+    if (this.activeTaskIndex >= this.tasks.length) {
+      this.msgText = "Finished";
+      this.activeTaskIndex = this.tasks.length;
+    } else {
+      this.msgText = `Let's Go`;
+    }
   },
   methods: {
     handleTask(index) {
       const id = this.$route.params.id;
       const tid = this.$route.params.tid;
-      console.log(tid)
-        this.activeTask = this.tasks.find(task => {
-          return task.id === tid;
-        });
-        this.activeTaskIndex = this.tasks.findIndex(task => {
-          return task.id === tid;
-        })
-
+      console.log(tid);
+      this.activeTask = this.tasks.find(task => {
+        return task.id === tid;
+      })
+      console.log(this.activeTask)
+      this.activeTaskIndex = this.tasks.findIndex(task => {
+        return task.id === tid;
+      })
+      this.createSubmission()
     },
     takePart() {
-      const tid = this.$route.params.tid;
+      const tid = this.$route.params.tid
       if (!tid) {
         this.$router.push({
           name: "Submission",
           params: { id: this.$route.params.id, tid: this.tasks[0].id }
         });
-      } else if (this.activeTaskIndex + 1 !== this.tasks.length) { 
-        this.$router.push({
-          name: "Submission",
-          params: { id: this.$route.params.id, tid: this.tasks[this.activeTaskIndex + 1].id }
-        });
+      } else if (this.activeTaskIndex + 1 !== this.tasks.length) {
+        const pid = this.$route.params.id
+        const tid = this.tasks[this.activeTaskIndex + 1].id
+        // TODO handle validation here or in store actions
+        this.$store.dispatch('submission/putSubmission', this.submisson)
+        this.$router.push(`/projects/${pid}/participate/${tid}`)
       } else {
         // TODO load finished page
-        this.btnText = 'Finished'
+        this.$router.push(`/projects/${pid}`)
       }
+    },
+    createSubmission() {
 
       // if (this.activeTaskIndex !== this.tasks.length) {
       //   console.log(this.submisson.content)
-      //   const submission = {
-      //     user_id: this.$store.getters['user/id'],
-      //     task_id: this.activeTask.id,
-      //     content: {}
-      //   }
-      //   this.$store.commit('submission/SET_SUBMISSION', submission)
+        const submission = {
+          user_id: this.$store.getters['user/id'],
+          task_id: this.activeTask.id,
+          content: {}
+        }
+        this.$store.commit('submission/SET_SUBMISSION', submission)
+        this.$store.dispatch('submission/postSubmission', submission)
       //   this.activeTaskIndex += 1
       //   this.btnText = 'Next'
       // } else {
