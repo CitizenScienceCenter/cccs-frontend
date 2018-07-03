@@ -23,7 +23,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
   
         <md-card-actions>
-          <md-button type="submit" ref='upload' class="md-primary" :disabled="sending">Upload</md-button>
+          <md-button type="submit" ref='upload' class="md-primary" v-if="embedded" :disabled="sending">Upload</md-button>
         </md-card-actions>
       </md-card>
   
@@ -36,7 +36,7 @@
   import { mapState, mapGetters } from "vuex";
   export default {
     name: 'UploadMedia',
-    props: ['id', 'multiple'],
+    props: ['id', 'multiple', 'embedded'],
     data() {
       return {
         msg: 'Upload Here',
@@ -60,6 +60,9 @@
     methods: {
       fileSelected(ev) {
         this.selected = ev
+        if (this.embedded) {
+          this.$store.dispatch('upload/SET_CONTENT', ev)
+        }
       },
       upload() {
         this.sending = true
