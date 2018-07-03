@@ -93,7 +93,8 @@ export default {
         this.$router.push(`/projects/${id}/participate/${tid}`)
       } else {
         // TODO load finished page
-        this.$router.push(`/projects/${iid}`)
+        this.$store.commit('upload/SET_ID', null)
+        this.$router.push(`/projects/${id}`)
       }
     },
     createSubmission() {
