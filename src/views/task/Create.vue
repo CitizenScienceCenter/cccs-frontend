@@ -35,7 +35,8 @@
             <md-field>
               <md-select v-model="task.content.question.type" name="data_type" id="data_type">
                 <md-option value="text">Text</md-option>
-                <md-option value="file">File</md-option>
+                <md-option value="single_file">Single File</md-option>
+                <md-option value="multiple_file">Multiple Files</md-option>
               </md-select>
             </md-field>
 
@@ -46,7 +47,8 @@
             <md-field>
               <md-select v-model="task.content.answer.type" name="data_type" id="data_type">
                 <md-option value="text">Text</md-option>
-                <md-option value="file">File</md-option>
+                <md-option value="single_file">Single File</md-option>
+                <md-option value="multiple_file">Multiple Files</md-option>
                 <md-option value="multiple_choice">Multiple Choice</md-option>
               </md-select>
             </md-field>

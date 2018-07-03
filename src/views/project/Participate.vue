@@ -37,12 +37,12 @@ export default {
   computed: mapState({
     project: state => state.project.project,
     tasks: state => state.task.tasks,
-    submisson: state => state.submission.submission,
+    submission: state => state.submission.submission,
     loading: state => state.task.loading
   }),
   watch: {
     "$route.params.tid": function(tid) {
-      // this.handleTask();
+      this.handleTask();
     }
   },
   mounted() {
@@ -62,34 +62,38 @@ export default {
   },
   methods: {
     handleTask(index) {
-      const id = this.$route.params.id;
-      const tid = this.$route.params.tid;
-      console.log(tid);
+      const id = this.$route.params.id
+      const tid = this.$route.params.tid
+      this.$store.dispatch("project/getProject", this.pid)
+      this.$store.dispatch("task/projectTasks", this.pid)
       this.activeTask = this.tasks.find(task => {
-        return task.id === tid;
+        return task.id === tid
       })
-      console.log(this.activeTask)
       this.activeTaskIndex = this.tasks.findIndex(task => {
-        return task.id === tid;
+        return task.id === tid
       })
-      this.createSubmission()
+      if (this.activeTask) {
+        this.createSubmission()
+      }
     },
     takePart() {
-      const tid = this.$route.params.tid
-      if (!tid) {
+      const id = this.$route.params.id
+      const tid = this.tasks[0].id
+      if (this.$route.params.tid ===  undefined) {
         this.$router.push({
           name: "Submission",
-          params: { id: this.$route.params.id, tid: this.tasks[0].id }
-        });
+          params: { id: id, tid: tid }
+        })
       } else if (this.activeTaskIndex + 1 !== this.tasks.length) {
-        const pid = this.$route.params.id
         const tid = this.tasks[this.activeTaskIndex + 1].id
+        let sub = Object.assign({}, this.submission)
+        sub.content = this.content
         // TODO handle validation here or in store actions
-        this.$store.dispatch('submission/putSubmission', this.submisson)
-        this.$router.push(`/projects/${pid}/participate/${tid}`)
+        this.$store.dispatch('submission/putSubmission', sub)
+        this.$router.push(`/projects/${id}/participate/${tid}`)
       } else {
         // TODO load finished page
-        this.$router.push(`/projects/${pid}`)
+        this.$router.push(`/projects/${iid}`)
       }
     },
     createSubmission() {
@@ -99,8 +103,9 @@ export default {
         const submission = {
           user_id: this.$store.getters['user/id'],
           task_id: this.activeTask.id,
-          content: {}
+          // content: {}
         }
+        console.log('creating submission')
         this.$store.commit('submission/SET_SUBMISSION', submission)
         this.$store.dispatch('submission/postSubmission', submission)
       //   this.activeTaskIndex += 1

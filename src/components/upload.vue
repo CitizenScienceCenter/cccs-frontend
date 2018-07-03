@@ -15,7 +15,7 @@
   
             <md-field>
               <label>Select Files</label>
-              <md-file v-model="filenames" @md-change="fileSelected($event)" multiple />
+              <md-file v-model="filenames" @md-change="fileSelected($event)" :multiple="multiple" />
             </md-field>
           </div>
         </md-card-content>
@@ -33,15 +33,16 @@
 </template>
 
 <script>
+  import { mapState, mapGetters } from "vuex";
   export default {
     name: 'UploadMedia',
-    props: ['id'],
+    props: ['id', 'multiple'],
     data() {
       return {
         msg: 'Upload Here',
         sending: false,
         form: {
-          id: this.id || this.$route.query.id,
+          id: this.id || this.storeID || this.$route.query.id,
           // id: this.$route.query.id || this.$route.params.tid,
           attachment: {
             name: ''
@@ -52,6 +53,9 @@
         fileSaved: false
       }
     },
+    computed: mapGetters({
+      storeID: state => state.upload.id
+    }),
     created() {},
     methods: {
       fileSelected(ev) {
