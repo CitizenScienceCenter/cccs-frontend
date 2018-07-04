@@ -89,7 +89,7 @@ export default {
         let sub = Object.assign({}, this.submission)
         sub.content = this.content
         // TODO handle validation here or in store actions
-        this.$store.dispatch('submission/putSubmission', sub)
+        this.$store.dispatch('submission/postSubmission', sub)
         this.$router.push(`/projects/${id}/participate/${tid}`)
       } else {
         // TODO load finished page
@@ -108,7 +108,7 @@ export default {
         }
         console.log('creating submission')
         this.$store.commit('submission/SET_SUBMISSION', submission)
-        this.$store.dispatch('submission/postSubmission', submission)
+        // this.$store.dispatch('submission/postSubmission', submission)
       //   this.activeTaskIndex += 1
       //   this.btnText = 'Next'
       // } else {
