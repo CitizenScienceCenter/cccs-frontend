@@ -86,13 +86,12 @@ export default {
         })
       } else if (this.activeTaskIndex + 1 !== this.tasks.length) {
         const tid = this.tasks[this.activeTaskIndex + 1].id
-        let sub = Object.assign({}, this.submission)
-        sub.content = this.content
         // TODO handle validation here or in store actions
-        this.$store.dispatch('submission/postSubmission', sub)
+        this.$store.dispatch('submission/postSubmission', this.submission)
         this.$router.push(`/projects/${id}/participate/${tid}`)
       } else {
         // TODO load finished page
+        this.$store.dispatch('submission/postSubmission', this.submission)
         this.$store.commit('upload/SET_ID', null)
         this.$router.push(`/projects/${id}`)
       }
@@ -104,19 +103,9 @@ export default {
         const submission = {
           user_id: this.$store.getters['user/id'],
           task_id: this.activeTask.id,
-          // content: {}
+          content: {}
         }
-        console.log('creating submission')
         this.$store.commit('submission/SET_SUBMISSION', submission)
-        // this.$store.dispatch('submission/postSubmission', submission)
-      //   this.activeTaskIndex += 1
-      //   this.btnText = 'Next'
-      // } else {
-      //   console.log(this.submisson.content)
-      //   console.log('FINISHED')
-      //   this.btnText = 'Finished'
-      //   this.activeTaskIndex = 100
-      // }
     }
   }
 };

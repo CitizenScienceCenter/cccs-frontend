@@ -7,31 +7,26 @@ const state = {
 
 // getters
 const getters = {
-  id: state => state.id
 }
 
 // actions
 const actions = {
-  saveUploads ({
+  addID ({
     state,
     commit,
     rootState
-  }) {
-    for (let i = 0; i < this.content.length; i++) {
-      // this.fileSaved = false
-      const f = this.content.item(i)
-      // this.sending = true
-      let form = {
-        'id': state.getters['id']
-      }
-      form.attachment = f
-      rootState.api.client.apis.Media.upload(this.form)
-        .then(req => {
-          console.log(req)
-        })
-        .catch((e) => {
-          console.error(e)
-        })
+  }, id) {
+    for (let i = 0; i < state.content.length; i++) {      
+        rootState.api.client.apis.Media.put_medium(state.content.id, {'source_id': id})
+            .then(req => {
+                console.log(req)
+                if (i === state.content.length - 1) {
+                    commit('CLEAR')
+                }
+            })
+            .catch((e) => {
+                console.error(e)
+            })
     }
   }
 }
@@ -41,8 +36,9 @@ const mutations = {
   SET_ID(state, id) {
     state.id = id
   },
-  SET_CONTENT(state, content) {
-    state.content = content
+  ADD_CONTENT(state, entry) {
+    console.log(entry)
+    state.content = [entry]
   },
   CLEAR(state) {
     state.id = null

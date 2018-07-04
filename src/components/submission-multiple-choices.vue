@@ -30,7 +30,7 @@ export default {
   methods: {  
     onSelect() {
       let sub = Object.assign({}, this.submission)
-      sub.content = this.selections
+      sub.content = { selections: this.selections }
       this.$store.commit('submission/SET_SUBMISSION', sub)
     
     }

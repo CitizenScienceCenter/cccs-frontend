@@ -8,7 +8,7 @@
   
         <md-card-content>
           <div class="md-layout">
-            <md-field>
+            <md-field v-if="!embedded">
               <label for="name">ID</label>
               <md-input type="text" v-model="form.id" name="id" id="id" disabled/>
             </md-field>
@@ -22,8 +22,8 @@
   
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
   
-        <md-card-actions>
-          <md-button type="submit" ref='upload' class="md-primary" v-if="embedded" :disabled="sending">Upload</md-button>
+        <md-card-actions v-if="!embedded">
+          <md-button type="submit" ref='upload' class="md-primary" :disabled="sending">Upload</md-button>
         </md-card-actions>
       </md-card>
   
@@ -56,13 +56,13 @@
     computed: mapGetters({
       storeID: state => state.upload.id
     }),
-    created() {},
+    created() {
+      console.log(this.embedded)
+    },
     methods: {
       fileSelected(ev) {
         this.selected = ev
-        if (this.embedded) {
-          this.$store.dispatch('upload/SET_CONTENT', ev)
-        }
+        this.upload()
       },
       upload() {
         this.sending = true
@@ -70,11 +70,15 @@
           this.fileSaved = false
           const f = this.selected.item(i)
           this.sending = true
+          if (this.embedded) {
+            // this.form.id = 'T
+          }
           this.form.attachment = f
           this.$ac.apis.Media.upload(this.form)
             .then(req => {
               this.sending = false
               console.log(req)
+              this.$store.commit('upload/ADD_CONTENT', req.body.id)
               this.fileSaved = true
             })
             .catch((e) => {

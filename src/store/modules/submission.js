@@ -15,15 +15,19 @@ const getters = {
 
 // actions
 const actions = {
-    postSubmission({state, commit, rootState }) {
+    postSubmission({state, commit, rootState, dispatch }) {
 
         commit('SET_LOADING', true)
-        console.log(Object.assign({}, state.submission))
+        console.log(Object.assign({}, state.submission.content))
         rootState.api.client.apis.Submissions.create_submission({submission: state.submission})
           .then(req => {
             commit('SET_LOADING', false)
             commit('SET_SUBMISSION', Object.assign({}, req.body))
-            commit('upload/SET_ID', req.body.id, {root: true})
+            console.log(rootState.upload.content)
+            if (rootState.upload.content.length > 0) {
+              // commit('upload/SET_ID', req.body.id, {root: true})
+              dispatch('upload/addID', req.body.id, {root: true})
+            }
           })
           .catch(err => {
             console.log(err)

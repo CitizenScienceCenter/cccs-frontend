@@ -23,11 +23,6 @@ const actions = {
             .then(user => {
                 commit('SET_USER', user)
                 commit('SET_LOADING', false)
-                // TODO access these from getters
-                console.log(state.user.email)
-                localStorage.setItem('api_key', req['body']['api_key'])
-                localStorage.setItem('user_id', req['body']['id'])
-                localStorage.setItem('user', JSON.stringify(req['body']))
             })
             .catch(err => {
                 commit('SET_LOADING', false)
