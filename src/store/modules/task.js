@@ -83,8 +83,10 @@ const actions = {
         })
             .then(res => {
                 commit('SET_LOADING', false)
+                console.log(res.body[0].id)
+                dispatch('upload/addID', res.body[0].id, {root: true})
             })
-            .catch(e => console.error(e));
+            .catch(e => console.error(e))
 
     },
     deleteTasks({ state, commit, dispatch, rootState }, tasks) {

@@ -16,8 +16,12 @@ const actions = {
     commit,
     rootState
   }, id) {
+    commit('SET_ID', id)
+    console.log('updating')
+    console.log(id)
     for (let i = 0; i < state.content.length; i++) {      
-        rootState.api.client.apis.Media.put_medium(state.content.id, {'source_id': id})
+        console.log(state.content[i])
+        rootState.api.client.apis.Media.put_medium({id: state.content[i], media: {id: state.content[i], 'source_id': id || state.id}})
             .then(req => {
                 console.log(req)
                 if (i === state.content.length - 1) {
@@ -38,7 +42,8 @@ const mutations = {
   },
   ADD_CONTENT(state, entry) {
     console.log(entry)
-    state.content = [entry]
+    state.content.push(entry)
+    console.log(state.content)
   },
   CLEAR(state) {
     state.id = null

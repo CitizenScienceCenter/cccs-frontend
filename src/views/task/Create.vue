@@ -15,7 +15,7 @@
 
           <md-field>
             <label for="seq">Sequence</label>
-            <md-input type="text" v-model="task.sequence" name="seq" id="seq" :disabled="sending" />
+            <md-input type="number" v-model="task.sequence" name="seq" id="seq" :disabled="sending" />
           </md-field>
 
             <md-field>
@@ -40,7 +40,10 @@
               </md-select>
             </md-field>
 
-            <upload v-if="task.content.question_type === 'file'"></upload>
+            <md-field v-if="task.content.question.type.indexOf('file') !== -1">
+              <upload :multiple=true :embedded=true></upload>
+            </md-field>
+
 
             <md-subheader>Answer</md-subheader>
 
@@ -92,10 +95,10 @@ export default {
         content: {
           question: {
             text: '',
-            type: ''
+            type: 'text'
           },
           answer: {
-            type: '',
+            type: 'text',
             choices: []
           }
         }
@@ -107,8 +110,9 @@ export default {
   },
   methods: {
     add() {
+      this.task.sequence = parseInt(this.task.sequence)
       this.$store.dispatch('task/addTasks', [this.task])
-      .then(this.$router.go(-1))
+      // .then(this.$router.go(-1))
     },
   }
 };

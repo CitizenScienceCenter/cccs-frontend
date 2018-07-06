@@ -67,6 +67,10 @@
               this.sending = false
               console.log(req)
               this.fileSaved = true
+              if (!this.form.id) {
+                console.log('adding media')
+                this.$store.commit('upload/addContent', req.body.id)
+              }
             })
             .catch((e) => {
               this.sending = false

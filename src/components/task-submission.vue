@@ -40,9 +40,17 @@ export default {
   computed: mapState({
     loading: state => state.project.loading,
     submission: state => state.submission.submission,
-    userId: state => state.user.user
+    userId: state => state.user.user,
+    taskMedia: state => state.media.media
   }),
-  mounted() {
+  watch: {
+    'task'(to, from) {
+      console.log(to)
+      this.$store.dispatch('media/getMedia', this.task.id)
+    },
+    'taskMedia'(to, from) {
+      console.log(to)
+    }
   },
   methods: {
     handleText() {

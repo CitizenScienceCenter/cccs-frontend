@@ -20,13 +20,12 @@ const actions = {
         commit('SET_LOADING', true)
         console.log(Object.assign({}, state.submission.content))
         rootState.api.client.apis.Submissions.create_submission({submission: state.submission})
-          .then(req => {
+          .then(res => {
             commit('SET_LOADING', false)
-            commit('SET_SUBMISSION', Object.assign({}, req.body))
-            console.log(rootState.upload.content)
+            commit('SET_SUBMISSION', Object.assign({}, res.body))
+            // console.log(rootState.upload.content)
             if (rootState.upload.content.length > 0) {
-              // commit('upload/SET_ID', req.body.id, {root: true})
-              dispatch('upload/addID', req.body.id, {root: true})
+              dispatch('upload/addID', res.body.id, {root: true})
             }
           })
           .catch(err => {

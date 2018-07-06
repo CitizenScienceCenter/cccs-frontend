@@ -22,11 +22,12 @@ const actions = {
         })
           .then(req => {
             commit('SET_MEDIA', req.body)
+            console.log(req.body)
             commit('SET_LOADING', false)
           })
           .catch(err => {
             if (err.response.status === 404) {
-              // TODO load 404 page
+              // TODO load 404 pageFput_
             } else {
               // TODO show errror
             }

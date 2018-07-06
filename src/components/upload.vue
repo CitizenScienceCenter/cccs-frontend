@@ -70,9 +70,6 @@
           this.fileSaved = false
           const f = this.selected.item(i)
           this.sending = true
-          if (this.embedded) {
-            // this.form.id = 'T
-          }
           this.form.attachment = f
           this.$ac.apis.Media.upload(this.form)
             .then(req => {
