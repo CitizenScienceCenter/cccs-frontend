@@ -4,6 +4,7 @@
       <md-card>
         <md-icon></md-icon>
         <span class="md-list-item-text md-alignment-top-center">{{task.title}}</span>
+        <featured-carousel class="featured-carousel" :items=items v-if="items.length > 0"></featured-carousel>                
         <upload v-if="task.content.answer.type.indexOf('file') !== -1" :embedded="true" :multiple="task.content.answer.type === 'multiple_files'"></upload>
         <md-field v-if="task.content.answer.type === 'text' || task.content.answer.type.indexOf('file') !== -1">
           <label for="qutxt">{{task.content.question.text}}</label>
@@ -25,18 +26,21 @@
 <script>
 import { mapState } from "vuex";
 import Upload from "@/components/upload.vue"
+import FeaturedCarousel from '@/components/featured-carousel.vue'
 import SubmissionMultipleChoices from "@/components/submission-multiple-choices.vue"
+
 export default {
   name: "task-submission",
   props: ["task"],
   data() {
     return {
+      items: [],
       content: {
         text: ""
       }
     };
   },
-  components: { Upload, SubmissionMultipleChoices},
+  components: { Upload, SubmissionMultipleChoices, FeaturedCarousel},
   computed: mapState({
     loading: state => state.project.loading,
     submission: state => state.submission.submission,
@@ -45,11 +49,17 @@ export default {
   }),
   watch: {
     'task'(to, from) {
-      console.log(to)
       this.$store.dispatch('media/getMedia', this.task.id)
     },
     'taskMedia'(to, from) {
-      console.log(to)
+      to.forEach(m => {
+        const path = m.path.replace('./static', 'http://localhost:8080/static')
+        this.items.push({
+          name: m.name,
+          number: this.items.length + 1,
+          img: path
+        })
+      });
     }
   },
   methods: {

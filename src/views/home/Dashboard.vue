@@ -7,7 +7,7 @@
 
         <md-card-content>
             <div class="md-layout">
-              <featured-carousel class="featured-carousel"></featured-carousel>                
+              <featured-carousel class="featured-carousel" :items=items></featured-carousel>                
             </div>
         </md-card-content>
     </md-card>
@@ -24,6 +24,27 @@ export default {
   name: 'Dashboard',
   data() {
     return {
+      items: [{
+            msg: 'Farming Projects',
+            number: 1,
+            img: 'https://image.shutterstock.com/z/stock-photo-farmer-and-agraringeniuer-discuss-the-rape-field-140707168.jpg'
+          },
+          {
+            msg: 'Chemistry Projects',
+            number: 2,
+            img: 'https://image.shutterstock.com/z/stock-photo-portrait-of-female-doctor-or-scientist-showing-and-analyzing-liquid-in-flask-over-american-flag-133647182.jpg'
+          },
+          {
+            msg: 'Teaching Citizen Science',
+            number: 3,
+            img: 'https://image.shutterstock.com/z/stock-photo-conceptual-business-illustration-with-the-words-citizen-science-1014248041.jpg'
+          },
+          {
+            msg: 'Businesses and Open Data',
+            number: 4,
+            img: 'https://image.shutterstock.com/z/stock-photo-conceptual-business-illustration-with-the-words-citizen-science-1022808259.jpg'
+          }
+        ]
     }
   },
   components: {ProjectList: ProjectList, FeaturedCarousel: FeaturedCarousel},

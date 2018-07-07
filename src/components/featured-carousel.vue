@@ -1,11 +1,11 @@
 <template>
   <div>
-    <carousel class="featured-carousel" :autoplay="true" :per-page="1">
+    <carousel v-if="items.length" class="featured-carousel" :autoplay="true" :per-page="1">
       <slide :key="item.number" v-for="item in items">
         <md-card>
           <md-card-media-cover md-solid>
             <md-card-media md-ratio="1:1">
-              <img :src="item.img" alt="Skyscraper">
+              <img :src="item.img" alt="item.name">
             </md-card-media>
   
             <md-card-area>
@@ -34,32 +34,15 @@
 <script>
   export default {
     name: 'featured-carousel',
+    props: ['items'],
     data() {
       return {
-        items: [{
-            msg: 'Farming Projects',
-            number: 1,
-            img: 'https://image.shutterstock.com/z/stock-photo-farmer-and-agraringeniuer-discuss-the-rape-field-140707168.jpg'
-          },
-          {
-            msg: 'Chemistry Projects',
-            number: 2,
-            img: 'https://image.shutterstock.com/z/stock-photo-portrait-of-female-doctor-or-scientist-showing-and-analyzing-liquid-in-flask-over-american-flag-133647182.jpg'
-          },
-          {
-            msg: 'Teaching Citizen Science',
-            number: 3,
-            img: 'https://image.shutterstock.com/z/stock-photo-conceptual-business-illustration-with-the-words-citizen-science-1014248041.jpg'
-          },
-          {
-            msg: 'Businesses and Open Data',
-            number: 4,
-            img: 'https://image.shutterstock.com/z/stock-photo-conceptual-business-illustration-with-the-words-citizen-science-1022808259.jpg'
-          }
-        ]
       }
     },
     mounted() {},
+    created() {
+      console.log(this.items[0].path)
+    },
     methods: {}
   }
 </script>

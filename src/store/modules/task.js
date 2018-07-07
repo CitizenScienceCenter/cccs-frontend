@@ -6,6 +6,7 @@ const state = {
     tasks: [],
     selectedTask: null,
     loading: false,
+    taskSaved: false
 }
 
 // getters
@@ -28,6 +29,7 @@ const actions = {
             .catch(err => {
                 console.log(err)
                 commit('SET_LOADING', false)
+                commit('SET_TASKSAVED', true)
                 if (err.response.status === 404) {
                     // TODO load 404 page
                 } else {
@@ -108,6 +110,9 @@ const actions = {
 const mutations = {
     SET_LOADING(state, flag) {
         state.loading = flag
+    },
+    SET_TASKSAVED(state, flag) {
+        state.taskSaved = flag
     },
     SET_TASKS(state, tasks) {
         state.tasks = tasks

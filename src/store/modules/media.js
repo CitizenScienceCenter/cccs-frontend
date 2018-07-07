@@ -22,7 +22,6 @@ const actions = {
         })
           .then(req => {
             commit('SET_MEDIA', req.body)
-            console.log(req.body)
             commit('SET_LOADING', false)
           })
           .catch(err => {

@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex"
 import TaskMultipleChoices from '@/components/task-multiple-choices.vue'
 import Upload from '@/components/upload.vue'
 export default {
@@ -103,16 +104,19 @@ export default {
           }
         }
       },
-      taskSaved: false
     };
   },
+  computed: mapState({
+    taskSaved: state => state.task.taskSaved,
+    loading: state => state.task.loading
+  }),
   created() {
   },
   methods: {
     add() {
       this.task.sequence = parseInt(this.task.sequence)
       this.$store.dispatch('task/addTasks', [this.task])
-      // .then(this.$router.go(-1))
+      // .then(this.$router.go({name:'CreateTask', params: {id: this.project_id}}))
     },
   }
 };
