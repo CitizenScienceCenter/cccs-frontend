@@ -4,7 +4,7 @@
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span class="md-title">Citizen Science</span>
+      <span class="md-title">C<sup>3</sup>S</span>
 
       <div class="md-toolbar-section-end">
       </div>

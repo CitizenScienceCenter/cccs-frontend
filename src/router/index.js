@@ -34,6 +34,11 @@ const router = new Router({
       beforeEnter: logout,
     },
     {
+      path: '/splash',
+      name: 'Splash',
+      component: Home.Splash
+    },
+    {
       path: '/dashboard',
       name: 'Dashboard',
       component: Home.Dashboard,
@@ -41,9 +46,17 @@ const router = new Router({
     },
     {
       path: '/',
-      redirect: {
-        name: 'Dashboard',
-      },
+      beforeEnter: (to, from, next) => {
+        if (store.state.user.user !== null && 'api_key' in store.state.user.user && store.state.user.user.api_key) {
+          next({
+            path: '/dashboard',
+          });
+        } else {
+          next({
+            path: '/splash',
+          });
+        }
+      }
     },
     {
       path: '/oauth/authorize',
@@ -137,8 +150,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // console.log(store.getters['user/user'].api_key)
-    // store.getters['user/user']
     // TODO check user after login is null, need to subscribe to value
     if (store.state.user.user !== null && 'api_key' in store.state.user.user && store.state.user.user.api_key) {
       next(vm => {
