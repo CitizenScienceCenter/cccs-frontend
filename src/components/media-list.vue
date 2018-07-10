@@ -62,8 +62,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.thumb {
-  width: 4%;
-}
+<style lang="scss" scoped src='@/assets/styles/components/media-list.scss'>
+
 </style>

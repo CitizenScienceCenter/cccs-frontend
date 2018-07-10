@@ -1,7 +1,7 @@
 <template>
 
   
-  <div>
+  <div class="splash">
     <header class="home-header">
         <h1 class="hdr-text">C<sup>3</sup>S</h1>
         <p class="hdr-desc">A Citizen Science platform to create, and participate in, apps to access the power of the people.</p>
@@ -79,24 +79,6 @@ export default {
   name: "Splash"
 };
 </script>
-<style lang="scss" scoped>
-.home-header {
-  text-align: center;
-}
-.home-grid {
-    margin-left: 25%;
-    // margin-right: 30%;
-}
-.md-card {
-  width: 320px;
-  margin: 5%;
-  display: inline-block;
-  vertical-align: top;
-}
-.hdr-text {
-    font-size: 400%
-}
-.hdr-desc {
-    font-size: 200%
-}
+<style lang="scss" scoped src="@/assets/styles/home/splash.scss'>
+
 </style>

@@ -41,31 +41,11 @@
     },
     mounted() {},
     created() {
-      console.log(this.items[0].path)
     },
     methods: {}
   }
 </script>
 
-<style lang="scss" scoped>
-  .VueCarousel-slide {
-    position: relative;
-    background: #448aff;
-    color: #fff;
-    font-family: Arial;
-    font-size: 24px;
-    text-align: center;
-    min-height: 100px;
-  }
+<style lang="scss" scoped src='@/assets/styles/components/featured-carousel.scss'>
 
-  .slide-img {
-    max-width: 30%;
-  }
-  
-  .md-card {
-    width: 320px;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-  }
 </style>
