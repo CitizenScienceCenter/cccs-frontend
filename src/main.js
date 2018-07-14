@@ -22,7 +22,7 @@ Vue.use(VueBreadcrumbs);
 Swagger({url:process.env.BASE_URI,
 requestInterceptor(req) {
   // req.headers['content-type'] = 'application/json'
-  let u = store.getters['user/user']
+  let u = store.getters['user/currentUser']
   if (u !== null) {
     req.headers['X-API-KEY'] = u.api_key
   }

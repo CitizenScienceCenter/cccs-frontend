@@ -4,14 +4,17 @@
 // shape: [{ id, quantity }]
 const state = {
     user: null,
-    settings: null,
-    loading: false
+    currentUser: null,
+    settings: null, // TODO split this out into separate store
+    loading: false,
+    error: false
 }
 
 // getters
 const getters = {
     user: state => state.user,
-    id: state => state.user.id
+    currentUser: state => state.currentUser,
+    id: state => state.currentUser.id
 }
 
 // actions
@@ -21,15 +24,18 @@ const actions = {
         rootState.api.client.apis.Users.login(user)
             .then(r => r.body)
             .then(user => {
-                commit('SET_USER', user)
+                console.log(user)
+                commit('SET_CURRENT_USER', user)
                 commit('SET_LOADING', false)
             })
             .catch(err => {
+                console.log(err)
+                commit('SET_ERROR', err)
                 commit('SET_LOADING', false)
             });
     },
-    logout({commit}) {
-        commit('SET_USER', null)
+    logout({state, commit}) {
+        commit('SET__CURRENT_USER', null)
     },
     getUser({state, commit, rootState}, id) {
         this.$ac.apis.Users.get_user({
@@ -39,6 +45,7 @@ const actions = {
             commit('SET_USER', req.body)
           }).catch(err => {
             console.error(err.response.status)
+            commit('SET_ERROR', err)
             // TODO set path to login or 404 
           })
     }
@@ -51,6 +58,12 @@ const mutations = {
     },
     SET_USER(state, user) {
         state.user = user
+    },
+    SET_CURRENT_USER(state, user) {
+        state.currentUser = user
+    },
+    SET_ERROR(state, err) {
+        state.error = err
     }
 }
 
