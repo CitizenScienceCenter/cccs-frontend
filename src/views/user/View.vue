@@ -33,30 +33,23 @@
 </template>
 
 <script>
+  import { mapState, mapGetters } from "vuex"
   export default {
     name: 'ViewUser',
     data() {
       return {
-        user: undefined,
-        userId: this.$route.params.id || localStorage.getItem('user_id')
+        userId: this.$route.params.id || this.$store.getters['user/id']
       }
     },
+    computed: mapState({
+      user: state => state.user.user
+    }),
     mounted() {
-      //TODO handle user searching from ID or API Key
-      this.fetchUser()
+      if(this.userId !== this.user.id) {
+        this.$store.dispatch('user/getUser', this.userId)
+      }
     },
     methods: {
-      fetchUser() {
-        this.$ac.apis.Users.get_user({
-            id: this.userId
-          })
-          .then(req => {
-            this.user = req.body
-          }).catch(err => {
-            // TODO show error snack bar
-            console.error(err)
-          })
-      }
     }
   }
 </script>

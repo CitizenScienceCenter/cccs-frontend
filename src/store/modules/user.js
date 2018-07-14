@@ -30,6 +30,17 @@ const actions = {
     },
     logout({commit}) {
         commit('SET_USER', null)
+    },
+    getUser({state, commit, rootState}, id) {
+        this.$ac.apis.Users.get_user({
+            id: id
+          })
+          .then(req => {
+            commit('SET_USER', req.body)
+          }).catch(err => {
+            console.error(err.response.status)
+            // TODO set path to login or 404 
+          })
     }
 }
 

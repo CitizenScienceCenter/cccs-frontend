@@ -151,6 +151,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // TODO check user after login is null, need to subscribe to value
+    console.dir(store.state.user)
     if (store.state.user.user !== null && 'api_key' in store.state.user.user && store.state.user.user.api_key) {
       next(vm => {
         console.log(vm)
