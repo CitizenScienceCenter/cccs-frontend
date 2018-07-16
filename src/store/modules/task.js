@@ -18,17 +18,17 @@ const getters = {
 // actions
 const actions = {
     getTasks({ state, commit, rootState }, search) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Tasks.get_tasks({
             search_term: search || undefined
         })
             .then(res => {
                 commit('SET_TASKS', res.body)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             })
             .catch(err => {
                 console.log(err)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
                 commit('SET_TASKSAVED', true)
                 if (err.response.status === 404) {
                     // TODO load 404 page
@@ -38,17 +38,17 @@ const actions = {
             })
     },
     getTask({ state, commit, rootState }, id) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Tasks.get_task({
             id: id
         })
             .then(res => {
                 res.body['content_str'] = JSON.stringify(res.body.content)
                 commit('SET_TASK', res.body)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             })
             .catch(err => {
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
                 if (err.response.status === 404) {
                     // TODO load 404 page
                 } else {
@@ -57,7 +57,7 @@ const actions = {
             })
     },
     projectTasks({ state, commit, rootState }, id) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Projects.project_tasks({
             id: id
         })
@@ -66,11 +66,11 @@ const actions = {
                     t['content_str'] = JSON.stringify(t.content)
                 })
                 commit('SET_TASKS', res.body)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             })
             .catch(err => {
                 console.log(err)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false , {root: true})
                 if (err.status === 404) {
                     // TODO load 404 page
                 } else {
@@ -79,28 +79,34 @@ const actions = {
             })
     },
     addTasks({ state, commit, dispatch, rootState }, tasks) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Tasks.create_tasks({
             tasks: tasks,
         })
             .then(res => {
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
                 console.log(res.body[0].id)
                 dispatch('upload/addID', res.body[0].id, {root: true})
             })
-            .catch(e => console.error(e))
+            .catch(e => {
+                console.error(e)
+                commit('settings/SET_LOADING', false, {root: true})
+            })
 
     },
     deleteTasks({ state, commit, dispatch, rootState }, tasks) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Tasks.delete_tasks({
             tasks: tasks,
         })
             .then(res => {
                 commit('SET_TASKS', res.body)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             })
-            .catch(e => console.error(e));
+            .catch(e => {
+                commit('settings/SET_LOADING', false, {root: true})
+                console.error(e)
+            });
 
     }
 

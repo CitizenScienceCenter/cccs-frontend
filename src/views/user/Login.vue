@@ -27,7 +27,7 @@
         </md-card-actions>
       </md-card>
 
-      <!-- <md-snackbar :md-active.sync="currentUser">Welcome, {{username}}</md-snackbar>
+      <!-- <md-snackbar :md-active.sync="currentUser">Welcome, {{currentUser.email}}</md-snackbar>
       <md-snackbar :md-active.sync="error">Login Failed</md-snackbar> -->
     </form>
   </div>

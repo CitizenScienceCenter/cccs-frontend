@@ -20,18 +20,18 @@ const getters = {
 // actions
 const actions = {
     login({state, commit, rootState }, user) {
-        commit('SET_LOADING', true)
+        commit('settings/SET_LOADING', true, {root: true})
         rootState.api.client.apis.Users.login(user)
             .then(r => r.body)
             .then(user => {
                 console.log(user)
                 commit('SET_CURRENT_USER', user)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             })
             .catch(err => {
                 console.log(err)
                 commit('SET_ERROR', err)
-                commit('SET_LOADING', false)
+                commit('settings/SET_LOADING', false, {root: true})
             });
     },
     logout({state, commit}) {

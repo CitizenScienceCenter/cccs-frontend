@@ -17,11 +17,11 @@ const getters = {
 const actions = {
     postSubmission({state, commit, rootState, dispatch }) {
 
-        commit('SET_LOADING', true)
+      commit('settings/SET_LOADING', true, {root: true})
         console.log(Object.assign({}, state.submission.content))
         rootState.api.client.apis.Submissions.create_submission({submission: state.submission})
           .then(res => {
-            commit('SET_LOADING', false)
+            commit('settings/SET_LOADING', false, {root: true})
             commit('SET_SUBMISSION', Object.assign({}, res.body))
             // console.log(rootState.upload.content)
             if (rootState.upload.content.length > 0) {
@@ -38,14 +38,15 @@ const actions = {
           })
     },
     putSubmission({state, commit, rootState}, submission) {
-        commit('SET_LOADING', true)
+      commit('settings/SET_LOADING', true, {root: true})
         console.log(submission)
         rootState.api.client.apis.Submissions.put_submission({id: submission.id, submission: submission})
           .then(req => {
-            commit('SET_LOADING', false)
+            commit('settings/SET_LOADING', false, {root: true})
             commit('SET_SUBMISSION', req.body)
           })
           .catch(err => {
+            commit('settings/SET_LOADING', false, {root: true})
             if (err.response.status === 404) {
               // TODO load 404 page
             } else {

@@ -7,6 +7,7 @@ import task from './modules/task'
 import submission from './modules/submission'
 import media from './modules/media'
 import upload from './modules/upload'
+import settings from './modules/settings'
 import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     task,
     media,
     upload,
+    settings,
     submission
   },
   strict: debug,
