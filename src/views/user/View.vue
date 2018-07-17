@@ -24,7 +24,7 @@
   
   
         <!-- <md-card-actions>
-              <md-button type="submit" class="md-primary" :disabled="sending">Edit</md-button>
+              <md-button type="submit" class="md-primary" :disabled="loading">Edit</md-button>
             </md-card-actions> -->
       </md-card>
   
@@ -33,25 +33,25 @@
 </template>
 
 <script>
-  import { mapState, mapGetters } from "vuex"
-  export default {
-    name: 'ViewUser',
-    data() {
-      return {
-        userId: this.$route.params.id || this.$store.getters['user/id']
-      }
-    },
-    computed: mapState({
-      user: state => state.user.user
-    }),
-    mounted() {
-      if(this.userId !== this.user.id) {
-        this.$store.dispatch('user/getUser', this.userId)
-      }
-    },
-    methods: {
+import { mapState, mapGetters } from "vuex";
+export default {
+  name: "ViewUser",
+  data() {
+    return {
+      userId: this.$route.params.id || this.$store.getters["user/id"]
+    };
+  },
+  computed: mapState({
+    user: state => state.user.user,
+    loading: state => state.settings.loading
+  }),
+  mounted() {
+    if (this.userId !== this.user.id) {
+      this.$store.dispatch("user/getUser", this.userId);
     }
-  }
+  },
+  methods: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

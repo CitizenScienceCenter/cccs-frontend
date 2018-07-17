@@ -10,20 +10,20 @@
           <div class="md-layout">
           <md-field>
             <label for="email">Email</label>
-            <md-input v-model="email" type="email" name="email" id="email" autocomplete="email" :disabled="sending" />
+            <md-input v-model="email" type="email" name="email" id="email" autocomplete="email" :disabled="loading" />
           </md-field>
 
               <md-field>
                 <label for="pwd">Password</label>
-                <md-input v-model="password" type="password" id="password" name="password" autocomplete="password" :disabled="sending" />
+                <md-input v-model="password" type="password" id="password" name="password" autocomplete="password" :disabled="loading" />
               </md-field>
           </div>
         </md-card-content>
 
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">Create user</md-button>
         </md-card-actions>
       </md-card>
 
@@ -33,36 +33,28 @@
 </template>
 
 <script>
-
+import { mapState, mapGetters } from "vuex";
 export default {
-  name: 'Register',
-  data () {
+  name: "Register",
+  data() {
     return {
-      msg: 'Sign up for an account',
-      email: '',
-      password: '',
-      sending: false,
+      msg: "Sign up for an account",
+      email: "",
+      password: "",
       userSaved: false
-    }
+    };
   },
+  computed: mapGetters({
+    loading: state => state.settings.loading
+  }),
   methods: {
-    register () {
-      console.log(this.email)
-      this.sending = true
-      this.$ac.apis.Users.register_user({ user: { email: this.email, pwd: this.password } })
-        .then(req => {
-          console.log(req)
-          this.userSaved = true
-          this.$router.push('login')
-        })
-        .catch((e) => console.error(e))
-        .finally(() => this.sending = false)
+    register() {
+      this.$store.dispatch('user/register', this.user)
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped src='@/assets/styles/main.scss'>
-
 </style>

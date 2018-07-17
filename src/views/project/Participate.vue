@@ -38,7 +38,7 @@ export default {
     project: state => state.project.project,
     tasks: state => state.task.tasks,
     submission: state => state.submission.submission,
-    loading: state => state.task.loading
+    loading: state => state.settings.loading
   }),
   watch: {
     "$route.params.tid": function(tid) {
@@ -46,11 +46,11 @@ export default {
     }
   },
   mounted() {
-    this.pid = this.$route.params.id
-    this.activeTaskIndex = 0
-    this.$store.dispatch("project/getProject", this.pid)
-    this.$store.dispatch("task/projectTasks", this.pid)
-    this.handleTask()
+    this.pid = this.$route.params.id;
+    this.activeTaskIndex = 0;
+    this.$store.dispatch("project/getProject", this.pid);
+    this.$store.dispatch("task/projectTasks", this.pid);
+    this.handleTask();
   },
   updated() {
     if (this.activeTaskIndex >= this.tasks.length) {
@@ -62,50 +62,49 @@ export default {
   },
   methods: {
     handleTask(index) {
-      const id = this.$route.params.id
-      const tid = this.$route.params.tid
-      this.$store.dispatch("project/getProject", this.pid)
-      this.$store.dispatch("task/projectTasks", this.pid)
+      const id = this.$route.params.id;
+      const tid = this.$route.params.tid;
+      this.$store.dispatch("project/getProject", this.pid);
+      this.$store.dispatch("task/projectTasks", this.pid);
       this.activeTask = this.tasks.find(task => {
-        return task.id === tid
-      })
+        return task.id === tid;
+      });
       this.activeTaskIndex = this.tasks.findIndex(task => {
-        return task.id === tid
-      })
+        return task.id === tid;
+      });
       if (this.activeTask) {
-        this.createSubmission()
+        this.createSubmission();
       }
     },
     takePart() {
-      const id = this.$route.params.id
-      const tid = this.tasks[0].id
-      if (this.$route.params.tid ===  undefined) {
+      const id = this.$route.params.id;
+      const tid = this.tasks[0].id;
+      if (this.$route.params.tid === undefined) {
         this.$router.push({
           name: "Submission",
           params: { id: id, tid: tid }
-        })
+        });
       } else if (this.activeTaskIndex + 1 !== this.tasks.length) {
-        const tid = this.tasks[this.activeTaskIndex + 1].id
+        const tid = this.tasks[this.activeTaskIndex + 1].id;
         // TODO handle validation here or in store actions
-        this.$store.dispatch('submission/postSubmission', this.submission)
-        this.$router.push(`/projects/${id}/participate/${tid}`)
+        this.$store.dispatch("submission/postSubmission", this.submission);
+        this.$router.push(`/projects/${id}/participate/${tid}`);
       } else {
         // TODO load finished page
-        this.$store.dispatch('submission/postSubmission', this.submission)
-        this.$store.commit('upload/SET_ID', null)
-        this.$router.push(`/projects/${id}`)
+        this.$store.dispatch("submission/postSubmission", this.submission);
+        this.$store.commit("upload/SET_ID", null);
+        this.$router.push(`/projects/${id}`);
       }
     },
     createSubmission() {
-
       // if (this.activeTaskIndex !== this.tasks.length) {
       //   console.log(this.submisson.content)
-        const submission = {
-          user_id: this.$store.getters['user/id'],
-          task_id: this.activeTask.id,
-          content: {}
-        }
-        this.$store.commit('submission/SET_SUBMISSION', submission)
+      const submission = {
+        user_id: this.$store.getters["user/id"],
+        task_id: this.activeTask.id,
+        content: {}
+      };
+      this.$store.commit("submission/SET_SUBMISSION", submission);
     }
   }
 };

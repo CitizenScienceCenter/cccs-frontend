@@ -10,7 +10,7 @@
           <div class="md-layout">
             <md-field>
               <label for="name">ID</label>
-              <md-input type="text" v-model="form.id" name="id" id="id" :disabled="sending" />
+              <md-input type="text" v-model="form.id" name="id" id="id" :disabled="loading" />
             </md-field>
   
             <md-field>
@@ -20,10 +20,10 @@
           </div>
         </md-card-content>
   
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-progress-bar md-mode="indeterminate" v-if="loading" />
   
         <md-card-actions>
-          <md-button type="submit" ref='upload' class="md-primary" :disabled="sending">Upload</md-button>
+          <md-button type="submit" ref='upload' class="md-primary" :disabled="loading">Upload</md-button>
         </md-card-actions>
       </md-card>
   
@@ -33,12 +33,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
   export default {
     name: 'UploadMedia',
     data() {
       return {
         msg: 'Upload Here',
-        sending: false,
         form: {
           id: this.$route.query.id || this.$route.params.tid,
           attachment: {
@@ -50,21 +50,21 @@
         fileSaved: false
       }
     },
+    computed: mapState({
+      loading: state => state.settings.loading
+    }),
     created() {},
     methods: {
       fileSelected(ev) {
         this.selected = ev
       },
       upload() {
-        this.sending = true
         for (let i = 0; i < this.selected.length; i++) {
           this.fileSaved = false
           const f = this.selected.item(i)
-          this.sending = true
           this.form.attachment = f
           this.$ac.apis.Media.upload(this.form)
             .then(req => {
-              this.sending = false
               console.log(req)
               this.fileSaved = true
               if (!this.form.id) {
@@ -73,7 +73,6 @@
               }
             })
             .catch((e) => {
-              this.sending = false
               console.error(e)
             })
         }

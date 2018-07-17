@@ -36,8 +36,8 @@
     <md-progress-bar md-mode="indeterminate" v-if="loading" />
   
     <md-card-actions md-right>
-      <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="sending">Add Task</md-button>
-      <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="sending">Save</md-button> -->
+      <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="loading">Add Task</md-button>
+      <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="loading">Save</md-button> -->
     </md-card-actions>
     <md-snackbar :md-active.sync="taskSaved">Your tasks have been created, add some more?</md-snackbar>
   
@@ -51,7 +51,6 @@ export default {
   data() {
     return {
       msg: "Please create a task for this project",
-      sending: false,
       project_id: undefined,
       selected: [],
       taskSaved: false
@@ -65,7 +64,7 @@ export default {
   computed: {
     ...mapState({
       tasks: state => state.task.tasks,
-      loading: state => state.task.loading
+      loading: state => state.settings.loading
     })
   },
   methods: {

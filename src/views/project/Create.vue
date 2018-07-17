@@ -10,7 +10,7 @@
           <div class="md-layout">
           <md-field>
             <label for="name">Name</label>
-            <md-input type="text" v-model="project.name" name="name" id="name" :disabled="sending" />
+            <md-input type="text" v-model="project.name" name="name" id="name" :disabled="loading" />
           </md-field>
 
           <md-field>
@@ -33,10 +33,10 @@
           </div>
         </md-card-content>
 
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">Create</md-button>
         </md-card-actions>
       </md-card>
 
@@ -49,50 +49,44 @@
 </template>
 
 <script>
-
 export default {
-  name: 'CreateProject',
-  data () {
+  name: "CreateProject",
+  data() {
     return {
-      msg: 'Please create a project',
-      sending: false,
+      msg: "Please create a project",
       project: {
-        name:'',
-        description:'',
-        platform:'Desktop',
-        owned_by: ''
+        name: "",
+        description: "",
+        platform: "Desktop",
+        owned_by: ""
       },
       project_id: undefined,
       model: {
-        types: [
-          'Desktop',
-          'Mobile',
-          'Both'
-        ]
+        types: ["Desktop", "Mobile", "Both"]
       },
       projectSaved: false
-    }
+    };
   },
-  created () {
-    console.log(this.project)
+  created() {
+    console.log(this.project);
   },
   methods: {
     getModel() {
-      return this.model.types
+      return this.model.types;
     },
-    create () {
-      console.log(this.project)
+    create() {
+      console.log(this.project);
       this.$ac.apis.Projects.create_project({ project: this.project })
         .then(req => {
-          console.log(req)
-          this.project_id = req.body.id
+          console.log(req);
+          this.project_id = req.body.id;
           // this.$router.push({name: 'CreateTask', params: {id: req.body.id}})
           // this.$router.push({name: 'Dashboard'})
         })
-        .catch((e) => console.error(e))
+        .catch(e => console.error(e));
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

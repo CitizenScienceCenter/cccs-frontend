@@ -10,12 +10,12 @@
           <div class="md-layout">
           <md-field>
             <label for="title">Title</label>
-            <md-input type="text" v-model="task.title" name="title" id="title" :disabled="sending" />
+            <md-input type="text" v-model="task.title" name="title" id="title" :disabled="loading" />
           </md-field>
 
           <md-field>
             <label for="seq">Sequence</label>
-            <md-input type="number" v-model="task.sequence" name="seq" id="seq" :disabled="sending" />
+            <md-input type="number" v-model="task.sequence" name="seq" id="seq" :disabled="loading" />
           </md-field>
 
             <md-field>
@@ -29,7 +29,7 @@
 
             <md-field>
             <label for="qutxt">Question Text</label>
-            <md-input type="text" v-model="task.content.question.text" name="qutxt" id="qutxt" :disabled="sending" />
+            <md-input type="text" v-model="task.content.question.text" name="qutxt" id="qutxt" :disabled="loading" />
           </md-field>
 
             <md-field>
@@ -60,10 +60,10 @@
           </div>
         </md-card-content>
 
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Add</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">Add</md-button>
         </md-card-actions>
       </md-card>
 
@@ -77,16 +77,15 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex"
-import TaskMultipleChoices from '@/components/task-multiple-choices.vue'
-import Upload from '@/components/upload.vue'
+import { mapState, mapGetters } from "vuex";
+import TaskMultipleChoices from "@/components/task-multiple-choices.vue";
+import Upload from "@/components/upload.vue";
 export default {
   name: "CreateTask",
-  components: {TaskMultipleChoices, Upload},
+  components: { TaskMultipleChoices, Upload },
   data() {
     return {
       msg: "Add a new task!",
-      sending: false,
       project_id: this.$route.params.id,
       task: {
         title: "",
@@ -95,29 +94,28 @@ export default {
         sequence: 0,
         content: {
           question: {
-            text: '',
-            type: 'text'
+            text: "",
+            type: "text"
           },
           answer: {
-            type: 'text',
+            type: "text",
             choices: []
           }
         }
-      },
+      }
     };
   },
   computed: mapState({
     taskSaved: state => state.task.taskSaved,
-    loading: state => state.task.loading
+    loading: state => state.settings.loading
   }),
-  created() {
-  },
+  created() {},
   methods: {
     add() {
-      this.task.sequence = parseInt(this.task.sequence)
-      this.$store.dispatch('task/addTasks', [this.task])
+      this.task.sequence = parseInt(this.task.sequence);
+      this.$store.dispatch("task/addTasks", [this.task]);
       // .then(this.$router.go({name:'CreateTask', params: {id: this.project_id}}))
-    },
+    }
   }
 };
 </script>

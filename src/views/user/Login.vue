@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     login() {
-      this.sending = true;
       this.$store
         .dispatch("user/login", { user: { email: this.email, pwd: this.password } })
     }

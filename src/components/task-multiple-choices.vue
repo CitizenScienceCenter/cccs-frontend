@@ -15,7 +15,7 @@
   
     <md-card-actions md-right>
       <md-button class="md-primary" @click="addChoice" >Add Choice</md-button>
-      <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="sending">Save</md-button> -->
+      <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="loading">Save</md-button> -->
     </md-card-actions>
   
   </div>

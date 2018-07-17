@@ -5,7 +5,6 @@
 const state = {
     tasks: [],
     selectedTask: null,
-    loading: false,
     taskSaved: false
 }
 
@@ -114,9 +113,6 @@ const actions = {
 
 // mutations
 const mutations = {
-    SET_LOADING(state, flag) {
-        state.loading = flag
-    },
     SET_TASKSAVED(state, flag) {
         state.taskSaved = flag
     },

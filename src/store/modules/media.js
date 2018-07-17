@@ -3,8 +3,7 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-    media: [],
-    loading: false
+    media: []
 }
 
 // getters
@@ -67,9 +66,6 @@ const actions = {
 
 // mutations
 const mutations = {
-    SET_LOADING(state, flag) {
-        state.loading = flag
-    },
     SET_MEDIA(state, media) {
         state.media = media
     }

@@ -34,46 +34,47 @@
 </template>
 
 <script>
-
 export default {
-  name: 'ViewProject',
-  props: ['projectID'],
-  data () {
+  name: "ViewProject",
+  props: ["projectID"],
+  data() {
     return {
-        project: undefined,
-        userID: localStorage.getItem('user_id')
-    }
+      project: undefined,
+      userID: localStorage.getItem("user_id")
+    };
   },
-  mounted () {
-      this.fetchProject()
+  mounted() {
+    this.fetchProject();
   },
   methods: {
-    fetchProject () {
-        this.$ac.apis.Projects.get_project({id: this.$route.params.id || this.projectID})
+    fetchProject() {
+      this.$ac.apis.Projects.get_project({
+        id: this.$route.params.id || this.projectID
+      })
         .then(req => {
-            this.project = req.body
+          this.project = req.body;
         })
         .catch(err => {
-            if (err.response.status === 404) {
-                // TODO load 404 page
-            } else {
-                // TODO show errror
-            }
-        })
+          if (err.response.status === 404) {
+            // TODO load 404 page
+          } else {
+            // TODO show errror
+          }
+        });
     },
-    deleteProject () {
-      this.sending = true
-      this.$ac.apis.Projects.delete_project({id: this.project.id})
+    deleteProject() {
+      this.loading = true;
+      this.$ac.apis.Projects.delete_project({ id: this.project.id })
         .then(req => {
-          this.success = true
-          this.$router.push({name: 'Dashboard'})
-        }).catch(err => console.log(err))
+          this.success = true;
+          this.$router.push({ name: "Dashboard" });
+        })
+        .catch(err => console.log(err));
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped src='@/assets/styles/project/view.scss'>
-
 </style>

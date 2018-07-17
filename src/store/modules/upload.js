@@ -6,12 +6,11 @@ const state = {
 }
 
 // getters
-const getters = {
-}
+const getters = {}
 
 // actions
 const actions = {
-  addID ({
+  addID({
     state,
     commit,
     rootState
@@ -19,18 +18,33 @@ const actions = {
     commit('SET_ID', id)
     console.log('updating')
     console.log(id)
-    for (let i = 0; i < state.content.length; i++) {      
-        console.log(state.content[i])
-        rootState.api.client.apis.Media.put_medium({id: state.content[i], media: {id: state.content[i], 'source_id': id || state.id}})
-            .then(req => {
-                console.log(req)
-                if (i === state.content.length - 1) {
-                    commit('CLEAR')
-                }
-            })
-            .catch((e) => {
-                console.error(e)
-            })
+    for (let i = 0; i < state.content.length; i++) {
+      commit('settings/SET_LOADING', true, {
+        root: true
+      })
+      console.log(state.content[i])
+      rootState.api.client.apis.Media.put_medium({
+          id: state.content[i],
+          media: {
+            id: state.content[i],
+            'source_id': id || state.id
+          }
+        })
+        .then(req => {
+          console.log(req)
+          commit('settings/SET_LOADING', false, {
+            root: true
+          })
+          if (i === state.content.length - 1) {
+            commit('CLEAR')
+          }
+        })
+        .catch((e) => {
+          commit('settings/SET_LOADING', false, {
+            root: true
+          })
+          console.error(e)
+        })
     }
   }
 }

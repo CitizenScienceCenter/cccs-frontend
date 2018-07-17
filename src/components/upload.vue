@@ -20,10 +20,10 @@
           </div>
         </md-card-content>
   
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-progress-bar md-mode="indeterminate" v-if="loading" />
   
         <md-card-actions v-if="!embedded">
-          <md-button type="submit" ref='upload' class="md-primary" :disabled="sending">Upload</md-button>
+          <md-button type="submit" ref='upload' class="md-primary" :disabled="loading">Upload</md-button>
         </md-card-actions>
       </md-card>
   
@@ -40,7 +40,6 @@
     data() {
       return {
         msg: 'Upload Here',
-        sending: false,
         form: {
           id: this.id || this.storeID || this.$route.query.id,
           // id: this.$route.query.id || this.$route.params.tid,
@@ -54,7 +53,8 @@
       }
     },
     computed: mapGetters({
-      storeID: state => state.upload.id
+      storeID: state => state.upload.id,
+      loading: state => state.settings.loading
     }),
     created() {
       console.log(this.embedded)
@@ -65,21 +65,17 @@
         this.upload()
       },
       upload() {
-        this.sending = true
         for (let i = 0; i < this.selected.length; i++) {
           this.fileSaved = false
           const f = this.selected.item(i)
-          this.sending = true
           this.form.attachment = f
           this.$ac.apis.Media.upload(this.form)
             .then(req => {
-              this.sending = false
               console.log(req)
               this.$store.commit('upload/ADD_CONTENT', req.body.id)
               this.fileSaved = true
             })
             .catch((e) => {
-              this.sending = false
               console.error(e)
             })
         }
