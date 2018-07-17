@@ -44,7 +44,7 @@ export default {
       userSaved: false
     };
   },
-  computed: mapGetters({
+  computed: mapState({
     loading: state => state.settings.loading
   }),
   methods: {

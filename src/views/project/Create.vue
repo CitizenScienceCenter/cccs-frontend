@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "CreateProject",
   data() {
@@ -67,6 +68,9 @@ export default {
       projectSaved: false
     };
   },
+  computed: mapState({
+    loading: state => state.settings.loading
+  }),
   created() {
     console.log(this.project);
   },

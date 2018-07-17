@@ -8,12 +8,13 @@ import Swagger from 'swagger-client'
 import VueMaterial from 'vue-material'
 import store from './store'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
+import './assets/styles/theme.scss'
 import VuexRouterSync from 'vuex-router-sync'
 import VueBreadcrumbs from 'vue-2-breadcrumbs'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
+// TODO custiom themes
 Vue.use(VueCarousel)
 VuexRouterSync.sync(store, router)
 Vue.use(VueBreadcrumbs);

@@ -35,14 +35,23 @@
           </md-list>
         </md-list-item>
 
-        <md-list-item to="/user">
+        <md-list-item md-expand>
           <md-icon>account_circle</md-icon>
-          <span class="md-list-item-text">Account</span>
-        </md-list-item>
-
-        <md-list-item  to="/logout">
-          <md-icon>lock</md-icon>
-          <span class="md-list-item-text">Logout</span>
+          <span class="md-list-item-text">User</span>
+          <md-list slot="md-expand">
+            <md-list-item to="/user" class="md-inset">
+              <md-icon>account_circle</md-icon>
+              <span class="md-list-item-text">Account</span>
+            </md-list-item>
+            <md-list-item to="/settings" class="md-inset">
+              <md-icon>settings</md-icon>
+              <span class="md-list-item-text">Settings</span>
+            </md-list-item>
+            <md-list-item  to="/logout" class="md-inset">
+              <md-icon>lock</md-icon>
+              <span class="md-list-item-text">Logout</span>
+            </md-list-item>
+          </md-list>
         </md-list-item>
       </md-list>
     </md-drawer>
@@ -55,51 +64,25 @@
 </template>
 
 <script>
-  export default {
-    name: 'CCCS',
-    data: () => ({
-      showNavigation: false,
-      showSidepanel: false
-    })
+export default {
+  name: "CCCS",
+  data: () => ({
+    showNavigation: false,
+    showSidepanel: false
+  }),
+  created() {
+    // this.$material.theming.theme = 'myTheme'
   }
+};
 </script>
 
 <style lang="scss">
-html, body {
-    position: fixed;
-    top: 0; 
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    height: 100%;
+body {
+  overflow-x: hidden;
+  min-width: 100%;
 }
-  // html {
-  //   height: 100%;
-  // }
-  // body {
-  //   display: flex;
-  //   margin: 0;
-  //   padding: 0;
-  //   flex-direction: column;
-  //   min-height: 100%;
-  // }
-
-  .page-container {
-    overflow: auto;
-  //   position: relative;
-    min-height: 100%;
-  //   border: 1px solid rgba(#000, .12);
-  }
-
-   // Demo purposes only
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
-
-  .md-content {
-    padding: 16px;
-  }
+.md-drawer {
+  width: 230px;
+  max-width: calc(100vw - 125px);
+}
 </style>

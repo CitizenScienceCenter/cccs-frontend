@@ -3,7 +3,8 @@ const state = {
     showSidepanel: false,
     loading: false,
     err: null,
-    errTimeout: 5000
+    errTimeout: 5000,
+    theme: 'light'
 }
 
 const getters = {
@@ -31,6 +32,9 @@ const mutations = {
     },
     SET_ERROR(state, err) {
         state.error = err
+    },
+    SET_THEME(state, theme) {
+        state.theme = theme
     }
 }
 

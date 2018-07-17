@@ -132,6 +132,12 @@ const router = new Router({
       ]
     },
     {
+      path: '/settings',
+      name: 'Settings',
+      component: Home.Settings,
+      meta: {requiresAuth: true, breadcrumb: 'Change Settings'},
+    },
+    {
       path: '/users/:id',
       name: 'ViewUser',
       component: User.View,
