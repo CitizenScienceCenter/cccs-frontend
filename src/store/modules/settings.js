@@ -19,8 +19,7 @@ const actions = {
             commit('SET_ERROR', null)
         }, state.errTimeout)
     },
-    setLoc({state, commit, rootState}, i18n, loc) {
-        // i18n.locale = loc
+    setLoc({state, commit, rootState}, loc) {
         commit('SET_LOCALE', loc)
     }
 

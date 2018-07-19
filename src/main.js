@@ -11,16 +11,19 @@ import 'vue-material/dist/vue-material.min.css'
 import './assets/styles/theme.scss'
 import VuexRouterSync from 'vuex-router-sync'
 import VueBreadcrumbs from 'vue-2-breadcrumbs'
-import VueI18n from 'vue-i18n'
-import messages from './localisation/locale'
+import * as loc from './localisation/index'
+import vuexI18n from 'vuex-i18n'
 
-Vue.use(VueI18n)
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
 // TODO custiom themes
 Vue.use(VueCarousel)
+Vue.use(vuexI18n.plugin, store)
+Vue.i18n.add('en', loc.en);
+Vue.i18n.add('de', loc.de);
 VuexRouterSync.sync(store, router)
-Vue.use(VueBreadcrumbs);
+Vue.use(VueBreadcrumbs)
+
 
 // Load swagger client and SDK is created using tags and operationIds in the JSON
 Swagger({url:process.env.BASE_URI,
@@ -34,15 +37,10 @@ requestInterceptor(req) {
 }}).then((client) => {
   console.log(client)
   Vue.prototype.$ac = client
-  let l = store.getters['settings/loc']
-  const i18n = new VueI18n({
-    locale: l, // set locale
-    messages // set locale messages
-  })
+  Vue.i18n.set('en');
   store.dispatch('api/setClient', client)
   /* eslint-disable no-new */
   new Vue({
-    i18n: i18n,
     el: '#app',
     router,
     store,

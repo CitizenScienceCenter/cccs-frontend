@@ -66,8 +66,8 @@ export default {
         return this.$store.state.settings.locale;
       },
       set(value) {
-        this.$i18n.locale = value
-        this.$store.dispatch("settings/setLoc", this.$i18n, value);
+        this.$i18n.set(value)
+        this.$store.dispatch("settings/setLoc", value);
       }
     }
   },

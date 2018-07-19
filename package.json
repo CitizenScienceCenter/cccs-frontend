@@ -20,10 +20,10 @@
     "vue": "^2.5.2",
     "vue-2-breadcrumbs": "^0.3.0",
     "vue-axios": "^2.1.1",
-    "vue-i18n": "^8.0.0",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
+    "vuex-i18n": "^1.10.5",
     "vuex-persistedstate": "^2.5.4",
     "vuex-router-sync": "^5.0.0"
   },
