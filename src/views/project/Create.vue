@@ -3,30 +3,30 @@
     <form novalidate class="md-layout" @submit.prevent="create">
       <md-card class="md-layout-item md-size-70 md-small-size-100">
         <md-card-header>
-          <div class="md-title">Create a Project</div>
+          <div class="md-title">{{ $t("views.projects.create_title") }}</div>
         </md-card-header>
 
         <md-card-content>
           <div class="md-layout">
           <md-field>
-            <label for="name">Name</label>
+            <label for="name">{{$t("views.projects.form_name")}}</label>
             <md-input type="text" v-model="project.name" name="name" id="name" :disabled="loading" />
           </md-field>
 
           <md-field>
-            <label for="platform">Platform</label>
+            <label for="platform">{{$t("views.projects.form_platform")}}</label>
             <md-select v-model="project.platform" name="platform" id="platform">
               <md-option :value="t" :key="t" v-for="t in getModel()">{{t}}</md-option>
             </md-select>
           </md-field>
 
             <md-field>
-              <label>Description</label>
+              <label>{{$t("views.projects.form_desc")}}</label>
               <md-textarea type="text" v-model="project.description" md-autogrow></md-textarea>
             </md-field>
 
             <md-field>
-              <label>Live?</label>
+              <label>{{$t("views.projects.form_live")}}</label>
               <br>
               <md-switch v-model="project.active" class="live-switch md-primary"></md-switch>
             </md-field>
@@ -36,7 +36,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="loading">Create</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">{{$t("views.projects.form_submit")}}</md-button>
         </md-card-actions>
       </md-card>
 

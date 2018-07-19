@@ -10,14 +10,13 @@
         <md-card-content>
           <div class="md-layout">
             <md-field>
-                <label for="email">Description</label>
+                <label for="desc">{{ $t("views.projects.form_desc") }}</label>
                 <md-input v-model="project.description" type="text" name="desc" id="desc" disabled/>
             </md-field>
 
             <md-field>
-              <label>Live?</label>
-              
-              <md-switch v-model="project.active" class="live-switch md-primary"></md-switch>
+              <label for="live">{{ $t("views.projects.form_live") }}</label>
+              <md-switch v-model="project.active" class="live-switch md-primary" name="live"></md-switch>
             </md-field>
 
           </div>
@@ -25,7 +24,7 @@
         </md-card-content>
 
          <md-button v-on:click="deleteProject()" v-if="userID === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
-            <md-icon>delete</md-icon>
+            <md-icon>{{ $t("general.delete") }}</md-icon>
         </md-button>
       </md-card>
 
