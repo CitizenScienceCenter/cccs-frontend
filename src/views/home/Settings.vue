@@ -9,10 +9,18 @@
         <md-card-content>
           <div class="md-layout">
             <md-field>
+              <label for="theme">Theme</label>
               <md-select v-model="theme" name="theme" id="theme">
-                <md-option value="light">Light Theme</md-option>
+                <md-option value="default">Default Theme</md-option>
                 <md-option value="yellow">Yellow Theme</md-option>
                 <md-option value="dark">Dark Theme</md-option>
+              </md-select>
+            </md-field>
+            <md-field>
+              <label for="locale">Language</label>
+              <md-select v-model="locale" name="locale" id="locale">
+                <md-option value="en">English</md-option>
+                <md-option value="de">German</md-option>
               </md-select>
             </md-field>
           </div>
@@ -51,6 +59,15 @@ export default {
       },
       set(value) {
         this.$store.commit("settings/SET_THEME", value);
+      }
+    },
+    locale: {
+      get() {
+        return this.$store.state.settings.locale;
+      },
+      set(value) {
+        this.$i18n.locale = value
+        this.$store.dispatch("settings/setLoc", this.$i18n, value);
       }
     }
   },

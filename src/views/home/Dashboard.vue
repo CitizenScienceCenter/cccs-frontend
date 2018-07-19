@@ -3,6 +3,7 @@
     <md-card class="md-layout-item md-size-100">
         <md-card-header>
             <div class="featured-title md-title"><b>Featured Projects</b></div>
+            <p>{{ $t("home.welcome") }}</p>
         </md-card-header>
 
         <md-card-content>

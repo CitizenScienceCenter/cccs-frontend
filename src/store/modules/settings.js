@@ -4,10 +4,12 @@ const state = {
     loading: false,
     err: null,
     errTimeout: 5000,
-    theme: 'light'
+    theme: 'light',
+    locale: 'en'
 }
 
 const getters = {
+    loc: state => state.locale
 }
 
 const actions = {
@@ -17,6 +19,10 @@ const actions = {
             commit('SET_ERROR', null)
         }, state.errTimeout)
     },
+    setLoc({state, commit, rootState}, i18n, loc) {
+        // i18n.locale = loc
+        commit('SET_LOCALE', loc)
+    }
 
 }
 
@@ -35,6 +41,9 @@ const mutations = {
     },
     SET_THEME(state, theme) {
         state.theme = theme
+    },
+    SET_LOCALE(state, loc) {
+        state.loc = loc
     }
 }
 

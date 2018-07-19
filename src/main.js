@@ -11,7 +11,10 @@ import 'vue-material/dist/vue-material.min.css'
 import './assets/styles/theme.scss'
 import VuexRouterSync from 'vuex-router-sync'
 import VueBreadcrumbs from 'vue-2-breadcrumbs'
+import VueI18n from 'vue-i18n'
+import messages from './localisation/locale'
 
+Vue.use(VueI18n)
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
 // TODO custiom themes
@@ -31,9 +34,15 @@ requestInterceptor(req) {
 }}).then((client) => {
   console.log(client)
   Vue.prototype.$ac = client
+  let l = store.getters['settings/loc']
+  const i18n = new VueI18n({
+    locale: l, // set locale
+    messages // set locale messages
+  })
   store.dispatch('api/setClient', client)
   /* eslint-disable no-new */
   new Vue({
+    i18n: i18n,
     el: '#app',
     router,
     store,
