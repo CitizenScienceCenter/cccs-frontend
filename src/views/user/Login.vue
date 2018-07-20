@@ -3,18 +3,18 @@
     <form novalidate class="md-layout" @submit.prevent="login">
       <md-card class="md-layout-item">
         <md-card-header>
-          <div class="md-title">Login</div>
+          <div class="md-title">{{ $t("views.user.login") }}</div>
         </md-card-header>
 
         <md-card-content>
           <div class="md-layout">
           <md-field>
-            <label for="email">Email</label>
+            <label for="email">{{ $t("views.user.email") }}</label>
             <md-input v-model="email" type="email" name="email" id="email" autocomplete="email" :disabled="loading" />
           </md-field>
 
               <md-field>
-                <label for="pwd">Password</label>
+                <label for="pwd">{{ $t("views.user.pwd") }}</label>
                 <md-input v-model="password" type="password" id="password" name="password" autocomplete="password" :disabled="loading" />
               </md-field>
           </div>
@@ -23,7 +23,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="loading">Login</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">{{ $t("views.user.login") }}</md-button>
         </md-card-actions>
       </md-card>
 

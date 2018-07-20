@@ -3,18 +3,18 @@
     <form novalidate class="md-layout" @submit.prevent="register">
       <md-card class="md-layout-item">
         <md-card-header>
-          <div class="md-title">Sign Up</div>
+          <div class="md-title">{{ $t('views.user.register')}}</div>
         </md-card-header>
 
         <md-card-content>
           <div class="md-layout">
           <md-field>
-            <label for="email">Email</label>
+            <label for="email">{{ $t('views.user.email')}}</label>
             <md-input v-model="email" type="email" name="email" id="email" autocomplete="email" :disabled="loading" />
           </md-field>
 
               <md-field>
-                <label for="pwd">Password</label>
+                <label for="pwd">{{ $t('views.user.pwd')}}</label>
                 <md-input v-model="password" type="password" id="password" name="password" autocomplete="password" :disabled="loading" />
               </md-field>
           </div>
@@ -23,11 +23,11 @@
         <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="loading">Create user</md-button>
+          <md-button type="submit" class="md-primary" :disabled="loading">{{ $t('views.user.register')}}</md-button>
         </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="userSaved">The user {{ email }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="userSaved">	{{ $t('views.user.reg_success', {email: email}) }}</md-snackbar>
     </form>
   </div>
 </template>

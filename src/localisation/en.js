@@ -38,6 +38,11 @@ export const en = {
 
       },
       user: {
+        login: 'Login',
+        register: 'Register',
+        email: 'E-mail',
+        pwd: 'Password',
+        reg_success: 'The user {email} was saved with success',
 
       }
   }
