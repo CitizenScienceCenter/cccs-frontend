@@ -7,13 +7,12 @@ import * as Task from '@/views/task'
 import * as Media from '@/views/media'
 import store from '@/store'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const logout = (to, from, next) => {
   localStorage.removeItem('user')
   return store.dispatch('user/logout').then(() => next('/login'))
-
-};
+}
 
 const router = new Router({
   routes: [

@@ -6,6 +6,7 @@ import vuexI18n from 'vuex-i18n'
 
 Vue.use(vuexI18n.plugin, store)
 Vue.i18n.add('en', loc.en)
+Vue.i18n.set('en')
 
 describe('Dashboard', () => {
 
