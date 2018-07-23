@@ -23,8 +23,8 @@
           <br><br>
         </md-card-content>
 
-         <md-button v-on:click="deleteProject()" v-if="userID === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
-            <md-icon>{{ $t("general.delete") }}</md-icon>
+         <md-button v-on:click="deleteProject()" v-if="user.id === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
+            <md-icon>delete</md-icon>
         </md-button>
       </md-card>
 
@@ -33,42 +33,26 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex"
 export default {
   name: "ViewProject",
   props: ["projectID"],
   data() {
     return {
-      project: undefined,
-      userID: localStorage.getItem("user_id")
-    };
+
+    }
   },
+  computed: mapState({
+    project: state => state.project.selectedProject,
+    loading: state => state.settings.loading,
+    user: state => state.user.currentUser
+  }),
   mounted() {
-    this.fetchProject();
+    this.$store.dispatch('project/getProject', this.$route.params.id || this.projectID)
   },
   methods: {
-    fetchProject() {
-      this.$ac.apis.Projects.get_project({
-        id: this.$route.params.id || this.projectID
-      })
-        .then(req => {
-          this.project = req.body;
-        })
-        .catch(err => {
-          if (err.response.status === 404) {
-            // TODO load 404 page
-          } else {
-            // TODO show errror
-          }
-        });
-    },
     deleteProject() {
-      this.loading = true;
-      this.$ac.apis.Projects.delete_project({ id: this.project.id })
-        .then(req => {
-          this.success = true;
-          this.$router.push({ name: "Dashboard" });
-        })
-        .catch(err => console.log(err));
+      this.$store.dispatch('project/deleteProject', this.project.id)
     }
   }
 };

@@ -34,7 +34,9 @@ const actions = {
         commit('settings/SET_LOADING', false, {
           root: true
         })
-        commit('settings/SET_ERROR', err, {root: true})
+        commit('settings/SET_ERROR', err, {
+          root: true
+        })
       })
   },
   getProject({
@@ -58,7 +60,9 @@ const actions = {
         commit('settings/SET_LOADING', false, {
           root: true
         })
-        commit('settings/SET_ERROR', err, {root: true})
+        commit('settings/SET_ERROR', err, {
+          root: true
+        })
       })
   },
   createProject({
@@ -80,8 +84,35 @@ const actions = {
         commit('SET_PROJECT', req.body)
       })
       .catch(err => {
-        commit('settings/SET_ERROR', err, {root: true})
+        commit('settings/SET_ERROR', err, {
+          root: true
+        })
         commit('settings/SET_LOADING', false, {
+          root: true
+        })
+      });
+  },
+  deleteProject({
+    state,
+    commit,
+    rootState
+  }, pid) {
+    commit('settings/SET_LOADING', true, {
+      root: true
+    })
+    rootState.api.client.apis.Projects.delete_project({
+        id: pid
+      })
+      .then(req => {
+        commit('settings/SET_LOADING', false, {
+          root: true
+        })
+      })
+      .catch(err => {
+        commit('settings/SET_LOADING', false, {
+          root: true
+        })
+        commit('settings/SET_ERROR', err, {
           root: true
         })
       });
