@@ -20,8 +20,6 @@
           </div>
         </md-card-content>
 
-        <md-progress-bar md-mode="indeterminate" v-if="loading" />
-
         <md-card-actions>
           <md-button type="submit" class="md-primary" :disabled="loading">{{ $t('views.user.register')}}</md-button>
         </md-card-actions>

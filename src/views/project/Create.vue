@@ -33,8 +33,6 @@
           </div>
         </md-card-content>
 
-        <md-progress-bar md-mode="indeterminate" v-if="loading" />
-
         <md-card-actions>
           <md-button type="submit" class="md-primary" :disabled="loading">{{$t("views.projects.form_submit")}}</md-button>
         </md-card-actions>
@@ -69,10 +67,18 @@ export default {
     };
   },
   computed: mapState({
-    loading: state => state.settings.loading
+    loading: state => state.settings.loading,
+    createdProj: state => state.project.selectedProject
   }),
+  watch: {
+    'createdProj' (to, from) {
+      this.$store.commit('project/SET_PROJECT', null, {root: true})
+      this.$router.push({name: 'ViewProject', params: {id: to.id}})
+    }
+  },
   created() {
     console.log(this.project);
+    this.$store.commit('settings/SET_LOADING', false, {root: true})
   },
   methods: {
     getModel() {
@@ -80,14 +86,7 @@ export default {
     },
     create() {
       console.log(this.project);
-      this.$ac.apis.Projects.create_project({ project: this.project })
-        .then(req => {
-          console.log(req);
-          this.project_id = req.body.id;
-          // this.$router.push({name: 'CreateTask', params: {id: req.body.id}})
-          // this.$router.push({name: 'Dashboard'})
-        })
-        .catch(e => console.error(e));
+      this.$store.dispatch('project/createProject', this.project)
     }
   }
 };

@@ -33,8 +33,6 @@
       </md-table-row>
     </md-table>
   
-    <md-progress-bar md-mode="indeterminate" v-if="loading" />
-  
     <md-card-actions md-right>
       <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="loading">Add Task</md-button>
       <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="loading">Save</md-button> -->

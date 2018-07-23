@@ -19,8 +19,7 @@
             </md-field>
           </div>
         </md-card-content>
-  
-        <md-progress-bar md-mode="indeterminate" v-if="loading" />
+
   
         <md-card-actions>
           <md-button type="submit" ref='upload' class="md-primary" :disabled="loading">Upload</md-button>

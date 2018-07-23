@@ -9,6 +9,7 @@
       <div class="md-toolbar-section-end">
       </div>
     </md-toolbar>
+    <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
     <md-drawer :md-active.sync="showNavigation" >
       <md-toolbar class="md-transparent" md-elevation="0">
@@ -64,6 +65,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex"
 export default {
   name: "CCCS",
   data: () => ({
@@ -72,7 +74,10 @@ export default {
   }),
   created() {
     // this.$material.theming.theme = 'myTheme'
-  }
+  },
+  computed: mapState({
+    loading: state => state.settings.loading
+  }),
 };
 </script>
 
