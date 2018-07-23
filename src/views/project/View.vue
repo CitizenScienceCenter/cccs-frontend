@@ -42,6 +42,13 @@ export default {
 
     }
   },
+  watch: {
+    'project'(to, from) {
+      if (to === null) {
+        this.$router.push('/projects')
+      }
+    }
+  },
   computed: mapState({
     project: state => state.project.selectedProject,
     loading: state => state.settings.loading,

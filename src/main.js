@@ -35,9 +35,8 @@ requestInterceptor(req) {
   }
   return req
 }}).then((client) => {
-  console.log(client)
   Vue.prototype.$ac = client
-  Vue.i18n.set('en');
+  Vue.i18n.set('en')
   store.dispatch('api/setClient', client)
   /* eslint-disable no-new */
   new Vue({

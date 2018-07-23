@@ -155,24 +155,22 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // TODO check user after login is null, need to subscribe to value
-    if (store.state.user.currentUser !== null && 'api_key' in store.state.user.currentUser && store.state.user.currentUser.api_key) {
-      next(vm => {
-        console.log(vm)
+    store.dispatch('user/validate').then(v => {
+      if (v) {
         next()
-      })
-      // TODO check against user on server side (no access to $ac api object for call)
-    } else {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
-      });
-    }
+      } else {
+        next({
+          path: '/login',
+          query: {
+            redirect: to.fullPath
+          }
+        })
+      }
+    })
   } else {
-    next(); // make sure to always call next()!
+    next()
   }
-});
+})
 
-module.exports = router;
+module.exports = router
+

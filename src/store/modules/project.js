@@ -104,6 +104,7 @@ const actions = {
         id: pid
       })
       .then(req => {
+        commit('SET_PROJECT', null)
         commit('settings/SET_LOADING', false, {
           root: true
         })
