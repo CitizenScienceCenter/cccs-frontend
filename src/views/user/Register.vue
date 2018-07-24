@@ -47,7 +47,13 @@ export default {
   }),
   methods: {
     register() {
-      this.$store.dispatch('user/register', this.user)
+      const user = {
+        email: this.email,
+        pwd: this.password
+      }
+      this.$store.dispatch('user/register', user).then(r => {
+          this.$router.dispatch('/login')
+        })
     }
   }
 };

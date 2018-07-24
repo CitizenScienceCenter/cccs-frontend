@@ -56,7 +56,8 @@ const actions = {
     commit('settings/SET_LOADING', true, {
       root: true
     })
-    rootState.api.client.apis.Users.register_user(user)
+    console.log(user)
+    rootState.api.client.apis.Users.register_user({user: user})
       .then(r => r.body)
       .then(user => {
         console.log(user)
@@ -64,6 +65,7 @@ const actions = {
         commit('settings/SET_LOADING', false, {
           root: true
         })
+
       })
       .catch(err => {
         console.log(err)
@@ -102,8 +104,7 @@ const actions = {
     rootState
   }, id) {
     try {
-        let {res} = await rootState.api.client.apis.Users.validate({key: state.currentUser.api_key})
-        commit('SET_CURRENT_USER', res.body)
+        let res = await rootState.api.client.apis.Users.validate({key: state.currentUser.api_key})
         return true
     } catch (e) {
         return false

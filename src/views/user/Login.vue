@@ -47,7 +47,7 @@ export default {
   computed: mapState({
     currentUser: state => state.user.currentUser,
     loading: state => state.user.loading,
-    error: state => state.user.error
+    error: state => state.settings.error
   }),
   watch: {
     'currentUser'(to, from) {
@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     // TODO errors should be in a global state and cleared on load
-    this.$store.commit('user/SET_ERROR', null)
+    this.$store.commit('settings/SET_ERROR', null)
   },
   methods: {
     login() {

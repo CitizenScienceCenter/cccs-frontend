@@ -154,6 +154,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // TODO call needed every time? could check on first call and then add to store?
   if (to.matched.some(record => record.meta.requiresAuth)) {
     store.dispatch('user/validate').then(v => {
       if (v) {
