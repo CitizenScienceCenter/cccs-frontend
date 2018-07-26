@@ -82,6 +82,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "src/assets/styles/theme.scss";
+
 body {
   overflow-x: hidden;
   min-width: 100%;
@@ -92,9 +94,10 @@ body {
 //   background-color: red !important;
 // }
 
-// .md-list {
-//   background-color: red !important;
-// }
+.md-list {
+  background-color: $prim !important;
+
+}
 
 // .md-list-item {
 //     color: white !important;
