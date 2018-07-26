@@ -4,7 +4,7 @@ const state = {
     loading: false,
     err: null,
     errTimeout: 5000,
-    theme: 'light',
+    theme: 'default',
     locale: 'en'
 }
 

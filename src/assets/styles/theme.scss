@@ -1,18 +1,43 @@
 @import "~vue-material/dist/theme/engine";
 
+$prim: md-get-palette-color(red, A400) !default;
+$acc: md-get-palette-color(red, A200) !default;
+
+@mixin update-theme($theme) {
+    @if $theme == "default" or $theme == "default-dark" {
+        $prim: md-get-palette-color(red, A400) !global;
+        $acc: md-get-palette-color(blue, A200) !global;
+    } @else if $theme == "yellow" {
+        $prim: md-get-palette-color(yellow, A400) !global;
+        $acc: md-get-palette-color(red, A200) !global;
+    } @else if $theme == "indigo" {
+        $prim: md-get-palette-color(indigo, A400) !global;
+        $acc: md-get-palette-color(green, A200) !global;
+    }
+}
+
+@include update-theme("default");
 @include md-register-theme("default", (
-primary: md-get-palette-color(red, A400), // The primary color of your application
-accent: md-get-palette-color(red, A200) // The accent or secondary color
-))
+    primary: $prim,
+    accent: $acc,
+));
+@include update-theme("default-dark");
+@include md-register-theme("default-dark", (
+    primary: $prim,
+    accent: $acc,
+    theme: dark
+));
 
+@include update-theme("yellow");
 @include md-register-theme("yellow", (
-primary: md-get-palette-color(yellow, A400), // The primary color of your application
-accent: md-get-palette-color(yellow, A200) // The accent or secondary color
-))
+    primary: $prim,
+    accent: $acc
+));
 
-@include md-register-theme("dark", (
-primary: md-get-palette-color(indigo, A400), // The primary color of your application
-accent: md-get-palette-color(indigo, A200) // The accent or secondary color
-))
+@include update-theme("indigo");
+@include md-register-theme("indigo", (
+    primary: $prim,
+    accent: $acc
+));
 
 @import "~vue-material/dist/theme/all";

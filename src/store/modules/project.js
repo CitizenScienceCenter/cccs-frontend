@@ -2,7 +2,8 @@
 // shape: [{ id, quantity }]
 const state = {
   projects: [],
-  selectedProject: null
+  selectedProject: null,
+  selectedStats: null
 }
 
 // getters
@@ -127,6 +128,9 @@ const mutations = {
   },
   SET_PROJECT(state, project) {
     state.selectedProject = project
+  },
+  SET_STATS(state, stats) {
+    state.selectedStats = stats
   }
 }
 

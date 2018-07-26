@@ -12,8 +12,9 @@
               <label for="theme">Theme</label>
               <md-select v-model="theme" name="theme" id="theme">
                 <md-option value="default">Default Theme</md-option>
+                <md-option value="default-dark">Default Dark Theme</md-option>
                 <md-option value="yellow">Yellow Theme</md-option>
-                <md-option value="dark">Dark Theme</md-option>
+                <md-option value="indigo">Indigo Theme</md-option>
               </md-select>
             </md-field>
             <md-field>

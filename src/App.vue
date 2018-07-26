@@ -86,8 +86,17 @@ body {
   overflow-x: hidden;
   min-width: 100%;
 }
-.md-drawer {
-  width: 230px;
-  max-width: calc(100vw - 125px);
-}
+// .md-drawer {
+//   width: 230px;
+//   max-width: calc(100vw - 125px);
+//   background-color: red !important;
+// }
+
+// .md-list {
+//   background-color: red !important;
+// }
+
+// .md-list-item {
+//     color: white !important;
+// }
 </style>
