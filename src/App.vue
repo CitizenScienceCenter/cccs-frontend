@@ -60,11 +60,16 @@
     <md-content>
       <breadcrumbs/>
       <router-view/>
+      <CCFooter class='footer'></CCFooter>
     </md-content>
+    
+    
   </div>
+  
 </template>
 
 <script>
+import CCFooter from '@/components/ccfooter.vue'
 import { mapState, mapGetters } from "vuex"
 export default {
   name: "CCCS",
@@ -72,6 +77,9 @@ export default {
     showNavigation: false,
     showSidepanel: false
   }),
+  components: {
+    CCFooter
+  },
   created() {
     // this.$material.theming.theme = 'myTheme'
   },
@@ -82,22 +90,42 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~vue-material/dist/theme/engine";
 @import "src/assets/styles/theme.scss";
-
 body {
   overflow-x: hidden;
   min-width: 100%;
 }
-// .md-drawer {
-//   width: 230px;
-//   max-width: calc(100vw - 125px);
-//   background-color: red !important;
+
+.md-drawer {
+  width: 230px;
+  max-width: calc(100vw - 125px);
+  background-color: $prim !important;
+  .md-list {
+    background-color: $prim !important;
+  }
+}
+
+// .footer {
+//   height: 20%;
+//   padding: 0 16px;
+//   position: fixed;
+//   min-width: 100%;
+//   bottom: 0;
+//   z-index: 4;
+//   background-color: #eee;
 // }
 
-.md-list {
-  background-color: $prim !important;
 
+.footer {
+  min-width: 100%;
+  width: 100%;
+  background-color: #eee;
 }
+.page-container {
+  min-height: 100%;
+}
+
 
 // .md-list-item {
 //     color: white !important;

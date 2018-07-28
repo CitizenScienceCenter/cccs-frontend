@@ -29,9 +29,9 @@
 
 <script>
 import { mapState } from "vuex";
-import Upload from "@/components/upload.vue"
-import FeaturedCarousel from '@/components/featured-carousel.vue'
-import SubmissionMultipleChoices from "@/components/submission-multiple-choices.vue"
+import Upload from "@/components/upload.vue";
+import FeaturedCarousel from "@/components/featured-carousel.vue";
+import SubmissionMultipleChoices from "@/components/submission-multiple-choices.vue";
 
 export default {
   name: "task-submission",
@@ -44,7 +44,7 @@ export default {
       }
     };
   },
-  components: { Upload, SubmissionMultipleChoices, FeaturedCarousel},
+  components: { Upload, SubmissionMultipleChoices, FeaturedCarousel },
   computed: mapState({
     loading: state => state.project.loading,
     submission: state => state.submission.submission,
@@ -52,29 +52,29 @@ export default {
     taskMedia: state => state.media.media
   }),
   watch: {
-    'task'(to, from) {
-      console.log(to.id)
-      this.$store.dispatch('media/getMedia', this.task.id)
+    task(to, from) {
+      console.log(to.id);
+      this.$store.dispatch("media/getMedia", this.task.id);
     },
-    'taskMedia'(to, from) {
-      console.log(to)
+    taskMedia(to, from) {
+      console.log(to);
       to.forEach(m => {
-        const path = m.path.replace('./static', 'http://localhost:8080/static')
-        console.log(m)
+        const path = m.path.replace("./static", "http://localhost:8080/static");
+        console.log(m);
         this.items.push({
           name: m.name,
           number: this.items.length + 1,
           img: path
-        })
+        });
       });
     }
   },
   methods: {
     handleText() {
-      let sub = Object.assign({}, this.submission)
-      sub['content']['text'] = this.content.text
-      console.log(sub.content.text)
-      this.$store.commit('submission/SET_SUBMISSION', sub)
+      let sub = Object.assign({}, this.submission);
+      sub["content"]["text"] = this.content.text;
+      console.log(sub.content.text);
+      this.$store.commit("submission/SET_SUBMISSION", sub);
     }
   }
 };

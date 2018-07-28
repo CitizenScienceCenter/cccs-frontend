@@ -1,0 +1,4 @@
+@import "~vue-material/dist/theme/engine";
+
+$prim: md-get-palette-color(red, A400) !default;
+$acc: md-get-palette-color(red, A200) !default;
