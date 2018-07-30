@@ -58,8 +58,10 @@
     </md-drawer>
 
     <md-content>
-      <breadcrumbs/>
+      <!-- <breadcrumbs/> -->
       <router-view/>
+      <!-- <md-divider></md-divider> -->
+      <hr>
       <CCFooter class='footer'></CCFooter>
     </md-content>
     
@@ -120,7 +122,7 @@ body {
 .footer {
   min-width: 100%;
   width: 100%;
-  background-color: #eee;
+  background-color: #fff;
 }
 .page-container {
   min-height: 100%;

@@ -1,7 +1,5 @@
 <template>
     <div class="cc-footer">
-      <!-- <hr> -->
-      <md-divider></md-divider>
       <div class="md-layout-item md-layout md-gutter">
         <md-card class="md-layout-item sub-image-card md-size-50">
           <!-- <md-card-media-cover>
@@ -16,6 +14,9 @@
               <img class="logo" src="@/assets/img/eth_logo.jpg"/>
             <!-- </md-card-media>
           </md-card-media-cover> -->
+        </md-card>
+        <md-card class="md-layout-item md-size-100">
+          2018 UZH ETH
         </md-card>
       </div>
   </div>
@@ -59,7 +60,11 @@ export default {
   .sub-image-card {
     padding: 0px !important;
     // height: 40%;
-    width: 20%;
+    // width: 20%;
+  }
+
+  .md-card {
+    background-color: #fff;
   }
 
 
