@@ -42,7 +42,8 @@ const mutations = {
         state.theme = theme
     },
     SET_LOCALE(state, loc) {
-        state.loc = loc
+        console.log(loc)
+        state.locale = loc
     }
 }
 

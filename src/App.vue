@@ -7,7 +7,13 @@
       <span class="md-title">C<sup>3</sup>S</span>
       <!-- TODO logo here -->
       <div class="md-toolbar-section-end">
-        <span>En|De</span>
+         <md-menu md-direction="bottom-start">
+      <md-button md-menu-trigger>{{locale}}</md-button>
+      <md-menu-content>
+        <md-menu-item @click="setLocale('en')">English</md-menu-item>
+        <md-menu-item @click="setLocale('de')">Deutsch</md-menu-item>
+      </md-menu-content>
+    </md-menu>
       </div>
     </md-toolbar>
     <md-progress-bar md-mode="indeterminate" v-if="loading" />
@@ -85,9 +91,19 @@ export default {
   created() {
     // this.$material.theming.theme = 'myTheme'
   },
-  computed: mapState({
-    loading: state => state.settings.loading
-  }),
+  computed: {
+    ...mapState({
+      loading: state => state.settings.loading,
+      locale: state => state.settings.locale
+    }),
+  },
+  methods: {
+    setLocale(val) {
+      this.$i18n.set(val);
+      this.$store.dispatch('settings/setLoc', val);
+      console.log(this.locale);
+    }
+  }
 };
 </script>
 

@@ -2,17 +2,19 @@
 
   
   <div class="splash">
-    <header class="home-header">
+    <header class="home-header md-layout md-alignment-center-space-around">
         <h1 class="hdr-text">C<sup>3</sup>S</h1>
+        <br>
         <p class="hdr-desc">A Citizen Science platform to create, and participate in, apps to access the power of the people.</p>
+        <br>
         <div>
             <md-button to="/login" class="md-raised md-primary">Login</md-button>
             <md-button to="/register" class="md-raised md-accent">Sign Up</md-button>
         </div>
     </header>
-  <div class="home-grid">
-    <md-card>
-      <md-card-header>
+  <div class="md-layout-item md-layout md-gutter md-alignment-top-left">
+    <md-card  class="md-layout-item md-size-50">
+      <md-card-header >
         <md-card-header-text>
           <div class="md-title">Open Source</div>
         </md-card-header-text>
@@ -26,7 +28,7 @@
 
     </md-card>
 
-    <md-card>
+    <md-card class="md-layout-item md-size-50">
       <md-card-header>
         <md-card-header-text>
           <div class="md-title">Be Heard</div>
@@ -41,7 +43,7 @@
 
     </md-card>
 
-    <md-card>
+    <md-card class="md-layout-item md-size-50">
       <md-card-header>
         <md-card-header-text>
           <div class="md-title">No Coding Required</div>
@@ -57,7 +59,7 @@
     </md-card>
     
 
-    <md-card>
+    <md-card class="md-layout-item md-size-50">
       <md-card-header>
         <md-card-header-text>
           <div class="md-title">Open Data</div>
