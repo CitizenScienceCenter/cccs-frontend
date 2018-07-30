@@ -15,8 +15,8 @@
             <!-- </md-card-media>
           </md-card-media-cover> -->
         </md-card>
-        <md-card class="md-layout-item md-size-100">
-          2018 UZH ETH
+        <md-card class="copyright md-layout-item md-size-100">
+          <md-icon>copyright</md-icon> 2018 UZH ETH About 
         </md-card>
       </div>
   </div>
@@ -65,6 +65,10 @@ export default {
 
   .md-card {
     background-color: #fff;
+  }
+
+  .copyright {
+    text-align: center;
   }
 
 

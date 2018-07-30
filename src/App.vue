@@ -5,15 +5,16 @@
         <md-icon>menu</md-icon>
       </md-button>
       <span class="md-title">C<sup>3</sup>S</span>
-
+      <!-- TODO logo here -->
       <div class="md-toolbar-section-end">
+        <span>En|De</span>
       </div>
     </md-toolbar>
     <md-progress-bar md-mode="indeterminate" v-if="loading" />
 
     <md-drawer :md-active.sync="showNavigation" >
       <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">CCCS</span>
+        <span class="md-title">C<sup>3</sup>S</span>
       </md-toolbar>
 
       <md-list>
@@ -58,7 +59,6 @@
     </md-drawer>
 
     <md-content>
-      <!-- <breadcrumbs/> -->
       <router-view/>
       <!-- <md-divider></md-divider> -->
       <hr>
@@ -99,12 +99,21 @@ body {
   min-width: 100%;
 }
 
+.md-title {
+  color: white !important;
+}
+
 .md-drawer {
   width: 230px;
   max-width: calc(100vw - 125px);
-  background-color: $prim !important;
+  color: white !important;
+  background-color: red !important;
   .md-list {
-    background-color: $prim !important;
+    background-color: red !important;
+    color: white !important;
+  }
+  .md-list-item-content {
+    color: white !important;
   }
 }
 
