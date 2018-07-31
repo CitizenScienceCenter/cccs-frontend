@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     // TODO errors should be in a global state and cleared on load
-    this.$store.commit('settings/SET_ERROR', null)
+    // this.$store.commit('settings/SET_ERROR', null)
   },
   methods: {
     login() {

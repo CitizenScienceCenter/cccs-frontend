@@ -1,7 +1,7 @@
 <template>
     <div>
     <form novalidate class="md-layout" @submit.prevent="create">
-      <md-card class="md-layout-item md-size-70 md-small-size-100">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">{{ $t("views.projects.create_title") }}</div>
         </md-card-header>

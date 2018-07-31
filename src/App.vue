@@ -4,7 +4,7 @@
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span class="md-title">C<sup>3</sup>S</span>
+      <span class="home-title md-title">C<sup>3</sup>S</span>
       <!-- TODO logo here -->
       <div class="md-toolbar-section-end">
          <md-menu md-direction="bottom-start">
@@ -67,10 +67,12 @@
     <md-content>
       <router-view/>
       <!-- <md-divider></md-divider> -->
-      <hr>
-      <CCFooter class='footer'></CCFooter>
+      <md-snackbar class="err-bar" :md-active.sync="showSnack" v-if="err">
+        {{err.message}}
+      </md-snackbar>
     </md-content>
-    
+    <!-- <br><br> -->
+    <CCFooter class='footer'></CCFooter>
     
   </div>
   
@@ -83,10 +85,16 @@ export default {
   name: "CCCS",
   data: () => ({
     showNavigation: false,
-    showSidepanel: false
+    showSidepanel: false,
+    showSnack: false
   }),
   components: {
     CCFooter
+  },
+  watch: {
+    'err' (to, from) {
+      this.showSnack = to !== null ? true : false;
+    }
   },
   created() {
     // this.$material.theming.theme = 'myTheme'
@@ -94,14 +102,14 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.settings.loading,
-      locale: state => state.settings.locale
+      locale: state => state.settings.locale,
+      err: state => state.settings.err
     }),
   },
   methods: {
     setLocale(val) {
       this.$i18n.set(val);
       this.$store.dispatch('settings/setLoc', val);
-      console.log(this.locale);
     }
   }
 };
@@ -115,8 +123,12 @@ body {
   min-width: 100%;
 }
 
-.md-title {
+.home-title {
   color: white !important;
+}
+
+.err-bar {
+  background-color: red !important;
 }
 
 .md-drawer {
@@ -145,6 +157,7 @@ body {
 
 
 .footer {
+  padding-top: 4%;
   min-width: 100%;
   width: 100%;
   background-color: #fff;

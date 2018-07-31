@@ -36,7 +36,7 @@ const mutations = {
         state.showSidepanel = flag
     },
     SET_ERROR(state, err) {
-        state.error = err
+        state.err = err
     },
     SET_THEME(state, theme) {
         state.theme = theme

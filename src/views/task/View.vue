@@ -76,7 +76,7 @@ export default {
       const sel = this.selected;
       console.log(sel);
       this.$store.dispatch('task/deleteTasks', sel)
-        .then('task/projectTasks', this.project_id)
+        .then(this.$store.dispatch('task/projectTasks', this.project_id));
     },
     addMedia() {
       this.$router.push({

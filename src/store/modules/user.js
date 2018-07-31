@@ -18,6 +18,7 @@ const actions = {
   login ({
     state,
     commit,
+    dispatch,
     rootState
   }, user) {
     commit('settings/SET_LOADING', true, {
@@ -26,15 +27,13 @@ const actions = {
     rootState.api.client.apis.Users.login(user)
       .then(r => r.body)
       .then(user => {
-        console.log(user)
         commit('SET_CURRENT_USER', user)
         commit('settings/SET_LOADING', false, {
           root: true
         })
       })
       .catch(err => {
-        console.log(err)
-        commit('settings/SET_ERROR', err, {
+        dispatch('settings/setError', {'message': 'Login Failed'}, {
           root: true
         })
         commit('settings/SET_LOADING', false, {

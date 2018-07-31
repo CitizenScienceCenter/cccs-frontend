@@ -77,21 +77,20 @@ const actions = {
                 }
             })
     },
-    addTasks({ state, commit, dispatch, rootState }, tasks) {
+    async addTasks({ state, commit, dispatch, rootState }, tasks) {
         commit('settings/SET_LOADING', true, {root: true})
-        rootState.api.client.apis.Tasks.create_tasks({
-            tasks: tasks,
-        })
-            .then(res => {
-                commit('settings/SET_LOADING', false, {root: true})
-                console.log(res.body[0].id)
-                dispatch('upload/addID', res.body[0].id, {root: true})
-            })
-            .catch(e => {
-                console.error(e)
-                commit('settings/SET_LOADING', false, {root: true})
-            })
-
+        try {
+            let res = await rootState.api.client.apis.Tasks.create_tasks({
+                tasks: tasks,
+            });
+            commit('settings/SET_LOADING', false, {root: true})
+            dispatch('upload/addID', res.body[0].id, {root: true})
+            return res.body
+        } catch (e) {
+            commit('settings/SET_LOADING', false, {root: true})
+            commit('settings/SET_ERROR', e, {root: true})
+            return false
+        }
     },
     deleteTasks({ state, commit, dispatch, rootState }, tasks) {
         commit('settings/SET_LOADING', true, {root: true})

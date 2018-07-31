@@ -1,7 +1,7 @@
 <template>
   <div>
   <form novalidate class="md-layout" @submit.prevent="add">
-      <md-card class="md-layout-item md-size-70 md-small-size-100">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
           <div class="md-title">{{msg}}</div>
         </md-card-header>
@@ -28,15 +28,15 @@
              <md-subheader>Question</md-subheader>
 
             <md-field>
-            <label for="qutxt">Question Text</label>
+            <label for="qutxt">{{ $t('views.tasks.form_qutxt') }}</label>
             <md-input type="text" v-model="task.content.question.text" name="qutxt" id="qutxt" :disabled="loading" />
           </md-field>
 
             <md-field>
               <md-select v-model="task.content.question.type" name="data_type" id="data_type">
-                <md-option value="text">Text</md-option>
-                <md-option value="single_file">Single File</md-option>
-                <md-option value="multiple_file">Multiple Files</md-option>
+                <md-option value="text">{{ $t('views.tasks.form_text') }}</md-option>
+                <md-option value="single_file">{{ $t('views.tasks.form_file') }}</md-option>
+                <md-option value="multiple_file">{{ $t('views.tasks.form_files') }}</md-option>
               </md-select>
             </md-field>
 
@@ -111,8 +111,10 @@ export default {
   methods: {
     add() {
       this.task.sequence = parseInt(this.task.sequence);
-      this.$store.dispatch("task/addTasks", [this.task]);
-      // .then(this.$router.go({name:'CreateTask', params: {id: this.project_id}}))
+      this.$store.dispatch("task/addTasks", [this.task]).then(t => {
+        console.log(t)
+        this.$router.push({name:'ViewTasks', params: {id: this.project_id}});
+      })
     }
   }
 };

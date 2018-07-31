@@ -11,7 +11,7 @@
         <md-card class="md-layout-item sub-image-card md-size-50">
           <!-- <md-card-media-cover>
             <md-card-media md-ratio="1:1"> -->
-              <img class="logo" src="@/assets/img/eth_logo.jpg"/>
+              <img class="elogo" src="@/assets/img/eth_logo.jpg"/>
             <!-- </md-card-media>
           </md-card-media-cover> -->
         </md-card>
@@ -69,6 +69,11 @@ export default {
 
   .copyright {
     text-align: center;
+  }
+
+  .logo {
+    margin-top: 5%;
+    margin-left: 10%;
   }
 
 
