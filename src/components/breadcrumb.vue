@@ -39,8 +39,16 @@ export default {
 </script>
 <style scoped lang="scss">
 
-.breadcrumbs { padding-left: 2%; list-style:none; margin:0; display:inline-block; }
-.breadcrumbs a:after{ padding: 0 12px; color: #888; content: "/"; }
-
+.breadcrumbs {
+  padding-left: 2%;
+  list-style: none;
+  margin: 0;
+  display: inline-block;
+}
+.breadcrumbs a:after {
+  padding: 0 12px;
+  color: #888;
+  content: "/";
+}
 </style>
 	

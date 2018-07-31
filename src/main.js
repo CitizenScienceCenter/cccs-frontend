@@ -12,9 +12,12 @@ import './assets/styles/theme.scss'
 import VuexRouterSync from 'vuex-router-sync'
 import * as loc from './localisation/index'
 import vuexI18n from 'vuex-i18n'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
 
 Vue.config.productionTip = false
 Vue.use(VueMaterial)
+Vue.use(Viewer)
 // TODO custiom themes
 Vue.use(VueCarousel)
 Vue.use(vuexI18n.plugin, store)

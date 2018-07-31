@@ -1,26 +1,37 @@
  <template>
  
   <div class="content" v-if="task">
-    <h2 class="md-list-item-text md-alignment-top-center">{{task.title}}</h2>
-      <div class="md-layout-item md-layout md-gutter">
-        <md-card v-if="items.length" class="md-layout-item sub-image-card md-size-50"> 
-          <featured-carousel class="featured-carousel" :items=items v-if="items.length > 0"></featured-carousel>                
-        </md-card>
-        <md-card class="sub-card md-layout-item">
+    
       
-        <md-icon></md-icon>
-        <span class="md-list-item-text md-alignment-top-center">{{task.title}}</span>
-        <upload v-if="task.content.answer.type.indexOf('file') !== -1" :embedded="true" :multiple="task.content.answer.type === 'multiple_files'"></upload>
-        <md-field v-if="task.content.answer.type === 'text' || task.content.answer.type.indexOf('file') !== -1">
-          <label for="qutxt">{{task.content.question.text}}</label>
-          <md-input type="text" v-model="content.text" @keyup="handleText" name="qutxt" id="qutxt" />
-        </md-field>
-        <submission-multiple-choices :choices="task.content.answer.choices" :type="task.content.answer.type" v-if="task.content.answer.type === 'multiple_choice'"></submission-multiple-choices>
-        <!-- TODO handle multiple choice -->
-        <md-button :to="{name:'TakePart', params: {id: task.id}}" class="md-icon-button md-list-action" title="Take Part!">
-          Submit
-        </md-button> 
-      </md-card>
+        <md-card class="task-title md-layout-item md-size-100">
+          <md-card-header>
+            <div class="featured-title md-title"><b>{{task.title}}</b></div>
+        </md-card-header>
+        </md-card>
+      <div class="md-layout-item md-layout md-gutter">
+        <md-card v-if="items.length" class="md-layout-item sub-image-card md-size-60"> 
+           <viewer :images="items">
+              <img v-for="src in items" :src="src" :key="src">
+            </viewer>
+          <!-- <featured-carousel class="featured-carousel" :items=items v-if="items.length > 0"></featured-carousel>                 -->
+        </md-card>
+        <!-- TODO conditional sizing -->
+        <md-card class="sub-card md-layout-item md-size-40">
+          <md-icon></md-icon>
+          <span class="md-list-item-text md-alignment-top-center">{{task.title}}</span>
+          <upload v-if="task.content.answer.type.indexOf('file') !== -1" :embedded="true" :multiple="task.content.answer.type === 'multiple_files'"></upload>
+          <md-field v-if="task.content.answer.type === 'text' || task.content.answer.type.indexOf('file') !== -1">
+            <label for="qutxt">{{task.content.question.text}}</label>
+            <md-input type="text" v-model="content.text" @keyup="handleText" name="qutxt" id="qutxt" />
+          </md-field>
+          <submission-multiple-choices :choices="task.content.answer.choices" :type="task.content.answer.type" v-if="task.content.answer.type === 'multiple_choice'"></submission-multiple-choices>
+           <md-card-actions>
+            <md-button :to="{name:'TakePart', params: {id: task.id}}" class="smd-list-action" title="Take Part!">
+                Submit
+            </md-button> 
+          </md-card-actions>
+          
+        </md-card>
 
       </div>
   </div>
@@ -61,11 +72,12 @@ export default {
       to.forEach(m => {
         const path = m.path.replace("./static", "http://localhost:8080/static");
         console.log(m);
-        this.items.push({
-          name: m.name,
-          number: this.items.length + 1,
-          img: path
-        });
+        this.items.push(path);
+        // this.items.push({
+        //   name: m.name,
+        //   number: this.items.length + 1,
+        //   img: path
+        // });
       });
     }
   },
@@ -80,4 +92,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+.task-title {
+  text-align: center;
+}
+
+.content {
+  width: 90%;
+}
 </style>
