@@ -35,6 +35,7 @@ export const en = {
           snackbar_created: 'Your project has been created'
       },
       tasks: {
+          project_tasks: 'Tasks for Project',
           create_title: 'Add a New Task!',
           form_title: 'Title',
           form_sequence: 'Sequence',
@@ -45,7 +46,8 @@ export const en = {
           form_file: 'Single File',
           form_files: 'Multiple Files',
           form_answer: 'Answer',
-          btn_add: 'Add'
+          btn_add: 'Add',
+          btn_create: 'Add'
       },
       user: {
         login: 'Login',

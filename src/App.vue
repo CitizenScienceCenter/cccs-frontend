@@ -65,6 +65,9 @@
     </md-drawer>
 
     <md-content>
+      <br>
+      <breadcrumbs></breadcrumbs>
+      <br>
       <router-view/>
       <!-- <md-divider></md-divider> -->
       <md-snackbar class="err-bar" :md-active.sync="showSnack" v-if="err">
@@ -80,6 +83,7 @@
 
 <script>
 import CCFooter from '@/components/ccfooter.vue'
+import Breadcrumbs from '@/components/breadcrumb.vue'
 import { mapState, mapGetters } from "vuex"
 export default {
   name: "CCCS",
@@ -89,7 +93,8 @@ export default {
     showSnack: false
   }),
   components: {
-    CCFooter
+    CCFooter,
+    Breadcrumbs
   },
   watch: {
     'err' (to, from) {
@@ -161,6 +166,8 @@ body {
   min-width: 100%;
   width: 100%;
   background-color: #fff;
+  position: absolute;
+  bottom: 0;
 }
 .page-container {
   min-height: 100%;

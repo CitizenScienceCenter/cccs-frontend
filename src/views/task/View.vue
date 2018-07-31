@@ -5,7 +5,7 @@
     </md-empty-state>
     <md-table v-if="tasks.length > 0" v-model="tasks" md-card @md-selected="onSelect" @change="change">
       <md-table-toolbar>
-        <h1 class="md-title">Tasks for Project</h1>
+        <h1 class="md-title">{{ $t('views.tasks.project_tasks') }}</h1>
       </md-table-toolbar>
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
         <div class="md-toolbar-section-start">{{ `${count} Tasks Selected` }}</div>
@@ -34,7 +34,7 @@
     </md-table>
   
     <md-card-actions md-right>
-      <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="loading">Add Task</md-button>
+      <md-button type="submit" class="md-primary" :to="{name:'CreateTask', params: {id: project_id}}" :disabled="loading">{{ $t('views.tasks.btn_create') }} </md-button>
       <!-- <md-button v-on:click="save" type="submit" class="md-primary" :disabled="loading">Save</md-button> -->
     </md-card-actions>
     <md-snackbar :md-active.sync="taskSaved">Your tasks have been created, add some more?</md-snackbar>
