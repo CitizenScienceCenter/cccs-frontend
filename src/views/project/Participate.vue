@@ -11,22 +11,22 @@
     </md-card>
     </div>
     <br><br>
-    <div class="md-layout md-gutter md-alignment-center-space-around">
-    <md-card class="stats md-layout-item md-size-30" v-if="tasks">
+    <div class="md-layout md-gutter md-alignment-center-space-around" v-if="stats">
+    <md-card class="stats md-layout-item md-size-30">
       <md-card-header>
-        <span class="md-title">{{tasks.length}} Tasks </span>
+        <span class="md-title">{{stats.task_count}} Tasks </span>
         <!-- <span class="md-subhead"> Tasks</span> -->
       </md-card-header>
     </md-card>
     <md-card class="stats md-layout-item md-size-30" v-if="tasks">
       <md-card-header>
-        <span class="md-title">30 Contributions</span>
+        <span class="md-title">{{stats.contributor_count}} Contributors </span>
         <!-- <span class="md-subhead">Contributions</span> -->
       </md-card-header>
     </md-card>
     <md-card class="stats md-layout-item md-size-30" v-if="tasks">
       <md-card-header>
-        <span class="md-title">5 Volunteers</span>
+        <span class="md-title">{{ stats.submission_count }} Submissions </span>
         <!-- <span class="md-subhead">Volunteers</span> -->
       </md-card-header>
     </md-card>
@@ -57,6 +57,7 @@ export default {
   components: { TaskSubmission: TaskSubmission },
   computed: mapState({
     project: state => state.project.selectedProject,
+    stats: state => state.project.selectedStats,
     tasks: state => state.task.tasks,
     submission: state => state.submission.submission,
     loading: state => state.settings.loading
@@ -108,7 +109,8 @@ export default {
           name: "Submission",
           params: { id: id, tid: tid }
         });
-      } else if (this.activeTaskIndex + 1 !== this.tasks.length) {
+      } else if (this.activeTaskIndex + 1 < this.tasks.length) {
+        console.log(this.activeTaskIndex, this.tasks)
         const tid = this.tasks[this.activeTaskIndex + 1].id;
         // TODO handle validation here or in store actions
         this.$store.dispatch("submission/postSubmission", this.submission);

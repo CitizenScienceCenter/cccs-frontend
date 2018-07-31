@@ -43,11 +43,13 @@ const actions = {
   getProject({
     state,
     commit,
+    dispatch,
     rootState
   }, id) {
     commit('settings/SET_LOADING', true, {
       root: true
     })
+    dispatch('getStats', id);
     rootState.api.client.apis.Projects.get_project({
         id: id
       })
@@ -65,6 +67,25 @@ const actions = {
           root: true
         })
       })
+  },
+  getStats({state, commit, rootState}, id) {
+    commit('settings/SET_LOADING', true, {
+      root: true
+    })
+    rootState.api.client.apis.Projects.get_stats({
+      id: id
+    })
+    .then(req => {
+      commit('settings/SET_LOADING', false, {
+          root: true
+        })
+      commit('SET_STATS', req.body)
+    }).catch(err => {
+      commit('settings/SET_ERROR', err, {
+        root: true
+      })
+      // TODO set path to login or 404 
+    })
   },
   createProject({
     state,

@@ -23,10 +23,10 @@ export const de = {
           create_title: 'Erstellen Sie ein Projekt',
           form_name: 'Name',
           form_platform: 'Platform',
-          form_desc: 'Description',
+          form_desc: 'Beschreibung',
           form_live: 'Live?',
-          form_submit: 'Create',
-          snackbar_created: 'Your project has been created'
+          form_submit: 'Hinzufügen',
+          snackbar_created: 'Ihr Projekt wurde erstellt'
       },
       tasks: {
         project_tasks: 'Aufgaben für Projekt',
