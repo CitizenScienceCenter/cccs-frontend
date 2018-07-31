@@ -34,7 +34,7 @@
     <task-submission :task=activeTask :content=content></task-submission>
     </div>
     <div class="btn-wrapper md-layout">
-      <md-button v-on:click="takePart" class="md-alignment-center-center md-primary md-raised" v-if="tasks.length > 0">{{btnText}}</md-button>
+      <md-button v-on:click="takePart" class="md-alignment-center-center md-primary md-raised" v-if="tasks.length > 0">{{msgText}}</md-button>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
       content: undefined,
       activeTaskIndex: undefined,
       activeTask: undefined,
-      btnText: "Let's Go"
+      msgText: "Let's Go"
     };
   },
   components: { TaskSubmission: TaskSubmission },
@@ -75,11 +75,13 @@ export default {
     this.handleTask();
   },
   updated() {
-    if (this.activeTaskIndex >= this.tasks.length) {
+    if (this.activeTaskIndex >= this.tasks.length -1) {
       this.msgText = "Finished";
       this.activeTaskIndex = this.tasks.length;
-    } else {
+    } else if (this.activeTaskIndex === 0) {
       this.msgText = `Let's Go`;
+    } else {
+      this.msgText = `Next Task`;
     }
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
       });
       this.activeTaskIndex = this.tasks.findIndex(task => {
         return task.id === tid;
-      });
+      })
       if (this.activeTask) {
         this.createSubmission();
       }
