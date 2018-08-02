@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.project.name)
+    console.log(this.project)
     this.pid = this.$route.params.id;
     this.activeTaskIndex = 0;
     this.$store.dispatch("project/getProject", this.pid);
@@ -125,12 +125,14 @@ export default {
     createSubmission() {
       // if (this.activeTaskIndex !== this.tasks.length) {
       //   console.log(this.submisson.content)
-      const submission = {
-        user_id: this.$store.getters["user/id"],
-        task_id: this.activeTask.id,
-        content: {}
-      };
-      this.$store.commit("submission/SET_SUBMISSION", submission);
+      if(this.activeTask) {
+        const submission = {
+          user_id: this.$store.getters["user/id"],
+          task_id: this.activeTask.id,
+          content: {}
+        }
+        this.$store.commit("submission/SET_SUBMISSION", submission)
+      }
     }
   }
 };

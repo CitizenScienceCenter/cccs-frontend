@@ -4,7 +4,7 @@
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span class="home-title md-title">C<sup>3</sup>S</span>
+      <span class="home-title md-title"><img src="@/assets/img/logo.png"/></span>
       <!-- TODO logo here -->
       <div class="md-toolbar-section-end">
          <md-menu md-direction="bottom-start">
@@ -130,6 +130,9 @@ body {
 
 .home-title {
   color: white !important;
+  img {
+    max-width: 20%;
+  }
 }
 
 .err-bar {
@@ -162,12 +165,13 @@ body {
 
 
 .footer {
-  padding-top: 4%;
+  // padding-top: 4%;
   min-width: 100%;
   width: 100%;
   background-color: #fff;
   position: absolute;
   bottom: 0;
+  // max-height: 3%;
 }
 .page-container {
   min-height: 100%;

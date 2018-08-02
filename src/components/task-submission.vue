@@ -4,9 +4,9 @@
     
       
         <md-card class="task-title md-layout-item md-size-100">
-          <md-card-header>
+          <!-- <md-card-header>
             <div class="featured-title md-title"><b>{{task.title}}</b></div>
-        </md-card-header>
+        </md-card-header> -->
         </md-card>
       <div class="md-layout-item md-layout md-gutter">
         <md-card v-if="items.length" class="md-layout-item sub-image-card md-size-60"> 
@@ -18,13 +18,14 @@
         <!-- TODO conditional sizing -->
         <md-card class="sub-card md-layout-item md-size-40">
           <md-icon></md-icon>
-          <span class="md-list-item-text md-alignment-top-center">{{task.title}}</span>
-          <upload v-if="task.content.answer.type.indexOf('file') !== -1" :embedded="true" :multiple="task.content.answer.type === 'multiple_files'"></upload>
-          <md-field v-if="task.content.answer.type === 'text' || task.content.answer.type.indexOf('file') !== -1">
-            <label for="qutxt">{{task.content.question.text}}</label>
-            <md-input type="text" v-model="content.text" @keyup="handleText" name="qutxt" id="qutxt" />
-          </md-field>
-          <submission-multiple-choices :choices="task.content.answer.choices" :type="task.content.answer.type" v-if="task.content.answer.type === 'multiple_choice'"></submission-multiple-choices>
+          <md-card v-for="(answer, i) in task.content.answers" v-bind:key="i">
+            <upload v-if="answer.type.indexOf('file') !== -1" :embedded="true" :multiple="answer.type === 'multiple_files'"></upload>
+            <md-field v-if="answer.type === 'text'">
+              <label for="qutxt">{{task.content.question.text}}</label>
+              <md-input type="text" v-model="content.text" @keyup="handleText" name="qutxt" id="qutxt" />
+            </md-field>
+            <submission-multiple-choices :choices="answer.choices" :type="answer.type" v-if="answer.type === 'multiple_choice'"></submission-multiple-choices>
+          </md-card>
            <md-card-actions>
             <md-button :to="{name:'TakePart', params: {id: task.id}}" class="smd-list-action" title="Take Part!">
                 Submit
@@ -64,11 +65,13 @@ export default {
   }),
   watch: {
     task(to, from) {
-      console.log(to.id);
-      this.$store.dispatch("media/getMedia", this.task.id);
+      console.log(to.id)
+      if (to) {
+        this.$store.dispatch("media/getMedia", this.task.id)
+      }
     },
     taskMedia(to, from) {
-      console.log(to);
+      console.log(to)
       to.forEach(m => {
         const path = m.path.replace("./static", "http://localhost:8080/static");
         console.log(m);

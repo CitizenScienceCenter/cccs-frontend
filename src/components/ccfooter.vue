@@ -44,6 +44,7 @@ export default {
 .cc-footer {
   max-width: 60%;
   width: 60%;
+  max-height: 10%;
   padding-left: 20%;
   padding-right: 20%;
 }
