@@ -2,7 +2,21 @@
   <div>
     <carousel v-if="items.length" class="featured-carousel" :autoplay="true" :per-page="1">
       <slide :key="item.number" v-for="item in items">
-        <md-card>
+            <md-card class="md-primary">
+      <md-card-header>
+
+        <md-card-media>
+          <img :src="item.img" alt="logo">
+        </md-card-media>
+        <md-card-header-text class="project-txt">
+          <div class="md-title">Green custom theme</div>
+          <div class="md-subhead">Subtitle here</div>
+        </md-card-header-text>
+
+
+      </md-card-header>
+    </md-card>
+        <!-- <md-card>
           <md-card-media-cover md-solid>
             <md-card-media md-ratio="1:1">
               <img :src="item.img" alt="item.name">
@@ -25,7 +39,7 @@
               </md-card-actions>
             </md-card-area>
           </md-card-media-cover>
-        </md-card>
+        </md-card> -->
       </slide>
     </carousel>
   </div>

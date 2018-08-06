@@ -4,7 +4,7 @@
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span class="home-title md-title"><img src="@/assets/img/logo.png"/></span>
+      <span class="home-title md-title"><a href="/"><img src="@/assets/img/logo.png"/></a></span>
       <!-- TODO logo here -->
       <div class="md-toolbar-section-end">
          <md-menu md-direction="bottom-start">
