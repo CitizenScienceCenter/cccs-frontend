@@ -9,7 +9,8 @@ const state = {
 }
 
 const getters = {
-    loc: state => state.locale
+    loc: state => state.locale,
+    theme: state => state.theme
 }
 
 const actions = {

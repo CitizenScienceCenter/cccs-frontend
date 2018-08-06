@@ -38,6 +38,8 @@ requestInterceptor(req) {
 }}).then((client) => {
   Vue.prototype.$ac = client
   Vue.i18n.set('en')
+  let t = store.getters['settings/theme']
+  // Vue.$material.theming.theme = t;
   store.dispatch('api/setClient', client)
   /* eslint-disable no-new */
   new Vue({

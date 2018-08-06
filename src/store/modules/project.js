@@ -3,6 +3,7 @@
 const state = {
   projects: [],
   selectedProject: null,
+  selectedMedia: [],
   selectedStats: null
 }
 
@@ -50,6 +51,7 @@ const actions = {
       root: true
     })
     dispatch('getStats', id);
+    dispatch('getMedia', id);
     rootState.api.client.apis.Projects.get_project({
         id: id
       })
@@ -87,6 +89,24 @@ const actions = {
       // TODO set path to login or 404 
     })
   },
+  getMedia({state, commit, rootState }, search) {
+
+    commit('settings/SET_LOADING', true, {root: true})
+    rootState.api.client.apis.Media.get_media({
+        search_term: search || undefined
+    })
+      .then(req => {
+        commit('SET_MEDIA', req.body)
+        commit('settings/SET_LOADING', false, {root: true})
+      })
+      .catch(err => {
+        if (err.response.status === 404) {
+          // TODO load 404 page
+        } else {
+          // TODO show errror
+        }
+      })
+},
   createProject({
     state,
     commit,
@@ -152,6 +172,9 @@ const mutations = {
   },
   SET_STATS(state, stats) {
     state.selectedStats = stats
+  },
+  SET_MEDIA(state, media) {
+    state.selectedMedia = media
   }
 }
 

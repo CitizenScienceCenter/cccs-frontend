@@ -4,10 +4,10 @@ $prim: md-get-palette-color(red, A400) !default;
 $acc: md-get-palette-color(red, A200) !default;
 
 
-@mixin update-theme($theme) {
+@mixin update-theme($theme, $scheme) {
     @if $theme == "default" or $theme == "default-dark" {
-        $prim: md-get-palette-color(red, A400) !global;
-        $acc: md-get-palette-color(red, A200) !global;
+        $prim: md-get-palette-color(red, A700) !global;
+        $acc: md-get-palette-color(red, 100) !global;
     } @else if $theme == "yellow" {
         $prim: md-get-palette-color(yellow, A400) !global;
         $acc: md-get-palette-color(red, A200) !global;
@@ -15,32 +15,19 @@ $acc: md-get-palette-color(red, A200) !default;
         $prim: md-get-palette-color(indigo, A400) !global;
         $acc: md-get-palette-color(green, A200) !global;
     }
+    @include md-register-theme($theme, (
+        primary: $prim,
+        accent: $acc,
+        theme: $scheme
+    ));
 }
 
-@include update-theme("default");
-@include md-register-theme("default", (
-    primary: $prim,
-    accent: $acc,
-));
 
-@include update-theme("default-dark");
-@include md-register-theme("default-dark", (
-    primary: $prim,
-    accent: $acc,
-    theme: dark
-));
+@include update-theme("default-dark", "dark");
 
-@include update-theme("yellow");
-@include md-register-theme("yellow", (
-    primary: $prim,
-    accent: $acc
-));
+@include update-theme("yellow", "light");
 
-
-@include update-theme("indigo");
-@include md-register-theme("indigo", (
-    primary: $prim,
-    accent: $acc
-));
+@include update-theme("indigo", "light");
+@include update-theme("default", "light");
 
 @import "~vue-material/dist/theme/all";

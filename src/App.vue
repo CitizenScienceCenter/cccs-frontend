@@ -1,5 +1,5 @@
 <template>
-  <div flex class="page-container md-layout-column">
+  <div :md-theme="theme" flex class="page-container md-layout-column">
     <md-toolbar class="md-primary">
       <md-button @click="showNavigation = true">
         <md-icon>menu</md-icon>
@@ -102,13 +102,14 @@ export default {
     }
   },
   created() {
-    // this.$material.theming.theme = 'myTheme'
+    this.$material.theming.theme = this.theme
   },
   computed: {
     ...mapState({
       loading: state => state.settings.loading,
       locale: state => state.settings.locale,
-      err: state => state.settings.err
+      err: state => state.settings.err,
+      theme: state => state.settings.theme
     }),
   },
   methods: {
@@ -142,14 +143,14 @@ body {
 .md-drawer {
   width: 230px;
   max-width: calc(100vw - 125px);
-  color: white !important;
-  background-color: red !important;
+  color: $acc !important;
+  background-color: $prim !important;
   .md-list {
-    background-color: red !important;
-    color: white !important;
+    background-color: $prim !important;
+    color: $acc !important;
   }
   .md-list-item-content {
-    color: white !important;
+    color: $acc !important;
   }
 }
 

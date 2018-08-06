@@ -1,7 +1,10 @@
 <template>
   <div>
   <div class="md-layout md-gutter md-alignment-center-space-around">
-    <md-card class="title-card md-layout-item md-size-80" v-if="project">
+    <md-card class="title-card md-layout-item md-size-100" v-if="project">
+      <md-card-media v-if="media && media.length">
+        <img :src="media[0]">
+      </md-card-media>
       <md-card-header>
         <span class="md-title">{{project.name}}</span>
       </md-card-header>
@@ -57,6 +60,7 @@ export default {
   components: { TaskSubmission: TaskSubmission },
   computed: mapState({
     project: state => state.project.selectedProject,
+    media: state => state.project.selctedMedia,
     stats: state => state.project.selectedStats,
     tasks: state => state.task.tasks,
     submission: state => state.submission.submission,
