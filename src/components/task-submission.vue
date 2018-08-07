@@ -16,7 +16,7 @@
           <!-- <featured-carousel class="featured-carousel" :items=items v-if="items.length > 0"></featured-carousel>                 -->
         </md-card>
         <!-- TODO conditional sizing -->
-        <md-card class="sub-card md-layout-item md-size-40">
+        <md-card class="sub-card md-layout-item md-size-100">
           <md-icon></md-icon>
           <md-card v-for="(answer, i) in task.content.answers" v-bind:key="i">
             <upload v-if="answer.type.indexOf('file') !== -1" :embedded="true" :multiple="answer.type === 'multiple_files'"></upload>
@@ -98,6 +98,10 @@ export default {
 
 .task-title {
   text-align: center;
+}
+
+.sub-card {
+  margin-top: 5%;
 }
 
 .content {
