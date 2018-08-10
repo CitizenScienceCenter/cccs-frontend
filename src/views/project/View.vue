@@ -23,9 +23,14 @@
           <br><br>
         </md-card-content>
 
-         <md-button v-on:click="deleteProject()" v-if="user.id === project.owned_by" class="md-fab md-plain md-fab-bottom-right">
-            <md-icon>delete</md-icon>
-        </md-button>
+        <md-card-actions>
+          <md-button :to="{name:'CreateTask', params: {id: project.id}}" class="md-primary" :disabled="loading">{{$t("views.projects.add_tasks")}}</md-button>
+           <md-button v-on:click="deleteProject()" v-if="user.id === project.owned_by" class="md-primary">
+            {{$t("general.delete")}}
+          </md-button>
+        </md-card-actions>
+
+        
       </md-card>
 
     </form>
