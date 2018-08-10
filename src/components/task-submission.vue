@@ -9,14 +9,14 @@
         </md-card-header> -->
         </md-card>
       <div class="md-layout-item md-layout md-gutter">
-        <md-card v-if="items.length" class="md-layout-item sub-image-card md-size-60"> 
+        <md-card v-if="items.length"  class="md-layout-item sub-card md-size-60"> 
            <viewer :images="items">
               <img v-for="src in items" :src="src" :key="src">
             </viewer>
           <!-- <featured-carousel class="featured-carousel" :items=items v-if="items.length > 0"></featured-carousel>                 -->
         </md-card>
         <!-- TODO conditional sizing -->
-        <md-card class="sub-card md-layout-item md-size-100">
+        <md-card class="sub-card md-layout-item" :class="{'md-class-40': 'items.length > 0', 'md-class-60': 'items.length === 0'}">
           <md-icon></md-icon>
           <md-card v-for="(answer, i) in task.content.answers" v-bind:key="i">
             <upload v-if="answer.type.indexOf('file') !== -1" :embedded="true" :multiple="answer.type === 'multiple_files'"></upload>
