@@ -1,4 +1,10 @@
 export const de = {
+  general: {
+    delete: 'Delete',
+    create: 'Create',
+    edit: 'Edit',
+    add: 'Add'
+  },
   components: {
     welcome: 'Wilkommen'
   },
@@ -26,7 +32,8 @@ export const de = {
           form_desc: 'Beschreibung',
           form_live: 'Live?',
           form_submit: 'Hinzufügen',
-          snackbar_created: 'Ihr Projekt wurde erstellt'
+          snackbar_created: 'Ihr Projekt wurde erstellt',
+          add_tasks: 'Add Tasks'
       },
       tasks: {
         project_tasks: 'Aufgaben für Projekt',

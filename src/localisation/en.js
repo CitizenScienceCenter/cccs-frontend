@@ -32,7 +32,8 @@ export const en = {
           form_desc: 'Description',
           form_live: 'Live?',
           form_submit: 'Create',
-          snackbar_created: 'Your project has been created'
+          snackbar_created: 'Your project has been created',
+          add_tasks: 'Add Tasks'
       },
       tasks: {
           project_tasks: 'Tasks for Project',
