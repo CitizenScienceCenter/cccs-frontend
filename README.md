@@ -1,5 +1,7 @@
 # vuecs
 
+[![Join the chat at https://gitter.im/CitizenScienceCenter/frontend](https://badges.gitter.im/CitizenScienceCenter/frontend.svg)](https://gitter.im/CitizenScienceCenter/frontend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > CCCS Sample Client App
 
 ## Running
